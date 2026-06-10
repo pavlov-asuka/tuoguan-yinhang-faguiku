@@ -12,3 +12,8 @@ desktop.ini
 
 *.tmp
 *.log
+
+03_元数据台账/search.db
+03_元数据台账/search.db.tmp
+03_元数据台账/search.db-wal
+03_元数据台账/search.db-shm

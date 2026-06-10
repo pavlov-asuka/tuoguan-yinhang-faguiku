@@ -17,6 +17,8 @@ from typing import Any
 from lxml import html as lxml_html
 from pypdf import PdfReader
 
+from build_search_index import build_index
+
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW_ROOT = ROOT / "01_法规原文库"
@@ -327,7 +329,7 @@ def write_text_for_file(raw_file: Path, text_dir: Path, headers: dict[str, str] 
         return None
     text_dir.mkdir(parents=True, exist_ok=True)
     target = text_dir / f"{raw_file.stem}.txt"
-    target.write_text(text, encoding="utf-8")
+    target.write_text(text, encoding="utf-8", newline="\n")
     return target
 
 
@@ -412,7 +414,7 @@ def download_npc_rule(rule: Rule, raw_dir: Path, text_dir: Path) -> tuple[list[P
     bbbs = row["bbbs"]
     detail = npc_detail(bbbs) or {}
     meta_path = raw_dir / f"{rule.id}_{safe_name(rule.title)}_npc_detail.json"
-    meta_path.write_text(json.dumps({"search_row": row, "detail": detail}, ensure_ascii=False, indent=2), encoding="utf-8")
+    meta_path.write_text(json.dumps({"search_row": row, "detail": detail}, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
     raw_files.append(meta_path)
     text_files.append(write_text_for_file(meta_path.with_suffix(".txt"), text_dir) if False else None)  # keep linter quiet
     for fmt in ["pdf", "docx"]:
@@ -556,7 +558,7 @@ def download_rule(rule: Rule) -> dict[str, Any]:
 
 def write_csv(path: Path, rows: list[dict[str, Any]], fields: list[str]) -> None:
     with path.open("w", encoding="utf-8-sig", newline="") as fh:
-        writer = csv.DictWriter(fh, fieldnames=fields, extrasaction="ignore")
+        writer = csv.DictWriter(fh, fieldnames=fields, extrasaction="ignore", lineterminator="\n")
         writer.writeheader()
         for row in rows:
             writer.writerow(row)
@@ -931,7 +933,7 @@ def write_html_index(rows: list[dict[str, Any]], now: str) -> None:
 </body>
 </html>
 """
-    (ENTRY_ROOT / "总目录.html").write_text(document, encoding="utf-8")
+    (ENTRY_ROOT / "总目录.html").write_text(document, encoding="utf-8", newline="\n")
 
 
 def write_markdown_indexes(rows: list[dict[str, Any]]) -> None:
@@ -949,6 +951,7 @@ def write_markdown_indexes(rows: list[dict[str, Any]]) -> None:
         "|---|---|---|---|---|---:|---|\n"
         f"{table}\n",
         encoding="utf-8",
+        newline="\n",
     )
 
     (ENTRY_ROOT / "README.md").write_text(
@@ -972,6 +975,7 @@ def write_markdown_indexes(rows: list[dict[str, Any]]) -> None:
         "4. 每条规则保留 `current_status`、`validity_checked_at`、`source_type`、`business_tags` 字段。\n"
         "5. 发现新旧版本冲突时，先标记待核验，不用草案替代正式现行规则。\n",
         encoding="utf-8",
+        newline="\n",
     )
 
     write_html_index(rows, now)
@@ -981,6 +985,7 @@ def write_markdown_indexes(rows: list[dict[str, Any]]) -> None:
         f"- {now}：重建知识库索引，应用 supplemental_rules.json，补齐 unresolved 中可核验的正式规则、失效入口和规则组拆分项；同步刷新总目录、台账、专题地图和待核验清单。\n"
         "- 2026-05-29：建立第一版知识库骨架，下载 P0 主干规则、税法模块、AMAC 已定位细则和若干官方入口页。\n",
         encoding="utf-8",
+        newline="\n",
     )
 
 
@@ -1031,7 +1036,7 @@ def write_topic_map(rows: list[dict[str, Any]]) -> None:
             if row:
                 lines.append(f"- `{rid}` {row['title']}（{row['current_status']}）")
         lines.append("")
-    (TOPIC_ROOT / "托管业务专题地图.md").write_text("\n".join(lines), encoding="utf-8")
+    (TOPIC_ROOT / "托管业务专题地图.md").write_text("\n".join(lines), encoding="utf-8", newline="\n")
 
 
 def write_unresolved(rows: list[dict[str, Any]]) -> None:
@@ -1052,7 +1057,7 @@ def write_unresolved(rows: list[dict[str, Any]]) -> None:
         if row["notes"]:
             lines.append(f"- 备注：{row['notes']}")
         lines.append("")
-    (UNRESOLVED_ROOT / "unresolved.md").write_text("\n".join(lines), encoding="utf-8")
+    (UNRESOLVED_ROOT / "unresolved.md").write_text("\n".join(lines), encoding="utf-8", newline="\n")
 
 
 def copy_source_checklist() -> None:
@@ -1081,18 +1086,20 @@ def main() -> None:
     ]
     write_csv(META_ROOT / "rules_index.csv", rows, fields)
     write_csv(META_ROOT / "download_log.csv", rows, fields)
-    (META_ROOT / "rules_index.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8")
+    (META_ROOT / "rules_index.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
     write_markdown_indexes(rows)
     write_topic_map(rows)
     write_unresolved(rows)
+    search_index_summary = build_index(ROOT)
 
     summary = {
         "total_rules": len(rows),
         "rules_with_files": sum(1 for r in rows if r["downloaded_count"]),
         "total_files": sum(int(r["downloaded_count"]) for r in rows),
         "rules_with_errors": sum(1 for r in rows if r["errors"]),
+        "search_index": search_index_summary,
     }
-    (META_ROOT / "build_summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    (META_ROOT / "build_summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 
 

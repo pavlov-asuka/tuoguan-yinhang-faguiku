@@ -2,5 +2,15 @@
   "total_rules": 102,
   "rules_with_files": 87,
   "total_files": 143,
-  "rules_with_errors": 0
+  "rules_with_errors": 0,
+  "search_index": {
+    "path": "03_元数据台账\\search.db",
+    "rules": 102,
+    "documents": 123,
+    "chunks": 6334,
+    "missing_texts": 0,
+    "built_at": "2026-06-05 20:50:59",
+    "sqlite_version": "3.50.4",
+    "fts_tokenizer": "trigram"
+  }
 }
