@@ -42,9 +42,9 @@
 - 新增法规、替换法规版本、修正元数据、补充官方来源、更新现行状态、扩展专题标签时，必须同步更新相关索引和 Markdown 文件。
 - 法规库构建或文本抽取发生变化后，应同步重建 `03_元数据台账/search.db`；该文件是派生索引，可删除后用 `python tools/build_search_index.py` 重建。
 - 至少检查并按需更新：
+  - `README.md`
   - `00_入口与索引/总目录.html`
   - `00_入口与索引/更新记录.md`
-  - `00_入口与索引/README.md`
   - `03_元数据台账/rules_index.md`
   - `03_元数据台账/rules_index.csv`
   - `03_元数据台账/rules_index.json`
@@ -55,3 +55,4 @@
 - 可检索文本放入 `02_文本抽取库/`。
 - 无法确认官方正文、附件或现行状态的项目，放入 `99_unresolved/unresolved.md`。
 - 已解决的 unresolved 项目，应从 `unresolved.md` 移除或改为“已解决”说明，并同步到台账。
+- 每次更改文件后，应提示用户是否需要提交 Git。
