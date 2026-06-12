@@ -1,0 +1,18 @@
+中国结算关于交易所交易型开放式证券投资基金登记结算业务实施细则
+
+状态：官方入口/辅助资料
+说明：该条目是官方站点、栏目或业务平台入口，用于后续检索、巡检和定位正式规则；不得直接作为现行正式法规正文依据。
+官方入口：
+- https://www.chinaclear.cn/
+- https://www.sse.com.cn/
+- https://www.szse.cn/
+- https://www.bse.cn/
+- https://www.csrc.gov.cn/
+- https://www.sse.com.cn/
+- https://www.szse.cn/
+- https://www.bse.cn/
+- https://www.chinaclear.cn/
+
+目录挂接：
+- B_机构治理与核心业务条线 > B-05 资金清算、交易交收与结算
+- C_产品专册 > C-01 公募基金 > C-01-04 ETF、LOF与场内基金

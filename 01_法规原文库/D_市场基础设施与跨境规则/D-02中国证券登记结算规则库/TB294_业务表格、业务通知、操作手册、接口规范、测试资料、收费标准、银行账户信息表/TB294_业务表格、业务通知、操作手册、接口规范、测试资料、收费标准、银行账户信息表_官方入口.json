@@ -1,0 +1,14 @@
+{
+  "id": "TB294",
+  "title": "业务表格、业务通知、操作手册、接口规范、测试资料、收费标准、银行账户信息表",
+  "source_type": "官方入口",
+  "urls": [
+    "https://www.chinaclear.cn/",
+    "https://www.safe.gov.cn/",
+    "https://www.nfra.gov.cn/"
+  ],
+  "catalog_paths": [
+    "D_市场基础设施与跨境规则 > D-02 中国证券登记结算规则库"
+  ],
+  "note": "官方入口或平台栏目，用于巡检和查找正式规则；不作为现行正式法规正文依据。"
+}

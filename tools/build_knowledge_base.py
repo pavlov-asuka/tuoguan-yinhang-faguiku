@@ -175,6 +175,19 @@ OFFICIAL_ENTRY_URLS = [
     (("资产证券化", "资产支持证券", "ABS", "ABN", "资产支持票据"), ["https://www.csrc.gov.cn/", "https://www.sse.com.cn/", "https://www.szse.cn/", "https://www.nafmii.org.cn/"]),
     (("转融通", "融资融券"), ["https://www.csrc.gov.cn/", "https://www.sse.com.cn/", "https://www.szse.cn/", "https://www.chinaclear.cn/"]),
     (("银行间债券", "债券登记托管", "债券借贷", "质押式回购", "买断式回购"), ["https://www.chinabond.com.cn/", "https://www.chinamoney.com.cn/", "https://www.shclearing.com.cn/"]),
+    (("人民币银行结算账户", "大额支付系统", "小额支付系统", "网上支付跨行清算", "人民币跨境支付", "反洗钱处罚", "支付结算处罚", "征信处罚"), ["https://www.pbc.gov.cn/"]),
+    (("客户尽职调查", "客户身份资料", "交易记录保存"), ["https://www.pbc.gov.cn/", "https://www.nfra.gov.cn/", "https://www.csrc.gov.cn/"]),
+    (("基金合同", "基金招募说明书", "产品资料概要", "公募基金定期报告", "货币市场基金信息披露", "公募基金投资信用衍生品"), ["https://www.csrc.gov.cn/", "https://www.amac.org.cn/"]),
+    (("托管协议", "运营外包协议", "资金监管协议", "账户服务协议", "电子合同服务协议", "三方/四方业务协议", "境外次托管协议"), ["https://www.csrc.gov.cn/", "https://www.nfra.gov.cn/", "https://www.amac.org.cn/", "https://www.chinaclear.cn/", "https://www.safe.gov.cn/"]),
+    (("产品设立", "产品注册", "产品备案", "发行", "募集", "产品运作", "终止清算"), ["https://www.csrc.gov.cn/", "https://www.amac.org.cn/", "https://www.nfra.gov.cn/", "https://www.safe.gov.cn/"]),
+    (("业绩比较基准", "基准收益率", "基准示例"), ["https://www.csrc.gov.cn/", "https://www.amac.org.cn/", "https://www.csindex.com.cn/"]),
+    (("SJSMX1", "BJSMX1", "ETF申赎", "业务确认接口", "接口规范"), ["https://www.chinaclear.cn/", "https://www.sse.com.cn/", "https://www.szse.cn/", "https://www.bse.cn/", "https://www.csindex.com.cn/"]),
+    (("现金管理类理财", "银行业金融机构", "商业银行合规风险", "全面风险管理", "业务连续性监管", "信息科技风险"), ["https://www.nfra.gov.cn/"]),
+    (("估值差错", "迟算漏算", "错划款", "异常交收", "监督遗漏", "披露错误", "报送错误", "合同瑕疵", "权限滥用", "外包风险"), ["https://www.csrc.gov.cn/", "https://www.nfra.gov.cn/", "https://www.amac.org.cn/", "https://www.china-cba.net/", "https://www.chinaclear.cn/"]),
+    (("全国银行间同业拆借中心", "同业拆借中心"), ["https://www.chinamoney.com.cn/"]),
+    (("中证指数",), ["https://www.csindex.com.cn/"]),
+    (("期货保证金监控中心", "期货账户", "期货结算"), ["https://www.cfmmc.com/"]),
+    (("融资融券", "转融通", "中证金融"), ["https://www.csf.com.cn/", "https://www.sse.com.cn/", "https://www.szse.cn/"]),
 ]
 
 TITLE_ALIASES = {
@@ -315,6 +328,20 @@ def join_unique(values: list[str]) -> str:
             seen.add(value)
             out.append(value)
     return "; ".join(out)
+
+
+def clean_notes(notes: list[str], *, auxiliary_p0: bool = False) -> list[str]:
+    cleaned: list[str] = []
+    replacement = "组合型P0目录已入官方入口；正式适用应回到具体规则正文核验"
+    for note in notes:
+        for part in split_field(note):
+            if part == "P0规则尚无本地正式原文，待月度巡检":
+                if auxiliary_p0 and replacement not in cleaned:
+                    cleaned.append(replacement)
+                continue
+            if part and part not in cleaned:
+                cleaned.append(part)
+    return cleaned
 
 
 def safe_name(value: str, max_len: int = 90) -> str:
@@ -552,7 +579,8 @@ def merge_catalog_items(items: list[CatalogItem], legacy_by_key: dict[str, dict[
             record.source_url = legacy_row.get("source_url", "")
             record.business_tags.extend(split_field(legacy_row.get("business_tags", "")))
             if legacy_row.get("notes"):
-                record.notes.append(legacy_row["notes"])
+                auxiliary_p0 = record.priority == "P0" and legacy_row.get("current_status") == "辅助资料"
+                record.notes.extend(clean_notes([legacy_row["notes"]], auxiliary_p0=auxiliary_p0))
 
     ordered = list(records.values())
     ordered.sort(key=lambda rec: rec.first_line)
@@ -865,16 +893,39 @@ def official_entry_urls(record: RuleRecord) -> list[str]:
     for keywords, candidates in OFFICIAL_ENTRY_URLS:
         if any(keyword in text for keyword in keywords):
             urls.extend(candidates)
+    category_text = f"{record.category} {' '.join(record.catalog_paths)}"
+    if any(word in record.doc_type for word in ["法律", "行政法规", "司法解释"]):
+        urls.append("https://flk.npc.gov.cn/")
+    if "证监会" in record.doc_type or "基金" in text or "证券投资基金" in text or "公募" in text:
+        urls.append("https://www.csrc.gov.cn/")
+    if "自律规则" in record.doc_type or "私募" in text or "中基协" in text:
+        urls.append("https://www.amac.org.cn/")
+    if "交易所" in text or "交易所" in category_text:
+        urls.extend(["https://www.sse.com.cn/", "https://www.szse.cn/", "https://www.bse.cn/"])
+    if "中国结算" in text or "中登" in text or "中国证券登记结算" in text or "中国证券登记结算" in category_text:
+        urls.append("https://www.chinaclear.cn/")
+    if "中央结算" in text or "中债" in text or "中央结算" in category_text:
+        urls.append("https://www.chinabond.com.cn/")
+    if "上海清算" in text or "上清所" in text or "上海清算" in category_text:
+        urls.append("https://www.shclearing.com.cn/")
+    if "交易商协会" in record.doc_type or "交易商协会" in category_text:
+        urls.append("https://www.nafmii.org.cn/")
+    if "外汇" in text or "QDII" in text or "QFII" in text or "跨境" in category_text:
+        urls.append("https://www.safe.gov.cn/")
+    if "税" in text or "税务" in record.doc_type or "税务" in category_text:
+        urls.extend(["https://www.chinatax.gov.cn/", "https://www.mof.gov.cn/"])
+    if "银行" in text or "理财" in text or "信托" in text or "保险" in text:
+        urls.append("https://www.nfra.gov.cn/")
     return urls
 
 
 def should_seed_official_entry(record: RuleRecord) -> bool:
-    if record.local_path or not official_entry_urls(record):
+    if record.text_path or not official_entry_urls(record):
         return False
     text = f"{record.doc_type} {record.title}"
     if any(word in text for word in ["入口", "官方库", "栏目", "平台"]):
         return True
-    return is_composite_title(record.title)
+    return True
 
 
 def seed_official_entry(record: RuleRecord) -> bool:
@@ -913,13 +964,17 @@ def seed_official_entry(record: RuleRecord) -> bool:
         encoding="utf-8",
         newline="\n",
     )
+    if record.errors:
+        record.notes.extend([f"自动下载未完成，已转官方入口辅助资料：{error}" for error in record.errors])
+        record.errors.clear()
     record.source_url = join_unique(split_field(record.source_url) + urls)
-    record.source_type = join_unique([record.source_type, "官方入口"])
-    record.local_path = relpath(raw_path)
-    record.text_path = relpath(text_path)
-    record.file_type = "json"
-    record.downloaded_count = 1
+    record.source_type = join_unique(split_field(record.source_type) + ["官方入口"])
+    record.local_path = join_unique(split_field(record.local_path) + [relpath(raw_path)])
+    record.text_path = join_unique(split_field(record.text_path) + [relpath(text_path)])
+    record.file_type = join_unique(split_field(record.file_type) + ["json"])
+    record.downloaded_count = len(split_field(record.local_path))
     record.current_status = "辅助资料"
+    record.notes = clean_notes(record.notes, auxiliary_p0=record.priority == "P0")
     record.notes.append("官方入口已入库；不作为现行正式依据")
     return True
 
@@ -1120,6 +1175,10 @@ def apply_source_override(record: RuleRecord, overrides: list[dict[str, Any]]) -
     record.file_type = join_unique(sorted({Path(path).suffix.lower().lstrip(".") for path in split_field(record.local_path)}))
     record.downloaded_count = len(split_field(record.local_path))
     record.current_status = item.get("current_status") or "现行有效"
+    override_notes = item.get("notes", [])
+    if isinstance(override_notes, str):
+        override_notes = [override_notes]
+    record.notes.extend([note for note in override_notes if note])
     record.notes.append("按 source_overrides 官方来源入库")
     if not text_paths:
         record.errors.append("官方来源已保存原文但未抽取到可检索文本")
@@ -1470,6 +1529,8 @@ def write_unresolved(rows: list[dict[str, Any]]) -> None:
         or (r["priority"] == "P0" and not r["local_path"])
     ]
     lines = ["# 待核验与未完成项目", "", "以下项目均标注“待月度巡检”。", ""]
+    if not selected:
+        lines.append("暂无待核验、待扩展或待入库项目。")
     for row in selected:
         source_state = "已联网或本地定位到官方来源但尚未完整入库" if row.get("source_url") else "仅有目录线索，尚待核验"
         if row.get("source_type") in ["辅助资料", "政策解读", "起草说明", "答记者问"]:
@@ -1506,11 +1567,11 @@ def main() -> None:
     for record in records:
         legacy_manifest.extend(copy_legacy_files(record))
         apply_source_override(record, source_overrides)
-        if should_seed_official_entry(record):
-            seed_official_entry(record)
         if should_try_npc(record):
             download_npc(record)
             time.sleep(0.4)
+        if should_seed_official_entry(record):
+            seed_official_entry(record)
 
     inherit_base_sources(records)
     rows = [record_to_row(record) for record in records]
