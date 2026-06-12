@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>关于发布《关于固定收益品种的估值处理标准》的通知</title>
+  <!-- 一期common-d里引用的js -->
+   <!--<link rel="stylesheet" href="http://res.amac.org.cn/resources/images/reset-d.css?2.1.2">-->
+<link rel="stylesheet" href="https://res.amac.org.cn/policy/css/idangerous.swiper.css?2.1.2">
+<link href="https://res.amac.org.cn/policy/css/paging.css?2.1.2" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://res.amac.org.cn/policy/css/font.css?2.1.2">
+<link rel="stylesheet" href="https://res.amac.org.cn/policy/css/common-d.css?2.1.2">
+<link rel="stylesheet" href="https://res.amac.org.cn/policy/css/phone.css?2.1.2">
+
+
+
+<script src="https://res.amac.org.cn/policy/js/jquery.min.js?2.1.2" type="text/javascript"></script>
+<script src="https://res.amac.org.cn/policy/js/jquery.js?2.1.2" type="text/javascript"></script>
+<script src="https://res.amac.org.cn/policy/js/jquery-migrate.min.js?2.1.2" type="text/javascript"></script>
+<script src="https://res.amac.org.cn/policy/js/idangerous.swiper.min.js?2.1.2" type="text/javascript"></script>
+<script src="https://res.amac.org.cn/policy/js/MSClass.js?2.1.2" type="text/javascript"></script>
+<script src="https://res.amac.org.cn/policy/js/common-d.js?2.1.2" type="text/javascript"></script>
+<script type="text/javascript" src="https://res.amac.org.cn/policy/js/raphael-min.js?2.1.2"></script>
+<script type="text/javascript" src="https://res.amac.org.cn/policy/js/map-min.js?2.1.2"></script>
+<script type="text/javascript" src="https://res.amac.org.cn/policy/js/echarts-d.min.js?2.1.2"></script>
+<script src="https://res.amac.org.cn/policy/js/paging.js?2.1.2" type="text/javascript"></script>
+<script src="https://res.amac.org.cn/policy/js/laydate.js?2.1.2"></script>
+<style>
+    .bom-links ul li{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .hiddenSl2{ overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+    .hiddenSl3{ overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;}
+    .nav-tit{ height: 72px; }
+
+    .page{ text-align: center;line-height: 16px; }
+    .page a{ padding: 2px 6px; display:inline-block; margin: 0 5px;background: #e8edf2;position: relative;font-size: 16px; }
+    .page a.cr{ background: #b5151d;color:#fff; }
+    .page a.s1{ padding: 2px 6px; display:inline-block;border: 1px solid #ccc; margin: 0 5px;background: #fff;font-size: 14px; }
+    .page select{ font-size: 12px; padding: 2px 0 1px 0; border: 1px solid #ccc;margin-bottom: 0 !important;width: 50px; }
+
+    #footer .bom-report span{ margin-right: 12px;line-height: 32px; }
+    #footer .bom-contacts{ text-align: center; }
+    #footer .bom-contacts .bom-addr{ margin-left: 80px; }
+    #footer .bom-contacts .bom-tel { margin: 0;margin-left: 50px; }
+    #footer .bom-report>span em img{ margin-bottom: -10px; }
+    @media screen and (max-width: 480px){
+        .page a{ margin: 0px 5px 10px; }
+        .page{ white-space: normal;margin-top:0 !important; }
+        .mobile-menucss>ul>li>ul>li{ color: #fff; }
+        .mobile-menucss>ul>li>ul>li>a>span{ font-size: 16px;opacity: 1; }
+        .mobile-search{ padding: 0 20px 0 20px; }
+        .searchTips{ background: #fff; box-shadow: 0px 6px 16px 0px #aaa; -webkit-box-shadow: 0px 6px 16px 0px #aaa; -moz-box-shadow: 0px 6px 16px 0px #aaa; -ms-box-shadow: 0px 6px 16px 0px #aaa; }
+        .searchTips li{ overflow: hidden;text-overflow: ellipsis;white-space: nowrap; }
+        .fot-r{ text-align: left; }
+        #footer .fot-r .footFocus{ margin: 0px; }
+        #footer .mod-copy{ -height: 170px; }
+        #footer .bom-report>span{ display: inline-block; margin-bottom:20px; }
+        #footer .bom-contacts{ text-align: left; }
+        #footer .bom-contacts .bom-addr{ margin-left: 10px;line-height: 22px; }
+        #footer .bom-contacts .bom-tel { margin-left: 10px;line-height: 180%; }
+        #footer .copys{ font-size: 14px; }
+        #footer .copys>i>a{ display: block; }
+        #footer .copys span{ margin-left: 0; } .mode-banner{ margin-top: 0; } 
+
+        #pageToolbar ul li{ margin: 3px 2px; }
+        .content{ width:100%!important; padding: 0 10px; box-sizing: border-box; margin: 10px auto 0 !important; }
+        .layer-l{ background: none;width: 100%!important; }
+        .nav-tit{ height: 50px; }
+        .nav-tit span{ width: auto!important; }
+        .content .box-left{ width:100%!important;margin-bottom: 20px; }
+        .content .box-right{ width:100%!important; }
+        .content .layer-r{ width: 100%!important;padding: 30px 8px 30px !important; }
+
+        .inner-bg .wrap-layer{ margin-top: 0px!important; }
+        .inner-bg .wrap-layer .topbtn{ float: none; }
+        .top-search3 .s-input{ width:100%; }
+        .mod-news4{ margin-top:0; }
+        .pegeBox{ padding: 12px;height: auto; }
+        .list_page{ height: auto; }
+        .page select{ font-size: 14px; }
+    }
+</style>
+<!-- 二期引入的 -->
+   <link rel="stylesheet" href="https://res.amac.org.cn/policy/css/common.css?2.1.2">
+   <link rel="stylesheet" href="https://res.amac.org.cn/policy/css/footer.css?2.1.2">
+   <link rel="stylesheet" href="https://res.amac.org.cn/policy/css/idangerous.swiper2.7.6.css?2.1.2">
+   <link rel="stylesheet" href="https://res.amac.org.cn/policy/css/index.css?2.1.2">
+<script src="https://res.amac.org.cn/policy/js/idangerous.swiper2.7.6.min.js?2.1.2" type="text/javascript"></script>
+<script src="https://res.amac.org.cn/policy/js/foot.js?2.1.2" type="text/javascript"></script>
+<script src="https://res.amac.org.cn/policy/js/index.js?2.1.2" type="text/javascript"></script>
+<link href="https://res.amac.org.cn/policy/css/commonCss.css?2.1.2" rel="stylesheet" type="text/css"></link>
+  <style>
+    .inner-bg{
+        margin-top: -70px;
+    }
+    .job-infos{
+        padding: 50px;
+    }
+    .job-infos .title {
+      /* height: 46px; */
+      color: #fff;
+      text-align: center;
+      margin-bottom: 22px;
+      width: 100%;
+      position: relative;
+    }
+
+    .job-infos .title h3 {
+      letter-spacing: 2px;
+      color: #303133;
+      font-size: 28px;
+    }
+    .job-infos .title img{
+        width: 100%;
+        position: relative;
+        bottom: -9px;
+    }
+    .job-infos .content {
+      width: 100%;
+    }
+
+    .job-infos .job-tit {
+      line-height: 66px;
+      margin: 45px 0 0px 0;
+font-size: 21px;
+    font-weight: bold;
+    }
+    table{
+        margin-bottom: 20px;
+    }
+    tbody tr td{
+        height: 50px;
+    border: 1px solid #d3d7e0;
+    line-height: 50px;
+    padding-left: 24px;
+    box-sizing: border-box;
+    text-align: left;
+    width:33.3%;
+    }
+    tbody tr .geayBg{
+        width: 16.6%;
+        padding-right: 24px;
+        text-align: right;
+        background-color: #f2f2f2;
+    }
+    .geayBg h6{
+     position: relative;
+     top: 42px;
+    }
+    .attachment-down{
+     margin-top: 20px;
+    }
+    .attachment-down ul li .down-ico{
+        background-image:url('https://res.amac.org.cn/policy/images/DoenIcon.png?2.1.2') ; 
+    }
+    /* #close:hover {
+      cursor: pointer;
+    } */
+
+    /* .job-infos .job-date{ margin-top: 16px; }  */
+    /* 文本样式统一 */
+     .content p{ font-size: 16px !important;line-height: 175% !important;text-indent: 32px !important;color: #333 !important; font-family: "微软雅黑" !important; } 
+     .content p font , 
+     .content p span ,
+     .content p a ,
+     .content p i{ font-size: 16px !important;line-height: 175% !important;text-indent: 32px!important;color: #333 !important; font-family: "微软雅黑" !important;}
+    .copys *{
+      opacity: 1;
+    }
+    @media screen and (max-width: 480px){
+        .inner-bg{
+            margin-top: 0;
+        } 
+        .inner-bg .wrap-layer{
+            padding: 0;
+        } 
+        .job-infos{
+            padding: 10px 0 0 0;
+        } 
+        .TRS_Editor{
+         font-size: 22px;
+        }
+        .geayBg h6{
+            top: 15px;
+        }
+    }
+  </style>
+</head>
+
+<body>
+  <style>
+    body {
+        background-color: #f7f7f7;
+    }
+    .header {
+        height: 240px;
+        border-bottom: 0px solid #fff;
+    }
+    .logos {
+        width: 460px;
+        height: 70px;
+        margin-left: 1.1%;
+        margin-top: 30px;
+    }
+    .wrap-search {
+        margin-top: -20px;
+        padding-top: 6px;
+        position: relative;
+    }
+    #innerBox {
+        height: 0px;
+    }
+    .mod-headers {
+        height: 148px;
+        width: 100%;
+        left: 0;
+        top: 0;
+        /* min-height: 140px; */
+        position: absolute;
+        /* z-index: 9990; */
+        /* background: #fff; */
+        min-height: 90px;
+        background-repeat: round;
+        background-image: url('https://res.amac.org.cn/policy/images/handerBanner.png?');
+    }
+    .mod-headers .wrap-layer {
+        width: 100%;
+        height: 148px;
+        padding: 0 15%;
+        /* margin-top: 34px; */
+        background-repeat: round;
+        background-image: url('https://res.amac.org.cn/policy/images/handerBanner.png?');
+    }
+    
+    .wrap-search {
+        height: 90px;
+        /* background-color: #ACCFFF; */
+    }
+
+    
+    .mod-headers {
+        box-sizing: border-box;
+        /* z-index: -10; */
+        /* padding: 0 17%; */
+    }
+    .navMenu {
+        display: flex;
+        justify-content: flex-start;
+    }
+    .navMenu li.menucr {
+        margin-left: 5px;
+    }
+    .navMenu li.menucr a.taba {
+        width: 120px;
+    }
+    .cr {
+        background-color: #961118;
+    }
+    #sonHome {
+        display: inline-block;
+        width: 130px;
+        height: 40px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        /* float: right; */
+        margin-left: 255px;
+        /* margin-top: 1px; */
+        box-sizing: border-box;
+        padding-left: 40px;
+        line-height: 40px !important;
+        color: #999;
+        position: relative;
+    }
+    #sonHome .img {
+        width: 16px;
+        height: 16px;
+        background: url("http://res.amac.org.cn/resources/images/sonHomeRed.svg");
+        position: absolute;
+        top: 11px;
+        left: 12px;
+    }
+    #sonHome:hover {
+        color: #b5151d;
+        border-color: #b5151d;
+    }
+    #sonHome:hover .img {
+        background: url("http://res.amac.org.cn/resources/images/sonHomeGray.svg");
+    }
+    
+    .HanderNav {
+        /* width:21%; */
+        width: 300px;
+        height: 20px;
+        line-height: 25px;
+        /* background:hotpink; */
+        display: flex;
+        justify-content: end;
+        position: absolute;
+        right: 15.2%;
+        top: 58px;
+        z-index: 9999;
+    }
+    .navList {
+        /* width:44%; */
+        width: 128px;
+        height: 22px;
+        /* background:green; */
+        box-sizing: border-box;
+        padding-left: 5px;
+        padding-right: 5px;
+        font-size: 14px;
+        cursor: pointer;
+        line-height: 24px;
+        color: #262729;
+        position: relative;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .navList a {
+        color: #262729;
+    }
+    .navList .navImg {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        position: relative;
+        left: 2px;
+        top: 6px;
+    }
+    .navList .navImg img {
+        width: 100%;
+        height: 100%;
+    }
+    .ZrXmm {
+        width: 90px;
+        height: 23px;
+        /* background:green; */
+        box-sizing: border-box;
+        /* padding-left: 5px; */
+        font-size: 14px;
+        cursor: pointer;
+        position: relative;
+        line-height: 24px;
+        /* color:#1d4098; */
+        position: relative;
+        /* overflow: hidden; */
+    }
+    .ZrXmm:hover .weixImg {
+        display: block;
+        z-index: 100;
+    }
+    .ZrXmm .weixImg img {
+        width: 100%;
+        height: 100%;
+    }
+    .ZrXmm .navImg {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        position: relative;
+        left: 2px;
+        top: 6px;
+    }
+    .ZrXmm .navImg img {
+        width: 100%;
+        height: 100%;
+    }
+    .ZrXmm .weixImg {
+        width: 90px;
+        height: 90px;
+        z-index: 100;
+        position: absolute;
+        top: 30px;
+        left: -10px;
+        display: none;
+    }
+    .weixImg img {
+        width: 100%;
+        height: 100%;
+    }
+    .WsZyb {
+        /* width:30%; */
+        width: 88px;
+        height: 23px;
+        margin-top: 1px;
+        box-sizing: border-box;
+        font-size: 14px;
+        cursor: pointer;
+        position: relative;
+        line-height: 24px;
+        position: relative;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .WsZyb a {
+        display: inline-block;
+        margin-top: 3px;
+    }
+    .WsZyb .navImg {
+        width: 20px;
+        height: 18px;
+        display: inline-block;
+        position: relative;
+        left: 2px;
+        top: 3px;
+        padding-top: 1px;
+    }
+    .WsZyb .navImg img {
+        width: 100%;
+        height: 100%
+    }
+    .WsZyb-phone,.navList-phone{
+        width: 36px;
+        height: 30px;
+    }
+    .logoImg{
+        width: 100%;
+    height: 90px;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    }
+    .titleImg{
+        width: 80%;
+    height: 40px;
+    position: absolute;
+    left: 10%;
+    top: 40px;
+    }
+    .tzzzj{
+        position: relative;
+    right: 9px;
+    top: -10px;
+    width: 110px;
+    }
+    .tzzzj span{
+        color: #b5151d;
+    }
+    /* 面包屑样式 */
+    .wrap-layer-top{
+            width: 68%;
+    margin: 0 auto;
+    position: relative;
+    top: 78px;
+        }
+        .cur-locals{
+            position: relative;
+            padding-left: 22px;
+        }
+        .cur-locals img{
+            width: 18px;
+            height: 18px;
+            position: absolute;
+            top: 18px;
+            left: 0;
+        }
+        .miambaoxie{
+            display: inline-block;
+            text-indent: -10px;
+            overflow: hidden;
+            position: absolute;
+        }
+        .miambaoxie a:nth-child(1){
+            display: none;
+        }
+    /* 活动交流 结束 */
+    /* pc小屏适配开始 */
+    @media screen and (max-width: 1790px) {
+        .tabs-content .lists>.tab-head>li>a {
+            font-size: 16px;
+        }
+    }
+    /* 适配结束 */
+    /* ipadAir适配开始 */
+    @media screen and (max-width: 1388px) {}
+    /* ipadAir适配结束 */
+    /* 手机端 */
+    @media screen and (max-width: 480px) {
+        body{
+            background: #f1f1f1;
+        }
+        .nav {
+            display: none;
+        }
+        .mobile-search {
+            padding: 0 20px;
+        }
+        .searchTips {
+            width: 100%;
+            position: absolute;
+            left: 0;
+            padding-left: 20px;
+        }
+        .searchTips li {
+            text-align: left;
+        }
+        .mobile-menucss>ul>li>a,
+        .mobile-menucss>ul>li>h3 {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+        }
+        .header-shower{
+            height: 90px;
+        }
+        .inner-bg{
+            margin-top: 50px;
+        }
+        .header-shower{
+            box-shadow: none;
+        }
+    }
+    /* 手机端样式结束 */
+</style>
+<!--公共头-->
+<!-- 手机移动端导航开始 -->
+<div class="mobile-headerwrap">
+    <div class="mobile-header">
+        <div class="header-shower">
+             <div class="navList-phone">
+            <div class="navImg-phone" style="display: none;">
+                <a href="https://investor.amac.org.cn/" style="font-size: 14px;" title="投资者之家"> 
+                <img src="https://res.amac.org.cn/policy/images/tzzzj2.png?2.1.2" alt="" /> </a>
+            </div>
+        </div>
+            <img src="https://res.amac.org.cn/resources/images/handerBanner.png?2.1.2" class="logoImg" />
+            <img src="https://res.amac.org.cn/resources/images/logo3.png?2.1.2" alt="" class="titleImg" />
+            <div class="head-icons">  
+                <div class="navImg-phone tzzzj">
+                    <a href="https://investor.amac.org.cn/" style="font-size: 14px;" title="投资者之家"> 
+                    <img style="margin-top: 17px;" src="https://res.amac.org.cn/policy/images/tzzzj2.png?2.1.2" alt="" /> </a>
+                    <span>投资者之家</span>
+                </div>
+                <!--<a class="lang"><span>EN</span></a>-->
+            </div>
+        </div>
+        <div class="mobile-menucss">
+        </div>
+    </div>
+</div>
+<!-- 手机移动端导航结束-->
+<div id="navigation">
+    <div class="header">
+        <div class="mod-headers">
+            <div class="wrap-layer">
+                <!-- <div class="biaoyu">
+                            <p  id="sc"> 服务 自律 桥梁 创新</p>
+                            <p  id="zy"> 服务 自律 桥梁 创新</p>
+                            <p  id="hl"> 服务 自律 桥梁 创新</p>
+                        </div> -->
+                <div class="HanderNav">
+                    <!-- <div class="jft" style="color:#1d4098">
+                            <script src="http://res.amac.org.cn/resources/portal-v2/js/public.js?2.1.2"></script>
+                        </div>
+                        <span style="color:#1d4098">|</span> -->
+                    <div class="navList">
+                        <div class="navImg">
+                            <img src="https://res.amac.org.cn/policy/images/tzzzj2.png?2.1.2" alt="" />
+                        </div>
+                        <a href="https://investor.amac.org.cn/"  style="font-size: 14px;" title="投资者之家"> 投资者之家 </a>
+                    </div>
+                    <!-- <span>|</span> -->
+                    <div class="ZrXmm" style="padding-left:30px">
+                        <div class="navImg" id="wxTab">
+                            <img src="https://res.amac.org.cn/policy/images/wx2.png?2.1.2" alt="" />
+                        </div>
+                        微信
+                        <div class="weixImg">
+                            <img src="https://res.amac.org.cn/policy/images/wechat.jpg?2.1.2" alt="" />
+                        </div>
+                    </div>
+                    <!-- <span>|</span> -->
+                          <!--<div class="WsZyb">
+                        <div class="navImg">
+                            <img src="https://res.amac.org.cn/policy/images/wza2.png?2.1.2" alt="" />
+                        </div>
+                        <a href="javascript:void(0);" id="toolbarSwitch"
+                            style="font-size: 14px;display: inline-block;margin-top: 3px;" title="无障碍">无障碍</a>
+                    </div> -->
+                </div>
+                <!-- <p  id="zy">建制度、不干预、零容忍</p>
+                        <p  id="hl">敬畏市场、敬畏法治、敬畏专业、敬畏风险、发挥合力</p> -->
+                <div class="wrap-search">
+                    <div class="logos">
+                        <a href="https://www.amac.org.cn/">
+                            <img src="https://res.amac.org.cn/policy/images/logo3.png?2.1.2" alt="" />
+                        </a>
+                    </div>
+                 
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="mode-banner">
+            <div class="mode-inner">
+              <div class="banner-cnt">
+           
+                <div class="inner-wrapcur">
+                  <div class="wrap-layer-top" role="windowArea">
+                    <div class="curmenu">综合类</div>
+                    <div class="cur-locals">
+                        <img src="https://res.amac.org.cn/policy/images/fanzWhite.png?2.1.2" alt="" />当前位置：
+                        <div class="miambaoxie">
+                            <a href="../../../../../" class="CurrChnlCls">首页</a>><a href="../../../../" class="CurrChnlCls">政策法规</a>><a href="../../../" class="CurrChnlCls">自律规则</a>><a href="../../" class="CurrChnlCls">公募基金</a>><a href="../" class="CurrChnlCls">综合类</a>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <img class="bannerImg" src="https://res.amac.org.cn/policy/images/jjtj_banner.png?2.1.2" />
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+<script>
+    var filterHTMLTag = function (msg) {
+        var msg = msg.replace(/<\/?[^>]*>/g, ''); // 过滤标签
+        // var msg = msg.replace(/[|]*\n/,'');        // 过滤行尾空格
+        return msg;
+    }
+    String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
+        if (!RegExp.prototype.isPrototypeOf(reallyDo)) {
+            return this.replace(new RegExp(reallyDo, (ignoreCase ? 'gi' : 'g')), replaceWith);
+        } else {
+            return this.replace(reallyDo, replaceWith);
+        }
+    }
+    function toSwitchUrl(docPubUrl) {
+        var newUrl2 = '';
+        // if (docPubUrl) {
+        // 	var newUrl = docPubUrl.split('pub/')[1].slice(docPubUrl.split('pub/')[1].indexOf('/') + 1)
+        // }
+        // if (location.href.indexOf('//localhost') != -1) {
+        // 	return newUrl2 = ':8080/pub/jjyxh/' + newUrl;
+        // } else if (location.href.indexOf('10.13.116') != -1) {
+        //     if(window.location.pathname.split('/')[1] == 'fronthtml'){
+        //         return newUrl2 = '/fronthtml/' + newUrl;
+        //     }else{
+        //         return newUrl2 = ':8080/pub/jjyxh/' + newUrl;
+        //     }
+        // }
+        if (location.href.indexOf('//localhost') != -1) {
+            return newUrl2 = ':8080/pub/jjyxh/' + docPubUrl;
+        } else if (location.href.indexOf('10.13.116') != -1) {
+            return newUrl2 = '/policy/' + docPubUrl;
+        } else {
+            newUrl2 = docPubUrl;
+        }
+        return newUrl2
+    };
+</script>
+
+  <div class="clear"></div>
+  <div class="inner-bg">
+    <div class="wrap-layer">
+      <div class="layer-all">
+
+        <div class="job-infos">
+         
+          <!-- <div class="job-tit">关于发布《关于固定收益品种的估值处理标准》的通知</div>
+          <div class="job-date">2022-12-30</div> -->
+
+          <div class="content">
+             <div class="title">
+           
+            <!-- <img src="https://res.amac.org.cn/policy/images/botLongIcon.png?2.1.2" alt="" /> -->
+          </div>
+          <table width="100%" border="0">
+            <tbody>
+              <tr>
+                <td class="geayBg">文件名称</td>
+                <td colspan="3">
+                  <h3>关于发布《关于固定收益品种的估值处理标准》的通知</h3>
+                </td>
+              </tr>
+              <tr>
+                <td class="geayBg">效力状态</td>
+                <td>
+                    
+                </td>
+            
+                <td class="geayBg">失效日期</td>
+                <td>
+                    
+                </td>
+                
+              </tr>
+
+              <tr>
+                <td class="geayBg">发文单位</td>
+                <td>
+                    
+                </td>
+            
+                <td class="geayBg">文号</td>
+                <td>
+                    
+                </td>
+              </tr>
+              <tr>
+                <td class="geayBg">发文日期</td>
+                <td>
+                    
+                </td>
+                
+
+                <td class="geayBg">实施日期</td>
+                <td>
+                    
+                </td>
+              </tr>
+            </tbody>
+          </table>
+            <div class=TRS_Editor><div style="text-align: right;"><span style="font-size: 12pt;">&nbsp;</span><span style="text-align: right; font-family: 仿宋; font-size: 16pt;">中基协</span><span style="text-align: right; font-family: 仿宋; font-size: 16pt;">字</span><span style="text-align: right; font-family: 仿宋; font-size: 16pt;">〔202</span><span style="text-align: right; font-family: 仿宋; font-size: 16pt;">2</span><span style="text-align: right; font-family: 仿宋; font-size: 16pt;">〕</span><span style="text-align: right; font-family: 仿宋; font-size: 16pt;">566</span><span style="text-align: right; font-family: 仿宋; font-size: 16pt;">号</span></div>
+<p class="MsoNormal" align="center" style="margin: 0pt 0pt 0.0001pt; text-align: center; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 22pt;">&nbsp;</span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">各基金管理公司、证券期货经营机构和托管人：</span><span style="font-family: 仿宋; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">为确保证券投资基金对</span><span style="font-family: 仿宋; font-size: 16pt;">固定收益品种</span><span style="font-family: 仿宋; font-size: 16pt;">估值的合理性和公允性，配合修订后的《企业会计准则第22号--金融工具确认和计量》《企业会计准则第23号--金融资产转移》《企业会计准则第24号--套期会计》（以下简称新金融工具准则</span><span style="font-family: 仿宋; font-size: 16pt;">）</span><span style="font-family: 仿宋; font-size: 16pt;">和《资产管理产品相关会计处理规定</span><span style="font-family: 仿宋; font-size: 16pt;">》</span><span style="font-family: 仿宋; font-size: 16pt;">（以下简称《资管</span><span style="font-family: 仿宋; font-size: 16pt;">会计</span><span style="font-family: 仿宋; font-size: 16pt;">处理</span><span style="font-family: 仿宋; font-size: 16pt;">规定</span><span style="font-family: 仿宋; font-size: 16pt;">》</span><span style="font-family: 仿宋; font-size: 16pt;">）</span><span style="font-family: 仿宋; font-size: 16pt;">在基金行业</span><span style="font-family: 仿宋; font-size: 16pt;">的</span><span style="font-family: 仿宋; font-size: 16pt;">平稳实施，经征求部分行业机构意见和组织专家评议，中国证券投资基金业协会（以下简称协会）对《中国证券投资基金业协会估值核算工作小组关于2015年第一季度固定收益品种的估值处理标准》进行了</span><span style="font-family: 仿宋; font-size: 16pt;">修订，形成《</span><span style="font-family: 仿宋; font-size: 16pt;">关于固定收益品种的估值处理标准</span><span style="font-family: 仿宋; font-size: 16pt;">》</span><span style="font-family: 仿宋; font-size: 16pt;">（以下简称《标准》），现予以发布，并就有关事项通知如下：</span><span style="font-family: 仿宋; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 黑体; font-size: 16pt;">一、主要修订内容</span><span style="font-family: 黑体; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32.1pt; line-height: 27pt;"><b><span style="font-family: 楷体; font-size: 16pt;">（一</span></b><b><span style="font-family: 楷体; font-size: 16pt;">）</span></b><b><span style="font-family: 楷体; font-size: 16pt;">增加预期信用损失计量的相关内容</span></b><b><span style="font-family: 楷体; font-size: 16pt;"><o:p></o:p></span></b></p>
+<p class="MsoNormal" align="justify" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">新金融工具</span><span style="font-family: 仿宋; font-size: 16pt;">准则将金融工具</span><span style="font-family: 仿宋; font-size: 16pt;">由</span><span style="font-family: 仿宋; font-size: 16pt;">“</span><span style="font-family: 仿宋; font-size: 16pt;">四分类</span><span style="font-family: 仿宋; font-size: 16pt;">”</span><span style="font-family: 仿宋; font-size: 16pt;">改为</span><span style="font-family: 仿宋; font-size: 16pt;">“</span><span style="font-family: 仿宋; font-size: 16pt;">三分类</span><span style="font-family: 仿宋; font-size: 16pt;">”</span><span style="font-family: 仿宋; font-size: 16pt;">，</span><span style="font-family: 仿宋; font-size: 16pt;"><font face="仿宋">同时将金融工具的减值损失会计处理由</font>“</span><span style="font-family: 仿宋; font-size: 16pt;">已发生</span><span style="font-family: 仿宋; font-size: 16pt;">损失</span><span style="font-family: 仿宋; font-size: 16pt;">法</span><span style="font-family: 仿宋; font-size: 16pt;">”</span><span style="font-family: 仿宋; font-size: 16pt;">改为</span><span style="font-family: 仿宋; font-size: 16pt;">“</span><span style="font-family: 仿宋; font-size: 16pt;">预期信用损失法</span><span style="font-family: 仿宋; font-size: 16pt;">”</span><span style="font-family: 仿宋; font-size: 16pt;">，强调信用风险损失</span><span style="font-family: 仿宋; font-size: 16pt;">的提前计量与确认</span><span style="font-family: 仿宋; font-size: 16pt;">是新金融工具准则的主要修订内容之一。本次修订《标准》时增加了预期信用损失计量的相关内容，满足新金融工具准则的要求，为行业提供统一的计量标准。</span><span style="font-family: 仿宋; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">按照新金融工具准则及应用指南并结合</span><span style="font-family: 仿宋; font-size: 16pt;">行业特点</span><span style="font-family: 仿宋; font-size: 16pt;">，《标准》针对预期信用损失模型及参数</span><span style="font-family: 仿宋; font-size: 16pt;">、</span><span style="font-family: 仿宋; font-size: 16pt;">信用损失三阶段的认定、同一投资品种同时考虑不同阶段的信用损失计量、低信用风险</span><span style="font-family: 仿宋; font-size: 16pt;">投资品种的信用损失计量等问题</span><span style="font-family: 仿宋; font-size: 16pt;">提出了</span><span style="font-family: 仿宋; font-size: 16pt;">处理标准，</span><span style="font-family: 仿宋; font-size: 16pt;">允许</span><span style="font-family: 仿宋; font-size: 16pt;">行业</span><span style="font-family: 仿宋; font-size: 16pt;">使用第三方估值服务机构提供的模型参数或减值计量结果，并在附件</span><span style="font-family: 仿宋; font-size: 16pt;">中提出了</span><span style="font-family: 仿宋; font-size: 16pt;">具体</span><span style="font-family: 仿宋; font-size: 16pt;">的</span><span style="font-family: 仿宋; font-size: 16pt;">预期信用损失模型计量方法以</span><span style="font-family: 仿宋; font-size: 16pt;">供</span><span style="font-family: 仿宋; font-size: 16pt;">行业参考。</span><span style="font-family: 仿宋; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32.1pt; line-height: 27pt;"><b><span style="font-family: 楷体; font-size: 16pt;">（二</span></b><b><span style="font-family: 楷体; font-size: 16pt;">）</span></b><b><span style="font-family: 楷体; font-size: 16pt;">增加</span></b><b><span style="font-family: 楷体; font-size: 16pt;">违约</span></b><b><span style="font-family: 楷体; font-size: 16pt;">债券</span></b><b><span style="font-family: 楷体; font-size: 16pt;">估值</span></b><b><span style="font-family: 楷体; font-size: 16pt;">的相关</span></b><b><span style="font-family: 楷体; font-size: 16pt;">内容</span></b><b><span style="font-family: 楷体; font-size: 16pt;"><o:p></o:p></span></b></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">原《标准》没有特别考虑违约债券的估值问题，但近年来随着债券违约多次发生，违约债券的估值问题已经成为行业中受到广泛关注和富有争议性的问题。个券在实质性违约后，其收益与风险特征与违约前存在明显差异，市场活跃度明显降低，估值存在重大不确定性，</span><span style="font-family: 仿宋; font-size: 16pt;">第三方估值服务机构对违约债券提供</span><span style="font-family: 仿宋; font-size: 16pt;">估值</span><span style="font-family: 仿宋; font-size: 16pt;">价格参考</span><span style="font-family: 仿宋; font-size: 16pt;">区间有助于资管产品</span><span style="font-family: 仿宋; font-size: 16pt;">管理人</span><span style="font-family: 仿宋; font-size: 16pt;">（以下简称管理人</span><span style="font-family: 仿宋; font-size: 16pt;">）</span><span style="font-family: 仿宋; font-size: 16pt;">判断</span><span style="font-family: 仿宋; font-size: 16pt;">其公允价值</span><span style="font-family: 仿宋; font-size: 16pt;">。为了管理人更好的履行</span><span style="font-family: 仿宋; font-size: 16pt;">估值责任</span><span style="font-family: 仿宋; font-size: 16pt;">和</span><span style="font-family: 仿宋; font-size: 16pt;">保护投资者利益</span><span style="font-family: 仿宋; font-size: 16pt;">，本次</span><span style="font-family: 仿宋; font-size: 16pt;">修订</span><span style="font-family: 仿宋; font-size: 16pt;">《标准》时</span><span style="font-family: 仿宋; font-size: 16pt;">增加了违约债券</span><span style="font-family: 仿宋; font-size: 16pt;">估值的相关内容，</span><span style="font-family: 仿宋; font-size: 16pt;">允许</span><span style="font-family: 仿宋; font-size: 16pt;">第三方</span><span style="font-family: 仿宋; font-size: 16pt;">估值</span><span style="font-family: 仿宋; font-size: 16pt;">服务机构可针对</span><span style="font-family: 仿宋; font-size: 16pt;">违约债券</span><span style="font-family: 仿宋; font-size: 16pt;">以推荐价格加</span><span style="font-family: 仿宋; font-size: 16pt;">区间数据的形式</span><span style="font-family: 仿宋; font-size: 16pt;">提供</span><span style="font-family: 仿宋; font-size: 16pt;">估值价格。</span><span style="font-family: 仿宋; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32.1pt; line-height: 27pt;"><b><span style="font-family: 楷体; font-size: 16pt;">（三</span></b><b><span style="font-family: 楷体; font-size: 16pt;">）</span></b><b><span style="font-family: 楷体; font-size: 16pt;">推动</span></b><b><span style="font-family: 楷体; font-size: 16pt;">固定收益</span></b><b><span style="font-family: 楷体; font-size: 16pt;">品种采用</span></b><b><span style="font-family: 楷体; font-size: 16pt;">估值</span></b><b><span style="font-family: 楷体; font-size: 16pt;">全价进行估值</span></b><span style="font-family: 仿宋; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" align="justify" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">原《标准》针对</span><span style="font-family: 仿宋; font-size: 16pt;">部分固定收益品种</span><span style="font-family: 仿宋; font-size: 16pt;">建议选取第三方估值基准服务机构提供的估值净价</span><span style="font-family: 仿宋; font-size: 16pt;">进行估值。</span><span style="font-family: 仿宋; font-size: 16pt;">按照企业会计准则和《资管</span><span style="font-family: 仿宋; font-size: 16pt;">会计</span><span style="font-family: 仿宋; font-size: 16pt;">处理</span><span style="font-family: 仿宋; font-size: 16pt;">规定</span><span style="font-family: 仿宋; font-size: 16pt;">》的相关要求，以公允价值计量的金融工具在资产端应以全价</span><span style="font-family: 仿宋; font-size: 16pt;">进行</span><span style="font-family: 仿宋; font-size: 16pt;">列示。因此，本次修订《标准》时对</span><span style="font-family: 仿宋; font-size: 16pt;">以公允价值计量的固定收益品种建议采取</span><span style="font-family: 仿宋; font-size: 16pt;">估值全价进行估值。</span><span style="font-family: 仿宋; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32.1pt; line-height: 27pt;"><b><span style="font-family: 楷体; font-size: 16pt;">（四</span></b><b><span style="font-family: 楷体; font-size: 16pt;">）</span></b><b><span style="font-family: 楷体; font-size: 16pt;">推动第三方估值基准服务机构的市场化竞争</span></b><b><span style="font-family: 楷体; font-size: 16pt;"><o:p></o:p></span></b></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">为推动第三方</span><span style="font-family: 仿宋; font-size: 16pt;">估值基准服务机构</span><span style="font-family: 仿宋; font-size: 16pt;">的</span><span style="font-family: 仿宋; font-size: 16pt;">市场化竞争，同时确保其作为</span><span style="font-family: 仿宋; font-size: 16pt;">行业公共品提供商</span><span style="font-family: 仿宋; font-size: 16pt;">的</span><span style="font-family: 仿宋; font-size: 16pt;">权威性</span><span style="font-family: 仿宋; font-size: 16pt;">和专业</span><span style="font-family: 仿宋; font-size: 16pt;">性</span><span style="font-family: 仿宋; font-size: 16pt;">，</span><span style="font-family: 仿宋; font-size: 16pt;">《标准》将行业专家评审机机制作为第三方估值基准服务机构的</span><span style="font-family: 仿宋; font-size: 16pt;">引入标准</span><span style="font-family: 仿宋; font-size: 16pt;">，不再规定</span><span style="font-family: 仿宋; font-size: 16pt;">具体机构。</span><span style="font-family: 仿宋; font-size: 16pt;">目前通过协会委托的行业专家评审程序</span><span style="font-family: 仿宋; font-size: 16pt;">的</span><span style="font-family: 仿宋; font-size: 16pt;">第三方估值基准服务机构包括</span><span style="font-family: 仿宋; font-size: 16pt;">：</span><span style="font-family: 仿宋; font-size: 16pt;">中央</span><span style="font-family: 仿宋; font-size: 16pt;">国债登记结算公司</span><span style="font-family: 仿宋; font-size: 16pt;">、中证指数有限公司和中国外汇交易中心暨</span><span style="font-family: 仿宋; font-size: 16pt;">全国银行间同业拆借中心</span><span style="font-family: 仿宋; font-size: 16pt;">。</span><span style="font-family: 仿宋; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32.1pt; line-height: 27pt;"><b><span style="font-family: 楷体; font-size: 16pt;">（五</span></b><b><span style="font-family: 楷体; font-size: 16pt;">）</span></b><b><span style="font-family: 楷体; font-size: 16pt;">删除易</span></b><b><span style="font-family: 楷体; font-size: 16pt;">引起</span></b><b><span style="font-family: 楷体; font-size: 16pt;">滥</span></b><b><span style="font-family: 楷体; font-size: 16pt;">用成本法的相关内容</span></b><b><span style="font-family: 楷体; font-size: 16pt;"><o:p></o:p></span></b></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">原</span><span style="font-family: 仿宋; font-size: 16pt;">《</span><span style="font-family: 仿宋; font-size: 16pt;">标准</span><span style="font-family: 仿宋; font-size: 16pt;">》</span><span style="font-family: 仿宋; font-size: 16pt;">中存在</span><span style="font-family: 仿宋; font-size: 16pt;">不再符合资管新规和新金融工具准则要求</span><span style="font-family: 仿宋; font-size: 16pt;">的</span><span style="font-family: 仿宋; font-size: 16pt;">内容，容易为资管产品</span><span style="font-family: 仿宋; font-size: 16pt;">滥用</span><span style="font-family: 仿宋; font-size: 16pt;">成本法或采用不活跃市场的收盘价进行估值</span><span style="font-family: 仿宋; font-size: 16pt;">提供</span><span style="font-family: 仿宋; font-size: 16pt;">空间</span><span style="font-family: 仿宋; font-size: 16pt;">，</span><span style="font-family: 仿宋; font-size: 16pt;">分别是</span><span style="font-family: 仿宋; font-size: 16pt;">：</span><span style="font-family: 仿宋; font-size: 16pt;">“</span><span style="font-family: 仿宋; font-size: 16pt;">对银行间市场未上市，且第三方估值机构未提供估值价格的债券，在发行利率与二级市场利率不存在明显差异、未上市期间市场利率没有发生大的变动的情况下，建议按成本估值”和“评估第三方估值机构提供的交易所债券估值价格与交易所收盘价是否存在差异及差异的合理性，若认定交易所收盘价更能体现公允价值，应采用收盘价”。</span><span style="font-family: 仿宋; font-size: 16pt;">本次</span><span style="font-family: 仿宋; font-size: 16pt;">修订</span><span style="font-family: 仿宋; font-size: 16pt;">《</span><span style="font-family: 仿宋; font-size: 16pt;">标准</span><span style="font-family: 仿宋; font-size: 16pt;">》</span><span style="font-family: 仿宋; font-size: 16pt;">时</span><span style="font-family: 仿宋; font-size: 16pt;">删除了</span><span style="font-family: 仿宋; font-size: 16pt;">该部分内容。</span><span style="font-family: 仿宋; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 黑体; font-size: 16pt;">二、特别提示事项</span><span style="font-family: 黑体; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">（一）《标准》自发布之日起至202</span><span style="font-family: 仿宋; font-size: 16pt;">3</span><span style="font-family: 仿宋; font-size: 16pt;">年</span><span style="font-family: 仿宋; font-size: 16pt;">3</span><span style="font-family: 仿宋; font-size: 16pt;">月3</span><span style="font-family: 仿宋; font-size: 16pt;">1</span><span style="font-family: 仿宋; font-size: 16pt;">日实施完毕。管理人和托管人应尽快做好相关的业务系统开发与测试等准备工作，完善相关业务流程和内部控制制度，加强员工业务培训，积极防范业务风险。管理人在2023年3月31日前确定实施日期，在实施日对其管理的所有资产管理产品统一实施新标准。</span><span style="font-family: 仿宋; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">（二）管理人应将金融资产分类及预期信用损失的管理纳入公司全面风险管理体系中，结合《基金管理公司风险管理指引》等相关规则的要求，落实新金融工具准则对金融资产分类和预期信用损失减值的管理，制定由产品设计、投资、信评、交易、风控和运营等多部门共同执行、标准统一且明确的内部制度。上述制度的制定建议通过估值委员会、风险管理委员会或履行相应职责的专门委员会审议，并由相关委员会共同监督各职能部门执行。</span><span style="font-family: 仿宋; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">（三）管理人作为估值的第一责任人，应定期评估第三方估值机构的估值质量，并对估值价格进行检验，防范可能出现的估值偏差。</span><span style="font-family: 仿宋; font-size: 16pt;">如果资产管理产品</span><span style="font-family: 仿宋; font-size: 16pt;">进行估值时确</span><span style="font-family: 仿宋; font-size: 16pt;">需要改变估值模型或重要参数</span><span style="font-family: 仿宋; font-size: 16pt;">，或者</span><span style="font-family: 仿宋; font-size: 16pt;">在一个会计年度内确需调整第三方估值机构的，应事先与托管人协商一致，按要求做好</span><span style="font-family: 仿宋; font-size: 16pt;">相关</span><span style="font-family: 仿宋; font-size: 16pt;">披露工作</span><span style="font-family: 仿宋; font-size: 16pt;">。如相关调整</span><span style="font-family: 仿宋; font-size: 16pt;">未改变估值技术</span><span style="font-family: 仿宋; font-size: 16pt;">（</span><span style="font-family: 仿宋; font-size: 16pt;">市场法、成本法、收益法</span><span style="font-family: 仿宋; font-size: 16pt;">）</span><span style="font-family: 仿宋; font-size: 16pt;">，</span><span style="font-family: 仿宋; font-size: 16pt;">可不</span><span style="font-family: 仿宋; font-size: 16pt;">进行临时公告。</span><span style="font-family: 仿宋; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 黑体; font-size: 16pt;">三、</span><span style="font-family: 黑体; font-size: 16pt;">意见或建议</span><span style="font-family: 仿宋; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">管理人和托管人在估值过程中对估值标准有异议，或对协会估值工作小组提出其他意见或建议的，可将有关意见和建议以电子邮件形式发送至guzhi@amac.org.cn反馈给协会估值工作小组。协会估值工作小组将在下次制定标准的过程中考虑有关意见和建议，并视需要邀请提意见的人员参加会议。</span><span style="font-family: 仿宋; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">&nbsp;</span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">附件：关于固定收益品种的估值处理标准</span><span style="font-family: 仿宋; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">&nbsp;</span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">&nbsp;</span></p>
+<p class="MsoNormal" style="margin: 0pt 0pt 0.0001pt; text-align: justify; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">&nbsp;</span></p>
+<p class="MsoNormal" align="right" style="margin: 0pt 0pt 0.0001pt; text-align: right; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; text-indent: 32.25pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">中国证券投资基金业协会</span><span style="font-family: 仿宋; font-size: 16pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" align="center" style="text-align: right; margin: 0pt 0pt 0.0001pt; font-family: &quot;Times New Roman&quot;; font-size: 10.5pt; line-height: 27pt;"><span style="font-family: 仿宋; font-size: 16pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font face="仿宋">2022</font></span><span style="font-family: 仿宋; font-size: 16pt;">年</span><span style="font-family: 仿宋; font-size: 16pt;">12</span><span style="font-family: 仿宋; font-size: 16pt;">月</span><span style="font-family: 仿宋; font-size: 16pt;">29</span><span style="font-family: 仿宋; font-size: 16pt;">日</span><span style="font-family: 仿宋; font-size: 16pt;"><o:p></o:p></span></p></div>
+          </div>
+          <div class="attachment-down textBox">
+            <h3>附件下载：</h3>
+            <ul>
+                 
+                    <li><a href="./P020231126434909683701.docx">
+                            <span><img src="http://res.amac.org.cn/resources/images/file_icon1.png?2.1.2" alt="" /></span>
+                            附件：关于固定收益品种的估值处理标准.docx
+                        </a>
+                        <!-- <a href="./P020231126434909683701.docx" download=""./P020231126434909683701.docx"> <i class="down-ico"></i></a> -->
+                        <a href="./P020231126434909683701.docx" download="附件：关于固定收益品种的估值处理标准.docx"> <i class="down-ico"></i></a>
+                        
+                    </li>
+                
+            </ul>
+          </div>
+
+          <div class="attachment-down relnewsBox">
+            <h3>相关文档：</h3>
+            <ul>
+              
+            </ul>
+          </div>
+
+          <table width="100%" border="0" style="margin-top: 20px;" id="tablecon">
+            <tbody>
+              <tr>
+                <td class="geayBg" style="height:172px;box-sizing: border-box;width: 20%;"> 
+                <h6>起草说明</h6> 
+                </td>
+                <td style="height:172px;box-sizing: border-box;width: 80%;padding: 24px;">
+                    <p id="textcon">
+                        
+                    </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="com-line"></div>
+
+        <div class="mod-nextnews">
+          <!-- <ul>
+            <li><a href="#"><span>下一篇：</span>中国证券投资基金业协会2019年9月实习生招聘</a></li>
+          </ul> -->
+          <a class="gobacks" href="javascript:history.go(-1);"><span>返回上一级</span></a>
+          <!-- <a class="gobacks" id="close">
+            <span>关闭</span>
+          </a> -->
+        </div>
+
+
+      </div>
+      <div class="clear"></div>
+      <div class="H125"></div>
+    </div>
+  </div>
+
+
+  <div class="clear"></div>
+
+  <!--底部开始-->
+  <div id="footer" class="footer">
+    <div class="wrap-layer-foter">
+        </div> -->
+        <div class="clear"></div>
+        <!--<div class="bom-contacts"> <span class="bom-tel">私募基金咨询热线：400-017-8200</span> <span class="bom-tel">基金从业人员管理咨询服务热线：021-61948893</span> <span class="bom-addr">北京市西城区金融大街20号交通银行大厦B座9层中国证券投资基金业协会 </span> </div>-->
+        <div class="bom-contacts" style="text-align: left;">
+            <p class="drs"><i></i> 北京市西城区金融大街20号交通银行大厦B座9层中国证券投资基金业协会 </p> 
+            <div class="dizhiBox">
+                <span class="bom-tel" style="background: url('https://res.amac.org.cn/resources/images/icon_falvsm.png?2.1.2') 0 center no-repeat;">
+                    <a href="" style="text-decoration: underline;">法律声明</a>
+                </span> 
+                <span class="bom-tel" style="background: url('https://res.amac.org.cn/resources/images/lianxiwom.png?2.1.2') 0 center no-repeat;">
+                    <a href="" style="text-decoration: underline;">联系我们</a>
+                </span> 
+                <span class="bom-tel" style="background: url('https://res.amac.org.cn/resources/images/lianzhengjubao.png?2.1.2') 0 center no-repeat;background-size: 18px;">
+                <a href="https://gs.amac.org.cn/amac-infodisc/res/pof/manager/baidumap.html" style="text-decoration: underline;">廉政举报</a>
+                </span> 
+                <!-- <span class="bom-tel" style="background: url('http://res.amac.org.cn/resources/images/zzcx2.png?2.1.2') 0 center no-repeat;background-size: 19px;">
+                    <a href="https://km.amac.org.cn" style="text-decoration: underline;">私募咨询查询</a>
+                </span>  -->
+            </div>
+        </div>
+        <div class="clear"></div>
+       
+        <div class="clear"></div>
+    </div>
+    <div class="mod-copy">
+        <div class="wrap-layer-foter">
+            <div class="bom-links">
+                <div class="bom-linkstit"> <a href="javascript:;" style="color:#b5151d">相关链接</a> </div>
+                <ul>
+                <li><a target="_blank" title="中国证券监督管理委员会" href="http://www.csrc.gov.cn/pub/newsite/">中国证券监督管理委员会</a></li>
+                <li><a target="_blank" title="中华人民共和国民政部" href="http://www.mca.gov.cn/">中华人民共和国民政部</a></li>
+                <li><a target="_blank" title="国际投资基金协会" href="http://www.iifa.ca/">国际投资基金协会</a></li>
+                <li><a target="_blank" title="上海证券交易所" href="http://www.sse.com.cn/">上海证券交易所</a></li>
+                <li><a target="_blank" title="深圳证券交易所" href="http://www.szse.cn/">深圳证券交易所</a></li>
+                <li><a target="_blank" title="中国证券登记结算有限责任公司" href="http://www.chinaclear.cn/">中国证券登记结算有限责任公司</a></li>
+                <li><a target="_blank" title="中国证券投资者保护基金有限责任公司" href="http://www.sipf.com.cn/">中国证券投资者保护基金有限责任公司</a></li>
+                <li><a target="_blank" title="中国社会组织" href="http://www.chinanpo.gov.cn/">中国社会组织</a></li>
+                <li><a target="_blank" title="中国资本市场标准网" href="http://www.cfachina.org/">中国期货业协会</a></li>
+                </ul>
+            </div>
+            <div class="copys">
+                <i style="font-style: normal;">
+                    <div>&copy; 版权所有：中国证券投资基金业协会 </div>
+                    <a href="https://beian.miit.gov.cn" target="_blank" style="text-decoration: revert;
+                    margin-left: 14px;"> 京ICP备16045718号</a>
+                    <a style="display: initial;
+                    border: 1px solid #fff;
+                    padding: 0px 8px;
+                    border-radius: 5px;
+                    font-size: 8px;
+                    margin-left: 5px;">
+                        IPV6
+                    </a></i>
+                <div style="margin-top:5px"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010202007223" target="_blank" >京公网安备 11010202007223号</a></div>
+            
+            </div>
+        </div>
+    </div>
+    <div id="homeUrl" style="display:none;"><a href="../../../../../" target="_blank" class="CurrChnlCls">首页</a>&nbsp;&gt;&nbsp;<a href="../../../../" target="_blank" class="CurrChnlCls">政策法规</a>&nbsp;&gt;&nbsp;<a href="../../../" target="_blank" class="CurrChnlCls">自律规则</a>&nbsp;&gt;&nbsp;<a href="../../" target="_blank" class="CurrChnlCls">公募基金</a>&nbsp;&gt;&nbsp;<a href="../" target="_blank" class="CurrChnlCls">综合类</a></div>
+    <div class="statistical" style="display:none;">
+    <!-- 这里放统计代码 -->
+    </div>
+</div>
+<script>
+    // 侧边栏菜单
+(function(){
+
+    //设置cookie
+    function setCookie(key,value,t){
+        var oDate=new Date();
+        oDate.setDate(oDate.getDate()+t);
+        document.cookie=key+"="+value+"; expires="+oDate.toDateString();
+    }
+
+    //获取cookie
+    function getCookie(key){
+        var arr1=document.cookie.split("; ");//由于cookie是通过一个分号+空格的形式串联起来的，所以这里需要先按分号空格截断,变成[name=Jack,pwd=123456,age=22]数组类型；
+        for(var i=0;i<arr1.length;i++){
+            var arr2=arr1[i].split("=");//通过=截断，把name=Jack截断成[name,Jack]数组；
+            if(arr2[0]==key){
+                return decodeURI(arr2[1]);
+            }
+        }
+    }
+    //移除cookie  
+    function removeCookie(key){
+        setCookie(key,"",-1); // 把cookie设置为过期
+    };
+    
+    /*手机端内页左侧导航*/
+    if ($(window).width() <= 480) {
+        $(".leftMenuBox>ul").hide()
+        $(".mod-nav-l .nav-tit").click(function () {
+            $(".leftMenuBox>ul").slideToggle();
+        });
+    }
+
+    if(window.location.href.split('/').reverse()[0].split('.html')[0] == '' || window.location.href.split('/').reverse()[0].split('.html')[0] == 'index'){
+        $('.moreBox a, .page a').removeClass('cr');
+        $('.moreBox a, .page a').each(function(index,el){
+            if($(el).text() == 1){
+                $(el).addClass('cr');
+            }
+        });
+    }else{
+        $('.moreBox a, .page a').removeClass('cr');
+        $('.moreBox a, .page a').each(function(index,el){
+            if($(el).text()-1 == window.location.href.split('/').reverse()[0].split('.html')[0].split('_')[1]){
+                $(el).addClass('cr');
+            }
+        });
+    }
+    $('.leftMenuBox ul li h6').each(function(index,domEle){
+            if($(domEle).text().replace(/^\s*|\s*$/g, '') == $(".titBox .title").text().replace(/^\s*|\s*$/g, '')){
+              
+            // if(($(domEle).html()+$(domEle).parent().parent().siblings('a').html()).split('<span></span><i></i>').join('') == ($('.mode-banner .cur-locals a').eq($('.mode-banner .cur-locals a').length-1).html()+$('.mode-banner .cur-locals a').eq($('.mode-banner .cur-locals a').length-2).html())){
+                $(domEle).parent().addClass('fw');   //console.log($(domEle).html(),$(domEle).parent().parent().siblings('a').html())
+                $(domEle).parent().parent().siblings('a').find('i').parent().parent().addClass('active'); 
+            } else {
+               
+            }
+        });
+        var curNumber = 0;
+        // localStorage.setItem('init','true');
+        setCookie('init','true',0.5)
+        // $('.leftMenuBox ul li> ul li:nth(1)').addClass('fw');
+        // 给服务大厅侧边栏选中页加class开始
+        for (var i = 0; i < $(".leftMenuBox ul li> ul li").length; i++) {
+        if ($(".leftMenuBox ul li> ul li").eq(i).children().text().replace(/^\s*|\s*$/g, '') == $(".titBox .title").text().replace(/^\s*|\s*$/g, '')) {
+            $(".leftMenuBox ul li> ul li").removeClass("fwdtcbBg")
+            $(".leftMenuBox ul li> ul li").eq(i).addClass("fwdtcbBg")
+        }
+    }
+     // 给服务大厅侧边栏选中页加class结束
+        $('.leftMenuBox ul li').click(function  (e){
+            if($(this).parent().parent().is('.leftMenuBox')){
+                if(curNumber != $(this).index()){
+                    $('.leftMenuBox ul li').find('i').parent().parent().removeClass('active');
+                }
+                curNumber = $(this).index();
+            } 
+            if($(this).children('a').find('i').length != 0){
+                $(this).siblings('li').removeClass('active');
+                if(getCookie('init')){  // console.log(2);
+                    $(this).children('a').find('i').parent().parent().removeClass('active'); 
+                    removeCookie('init'); 
+                    // $(this).children('a').find('i').parent().parent().addClass('active');
+                }else{
+                    if($(this).is('.active')){ // console.log(3);
+                        $(this).children('a').find('i').parent().parent().removeClass('active');  
+                    }else{
+                        $(this).children('a').find('i').parent().parent().addClass('active');   
+                        $(this).parent('.leftMenuBox');
+                    }
+                }
+                if(!$('.leftMenuBox>ul>li').is('.active')){
+                    $('.leftMenuBox ul li').removeClass('active');
+                }
+            }else{
+                $('.leftMenuBox ul li').removeClass('fw');
+                $(this).addClass('fw');
+            }
+            e.stopPropagation();
+        });
+})();
+
+$('.bom-linkstit').keydown(function(e){
+    if((e.keyCode || e.which )== 13){
+        $('.bom-links ul').toggle()
+    }
+    
+})
+$('.focus').keydown(function(e){
+    if((e.keyCode || e.which )== 13){
+        $('#wximg').toggle()
+        //$('.focus').mouseover()
+    // $('#xglj').show()
+    
+    }
+    
+})
+$('.map-site span').keypress(function(e){
+    if((e.keyCode || e.which )== 13){
+        $('.site-nav').toggle()
+    //$('.map-site').click()
+    }
+})
+</script>
+<!-- 暂时关闭适老化功能 -->
+    <!-- <script src="https://res.amac.org.cn/resources/assets/wzaiToolsInit.js?2.1.2" type="text/javascript"></script> -->
+    <!-- 由于开启检查经常报适老化className错误 暂时不用此功能 -->
+<!--  <script src="http://res.amac.org.cn/resources/images/assets/jquery.min.js?2.1.2" type="text/javascript"></script>
+<script src="http://res.amac.org.cn/resources/images/assets/base.min.js?2.1.2" type="text/javascript"></script>
+<script src="http://res.amac.org.cn/resources/images/assets/soundmanager2.js?2.1.2" type="text/javascript"></script>
+<script src="http://res.amac.org.cn/resources/images/assets/pinyin.min.js?2.1.2" type="text/javascript"></script>
+<script src="http://res.amac.org.cn/resources/images/assets/handle.min.js?2.1.2" type="text/javascript"></script>
+<script src="http://res.amac.org.cn/resources/images/assets/slhtoolbar.min.js?2.1.2" type="text/javascript"></script>
+<script src="http://res.amac.org.cn/resources/images/assets/selectArea.js?2.1.2" type="text/javascript"></script>  -->
+
+<style>
+    .footer {
+    background: #191f27;
+    margin-top: 0px;
+    border-top: 5px solid #b5151d;
+    border-bottom: 5px solid #191f27;
+}
+    .bom-linkstit {
+    width: 16.7%;
+    height: 36px;
+    line-height: 36px;
+    text-align: left;
+    border-radius: 2px;
+    /* border: 1px solid #72767c; */
+    color: #ccc;
+    box-sizing: border-box;
+    padding: 0 15px;
+    font-size: 14px;
+    background-color: #fff;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+/* .bom-linkstit a{
+    display: inline-block;
+    width: 118%;
+} */
+    .bom-linkstit:after {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    color: #b5151d;
+    content: "\e74a";
+    /* content: "\e749"; */
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    transform: rotateZ(180deg);
+    }
+    #footer .bom-contacts .bom-addr {
+    margin-left: 0px;
+}
+#footer .bom-contacts{
+    width: 68%;
+    margin:auto;
+    position: relative;
+    top: -10px;
+}
+    .bom-links ul li{
+        text-align: left !important;
+    }
+    .wrap-layer-foter{
+        width: 68%;
+        /* height: 65px; */
+        margin: 0 auto;
+    }
+    .bom-links ul {
+    display: none;
+    width: 16.5%;
+    height: 168px;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 4px;
+    padding: 10px;
+    box-sizing: border-box;
+    position: absolute;
+    left: 83.4%;
+    top: -170px;
+    z-index: 999;
+}
+#footer .bom-contacts .bom-tel {
+    margin: 0;
+    margin-left: 15px;
+}
+.bom-links ul li a{
+    color:#000;
+}
+.dizhiBox{
+    display: inline-block;
+    float: right;
+    padding-top: 20px
+}
+#footer .mod-copy{  
+    background: #191f27;
+    width: 100%;
+    /* padding-right: 2.5%; */
+    margin: 0 auto;
+    padding-top: 10px;
+  
+}
+.copys{
+    overflow: hidden;
+    width: 104%;
+    line-height: 22px;
+}
+.copys > i > div {
+    display: inline;
+}
+/* 地址icon */
+.drs{
+    height: 36px;
+    display: inline-block;
+    position: relative;
+}
+.drs i{
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    position: relative;
+    bottom:-12px;
+    background-size: 100% 100%;
+    background-image: url('https://res.amac.org.cn/resources/images/icon_dizhi.png?2.1.2');
+}
+#footer .copys *{ opacity: 1; color:#e6e6e6}
+@media screen and (max-width: 1300px){
+    #footer .bom-contacts .bom-tel{
+        margin-left: 0;
+    }
+}
+@media screen and (max-width: 1264px){
+    .drs{
+        width: 384px;
+    line-height: 31px;
+    }
+}
+
+    @media screen and (max-width: 480px){
+        #footer .bom-contacts{
+            width: 100%;
+        }
+        .wrap-layer-foter{
+            width: 90%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .bom-linkstit {
+            width: 70%;
+            margin: auto;
+            position: relative;
+            /* left: 7%; */
+            /* top: 18px; */
+        }
+        .bom-links ul{
+            width: 70%;
+           position: relative;
+          left: 15.1%;
+          top: 0px;
+         z-index: 999;
+        }
+        .drs{
+            height: 100%;
+            padding: 0 45px;
+        }
+        .fot-r{ text-align: left; padding-top: 0;}
+        #footer .fot-r .footFocus{ margin: 0px; }
+        #footer .mod-copy{   padding-bottom: 50px; }
+        #footer .bom-report>span{ display: inline-block; margin-bottom:20px; }
+        #footer .bom-contacts{ text-align: left; }
+        #footer .bom-contacts .bom-addr{ margin-left: 10px;line-height: 22px; }
+        #footer .bom-contacts .bom-tel { margin-left: 10px;line-height: 180%; }
+        #footer .copys{ font-size: 14px;opacity: 1;line-height: 24px; }
+        #footer .copys>i>a{ display: inline; }
+        #footer .copys>i>div{ display: block; }
+        #footer .copys span{ margin-left: 0; } .mode-banner{ margin-top: 0; } 
+        .bom-logo img {
+            width: 90px;
+            height: 90px;
+        }
+        .copys {
+            height: 60px;
+            line-height: 20px;
+            text-align: center;
+            padding: 15px 0;
+        }
+        .copys > div {
+            display: block;
+        }
+        .dizhiBox {
+            width: 100%;
+    display: flex;
+    padding-left: 26px;
+        }
+        i>a {
+            display: block;
+        }
+        #footer .copys>img {
+            max-width: 100%;
+            height: auto;
+        }
+        .copys span {
+            float: none;
+            display: inline;
+            margin-left: 10px;
+        }
+    }
+    ::-webkit-scrollbar{
+    width: 4px;
+    height: 10px;
+    background-color: rgb(199, 194, 194);
+    opacity: .6;
+    }
+::-webkit-scrollbar-thumb{
+    background-color: #b5151d;
+}
+body{
+    font-family: "微软雅黑" !important;
+    scrollbar-arrow-color:rgba(199, 194, 194,.6);
+    scrollbar-face-color:#b5151d ;
+    scrollbar-width : 4px;
+    /* scrollbar-3dlight-color: #b5151d;
+    scrollbar-highlight-color: #b5151d;
+    scrollbar-track-color: #b5151d;
+    scrollbar-shadow-color:rgba(199, 194, 194,.6) ; */
+}
+</style>
+  <!--底部结束-->
+  
+
+  <script>
+    var fujianLength = $('.textBox ul li').length;
+    if(fujianLength > 0){
+      $('.textBox').show()
+      console.log('有附件1111',fujianLength)
+    } else {
+      $('.textBox').hide()
+      console.log('没有附件',fujianLength)
+    }
+    // var textBox = ''+ 
+    //                     '<li><a href="./P020231126434909683701.docx"><span><img src="file_icon1.png" alt="" /></span>附件：关于固定收益品种的估值处理标准.docx<i class="down-ico"></i></a></li>'+ 
+    //                 '';
+    // $('.textBox ul').html(textBox)
+
+    var relnewsBox = '';
+    // textBox != '' ? $('.textBox').show() : $('.textBox').hide();
+    relnewsBox != '' ? $('.relnewsBox').show() : $('.relnewsBox').hide();
+    var textconLength = $('#textcon').text().replace(/^\s*|\s*$/g, '');
+    console.log("$('#textcon').text()1111",textconLength);
+    if(textconLength != ""){
+      $("#tablecon").show()
+      console.log('有')
+    } else {
+     $("#tablecon").hide()
+     console.log('没')
+    }
+</script>
+
+</body>
+
+</html>

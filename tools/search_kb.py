@@ -97,12 +97,37 @@ def search(args: argparse.Namespace) -> list[sqlite3.Row]:
         where.append(f"rules.current_status NOT IN ({placeholders})")
         params.extend(EXCLUDED_STATUSES)
 
+    def add_like_filter(column: str, values: list[str] | None) -> None:
+        if not values:
+            return
+        parts = []
+        for value in values:
+            parts.append(f"{column} LIKE ?")
+            params.append(f"%{value}%")
+        where.append("(" + " OR ".join(parts) + ")")
+
+    add_like_filter("rules.business_tags", args.tag)
+    add_like_filter("rules.category", args.category)
+    add_like_filter("rules.issuer", args.issuer)
+    add_like_filter("rules.title", args.title)
+    add_like_filter("rules.product_tags", args.product)
+    add_like_filter("rules.business_line_tags", args.line)
+    add_like_filter("rules.market_tags", args.market)
+    add_like_filter("rules.catalog_paths", args.catalog)
+    if args.rule_id:
+        placeholders = ", ".join("?" for _ in args.rule_id)
+        where.append(f"rules.rule_id IN ({placeholders})")
+        params.extend(args.rule_id)
+
     sql = f"""
         SELECT
             rules.rule_id,
             rules.title,
             rules.current_status,
             rules.priority,
+            rules.product_tags,
+            rules.business_line_tags,
+            rules.market_tags,
             rules.business_tags,
             rules.source_urls,
             documents.text_path,
@@ -131,6 +156,15 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Search the local regulatory knowledge-base SQLite FTS index.")
     parser.add_argument("query", help="Search keywords. Space-separated terms use OR by default; OR/AND/NOT are supported.")
     parser.add_argument("--status", action="append", help="Filter by current_status. Can be repeated.")
+    parser.add_argument("--tag", action="append", help="Filter by business_tags. Can be repeated.")
+    parser.add_argument("--category", action="append", help="Filter by category. Can be repeated.")
+    parser.add_argument("--issuer", action="append", help="Filter by issuer. Can be repeated.")
+    parser.add_argument("--title", action="append", help="Filter by title. Can be repeated.")
+    parser.add_argument("--rule-id", action="append", help="Filter by rule id. Can be repeated.")
+    parser.add_argument("--product", action="append", help="Filter by product_tags. Can be repeated.")
+    parser.add_argument("--line", action="append", help="Filter by business_line_tags. Can be repeated.")
+    parser.add_argument("--market", action="append", help="Filter by market_tags. Can be repeated.")
+    parser.add_argument("--catalog", action="append", help="Filter by catalog_paths. Can be repeated.")
     parser.add_argument("--include-aux", action="store_true", help="Include 历史失效 and 辅助资料 results.")
     parser.add_argument("--limit", type=int, default=8, help="Maximum number of results.")
     args = parser.parse_args()
@@ -149,6 +183,9 @@ def main() -> None:
         print(f"状态：{row['current_status']}｜优先级：{row['priority']}｜命中：{heading}")
         if row["business_tags"]:
             print(f"标签：{row['business_tags']}")
+        scoped_tags = "｜".join(part for part in [row["product_tags"], row["business_line_tags"], row["market_tags"]] if part)
+        if scoped_tags:
+            print(f"范围：{scoped_tags}")
         print(f"本地文本：{location}")
         if row["source_urls"]:
             print(f"官方来源：{row['source_urls']}")

@@ -1,16 +1,23 @@
 {
-  "total_rules": 112,
-  "rules_with_files": 98,
-  "total_files": 176,
-  "rules_with_errors": 0,
+  "catalog_items": 420,
+  "skipped_internal_items": 50,
+  "source": "中国商业银行托管业务条线大法规库总目录.md",
+  "total_rules": 348,
+  "p0_rules": 192,
+  "rules_with_files": 68,
+  "p0_without_files": 138,
+  "rules_waiting": 279,
+  "legacy_reused_records": 61,
+  "legacy_manifest_entries": 179,
   "search_index": {
     "path": "03_元数据台账\\search.db",
-    "rules": 112,
-    "documents": 155,
-    "chunks": 7138,
+    "rules": 348,
+    "documents": 90,
+    "chunks": 7724,
     "missing_texts": 0,
-    "built_at": "2026-06-11 22:18:38",
+    "built_at": "2026-06-12 11:58:52",
     "sqlite_version": "3.50.4",
     "fts_tokenizer": "trigram"
-  }
+  },
+  "built_at": "2026-06-12 11:58:52"
 }

@@ -1,0 +1,16 @@
+{
+  "total_rules": 112,
+  "rules_with_files": 98,
+  "total_files": 176,
+  "rules_with_errors": 0,
+  "search_index": {
+    "path": "03_元数据台账\\search.db",
+    "rules": 112,
+    "documents": 155,
+    "chunks": 7138,
+    "missing_texts": 0,
+    "built_at": "2026-06-11 22:18:38",
+    "sqlite_version": "3.50.4",
+    "fts_tokenizer": "trigram"
+  }
+}

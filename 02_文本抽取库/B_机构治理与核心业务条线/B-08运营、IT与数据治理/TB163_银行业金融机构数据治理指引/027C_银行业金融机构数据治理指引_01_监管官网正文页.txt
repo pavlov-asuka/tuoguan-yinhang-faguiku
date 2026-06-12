@@ -1,0 +1,51 @@
+国家金融监督管理总局
+当前位置：
+首页
+{{x.itemName}}
+发布时间：{{data.publishDate|dateFormat2}}
+来源：{{data.docSource | branchFilter}}
+文章类型：{{documentTypeDetail}}
+打印
+微博
+微信
+更多
+QQ空间
+QQ
+索 引 号：
+{{data.indexNo}}
+主题分类：
+{{data.interviewTypeName}}
+办文部门：
+{{data.agencyTypeName}}
+发文日期：
+{{data.builddate|dateFormat2}}
+公文名称：
+{{data.docSubtitle}}
+文 号：
+{{data.documentNo | ljkh}}
+国家金融监督管理总局
+{{data.documentNo | documentNoTxt}}
+中国银行保险监督管理委员会
+中国银行业监督管理委员会
+中国保险监督管理委员会
+{{data.documentNo | ljkh}}
+问：
+答：
+附件信息:
+{{x.title}}
+{{data.remark2}}
+{{item.title}}
+{{item.href}}
+手机扫一扫打开此页
+版权与免责声明
+1.凡本站及其子站注明“文章类型：原创”的所有作品，其版权属于国家金融监督管理总局网站及其子站所有。其他媒体、网站或个人转载使用时必须注明：“文章来源：国家金融监督管理总局网站”。
+2.凡本站及其子站注明“文章类型：转载”、“文章类型：编译”、“文章类型：摘编”的所有作品，均转载、编译或摘编自其他媒体，转载、编译或摘编的目的在于传递更多信息，并不代表本站及子站赞同其观点和对其真实性负责。其他媒体、网站或个人转载使用时必须注明文章来源，并自负法律责任。
+无障碍浏览
+{{itemTitle}}规章
+下载文字版 下载图片版
+{{data.caption}}
+附件信息:
+{{x.title}}
+{{item.title}}
+{{item.href}}
+{{itemTitle}}发布

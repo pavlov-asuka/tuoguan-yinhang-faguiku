@@ -1,0 +1,1070 @@
+
+
+
+
+
+
+
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <title>法规正文</title>
+    <link rel="stylesheet" type="text/css" href="//neris.csrc.gov.cn/static//bootstrap/3.3.0/css/bootstrap.min.css">
+    <style>
+        pre{
+            border:0;
+            font-size: 16px;
+        }
+        a[href]:after {
+            content: none !important;
+        }
+        .noprint{
+            display:none
+        }
+    </style>
+    <link type="text/css" rel="stylesheet" href="//neris.csrc.gov.cn/falvfagui/styles/skin-standard/css/style.css">
+    <link type="text/css" rel="stylesheet" href="//neris.csrc.gov.cn/falvfagui/styles/css/ui.css">
+    <link type="text/css" rel="stylesheet" href="//neris.csrc.gov.cn/static/pubmui/1.15.1/webjars/pubmui/styles/skin-default/customui/css/jquery.windowdiv.css" />
+
+    <script type="text/javascript" src="//neris.csrc.gov.cn/static//jquery/1.11.1/jquery.min.js"></script>        
+    <script type="text/javascript"
+            src="//neris.csrc.gov.cn/falvfagui/styles/jquery/jquery.validate.js"></script>
+    <script type="text/javascript"
+            src="//neris.csrc.gov.cn/static/neris-widget/customui/1.19/js/customui.js"></script>
+    <script type="text/javascript"
+            src="//neris.csrc.gov.cn/static/neris-widget/windowdiv/1.17/js/jquery.windowdiv.js"></script>
+    <script type="text/javascript"
+            src="//neris.csrc.gov.cn/static/neris-widget/dialog/1.19/js/neris.dialog.js"></script>
+
+
+
+    <script src="//neris.csrc.gov.cn/static//bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//neris.csrc.gov.cn/falvfagui/styles/skin-standard/css/placeholder.js"></script>
+    <script src="//neris.csrc.gov.cn/static/vue/2.3.3/js/vue.js"></script>
+    <script src="//neris.csrc.gov.cn/falvfagui/dist/sflds-vue.js"></script>
+    <script type="text/javascript">
+        //不为空表示从文书过来
+        var entryId='';
+        var basePath="//neris.csrc.gov.cn/falvfagui/";
+    </script>
+    <script type="text/javascript" src="//neris.csrc.gov.cn/falvfagui/static/mainbody.js?v=20200709"></script>
+    <script type="text/javascript" src="//neris.csrc.gov.cn/falvfagui/static/hint.js"></script>
+    <script type="text/javascript">
+        $(function(){
+//            formVal();
+            initIsIE();
+            clickEnter();
+            initVue();
+            //setTimeout("countLawWrit()",1000);             
+        })
+    </script>
+</head>
+<body class="mustScoll overflow">
+<div id="app">
+    <sf-view>
+        
+        <sf-header website-cn="证券期货法规数据库系统" website-en="Securities and futures law database">
+            
+            <sf-toolbar>
+                <sf-toolbar-item href="http://www.csrc.gov.cn" target="_self">
+                    返回主站首页</sf-toolbar-item>
+                
+                <sf-toolbar-item target="_blank" href="//neris.csrc.gov.cn/falvfagui/classifyController/helpFile">
+                    系统简介</sf-toolbar-item>
+            </sf-toolbar>
+            
+            <sf-navbar>
+                <sf-navbar-item href="//neris.csrc.gov.cn/falvfagui/multipleFindController/indexJsp"
+                                active
+                                target="_self">综合查询</sf-navbar-item>
+                <sf-navbar-item href="//neris.csrc.gov.cn/falvfagui/classifyController/indexJsp"
+                                
+                                target="_self">法规体系查询</sf-navbar-item>
+                <sf-navbar-item href="//neris.csrc.gov.cn/falvfagui/"
+                                
+                                target="_self">最新法律资讯</sf-navbar-item>
+            </sf-navbar>
+            ·
+            <sf-position>
+                
+                <sf-breadcrumb>
+                    <sf-breadcrumb-item href="//neris.csrc.gov.cn/falvfagui/" target="_self">首页</sf-breadcrumb-item>
+                    
+                        <sf-breadcrumb-item href="//neris.csrc.gov.cn/falvfagui/multipleFindController/indexJsp" target="_self">
+                            <template>综合查询</template>
+                            <template slot="separator"></template>
+                        </sf-breadcrumb-item>
+                    
+                    
+                    
+                </sf-breadcrumb>
+                
+                <sf-font selector="law_text"></sf-font>
+            </sf-position>
+        </sf-header>
+        
+        <sf-main>
+            <div class="page_middle iframeBorder" >
+                <form action="" id="Form" name="Form" class="form-horizontal" method="POST" role="form">
+
+                    <input type="hidden" id="body" value="" name="body"/>
+                    <input type="hidden" id="secFutrsLawId" value="4114755b94bf47c0a515385231bfa837" name="secFutrsLawId"/>
+                    <input type="hidden" id="secFutrsLawEntryId" value="" name="secFutrsLawEntryId"/>
+                    <input type="hidden" id="navbarId" value="3" name="navbarId"/>
+                    <input type="hidden" id="lawEntryClsfCde" value="" name="lawEntryClsfCde"/>
+                    <input type="hidden" name="pageNo" id="pageNo" value="0"/>
+                    <input type="hidden" name="relativeType" id="relativeType" value="law"/>
+                    <div class="middle_content">
+                        <div class="page-header">
+                            <h3>法规详情</h3>
+                        </div>
+                        <table width="100%" border="0" cellspacing="1" cellpadding="5"
+                               class="table table-bordered table-condensed">
+                            <tbody>
+                            <tr>
+                                <td width="15%" class="table_bg">文件名称</td>
+                                <td colspan="4" class="text-left" id="tdLawName">关于基金投资非公开发行股票等流通受限证券有关问题的通知</td>
+                            </tr>
+                            <tr>
+                                <td class="table_bg">效力状态</td>
+                                <td colspan="1" class="chk_normal text-left" id="tdLawSts">
+                                    
+                                    现行有效
+                                    
+                                    
+                                </td>
+                                <td class="table_bg">失效日期</td>
+                                <td class="text-left" id="tdLawInefctvDate">
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="15%" class="table_bg">发文单位</td>
+                                <td width="35%" class="text-left" id="tdLawPub">
+                                    中国证券监督管理委员会
+                                </td>
+                                <td width="15%" class="table_bg">文号</td>
+                                <td width="35%" colspan="2" class="text-left" id="tdLawFileno">
+                                    证监基金字〔2006〕141号
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="15%" class="table_bg">发文日期</td>
+                                <td class="text-left" id="tdLawPubDate">
+                                    2006-07-20
+                                </td>
+                                <td class="table_bg">实施日期</td>
+                                <td colspan="2" class="text-left" id="LawEfctvDate">
+                                    2006-07-20
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="" width="15%" class="table_bg">历次修订信息</td>
+                                <td colspan="3" class="text-left">
+                                    <div class="revise_list" id="divEvltList">
+                                        
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr id="buttonsTr">
+                                <td colspan="5" class="table_bg text-center">
+
+                                    <input class="btn btn-primary btn-sm" type="button" id="lawlistId" value="全部条文"
+                                           onclick="lawlist();"/>
+
+                                    <input class="btn btn-primary btn-sm" id="draftDscr" type="button"
+                                           value="起草说明" onclick="getDraftDscr();"/>
+
+                                    <input class="btn btn-primary btn-sm" id="catalog" type="button"
+                                           value="目录" onclick="getCatalog();"/>
+
+                                    <input class="btn btn-primary btn-sm" id="selectItemP" type="button"
+                                           value="条款查询" onclick="qItems();"/>
+
+                                    <input class="btn btn-primary btn-sm" id="selectKeyword" type="button"
+                                           value="关键字查询" onclick="seleKeyword();" />
+
+                                    <input class="btn btn-primary btn-sm" id="secFutrsLawFile"  type="button"
+                                           value="附件下载" onclick="findLocalFile();"/>
+
+                                    <input class="btn btn-primary btn-sm" type="button" onclick="relativeFiles()" value="关联文件" />
+
+                                    <input class="btn btn-primary btn-sm" type="button" value="正文下载"
+                                           onclick="lawload();"/>
+
+                                    
+                                        <input class="btn btn-primary btn-sm" type="button" value="打印"
+                                               onclick="doPrint();">
+                                        <input class="btn btn-primary btn-sm" type="button"  value="相关案例" @click="queryRelative()" />
+                                    
+                                    
+                                        
+                                    
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        
+                        <template v-if="btnPage =='seleItemP'">
+                            <div class="law_text mainBody catalog">
+                                <table width="98%" border="0" cellspacing="1" cellpadding="5" class="table table-bordered table-condensed">
+                                    <tr>
+                                        <td class="text-left" colspan="6">
+                                            <h3 class="list_icon4">条款查询</h3>
+                                            查询提示：<br>
+                                            1.多个条款号之间可用加号“+”分隔；<br>
+                                            2.如果查询条请输入： 如 1 或者 一;如果查询款请输入： 1.1 或者 第一条第一款；<br>
+                                            3.如果查询多条请输入： 如 一+十二 或者  1+12；<br>
+                                            4.如需进行多条款查询请输入： 如  第一条第一款+第三条第一款  或者   1.2+3.1。
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="14%" class="text-center">条款编号:</td>
+
+                                        <td colspan="3" class="text-left">
+                                            <input v-once type="text" name="seleItemP" id="seleItemP"  value="" class="form-control" placeholder="请输入内容" style="border:1px solid #a1a1a1"/>
+                                            
+                                            <input class="hiddenText" type="text" />
+                                        </td>
+                                        <td width="15%" rowspan="2" class="text-center">
+                                            <input type="button" value="查询" class="btn btn-primary" onclick="searchClue()"/>
+                                            <input type="button" value="清空" class="btn btn-warning" onclick="cleanForm()"/>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </div>
+                        </template>
+                        
+                        
+                        <div class="law_text mainBody catalog" v-if="btnPage =='seleKeyword'">
+                            <table width="98%" border="0" cellspacing="1" cellpadding="5" class="table table-bordered table-condensed">
+                                <tr>
+                                    <td class="text-left" colspan="6">
+                                        <h3 class="list_icon4">关键字查询</h3>
+                                            <span>查询提示:<br>
+                                                1.输入的关键字为法规条文中的内容；<br>
+                                                2.多个关键字之间可用加号“+”分隔。<br>
+                                                </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="14%" class="text-center">查询关键字</td>
+
+                                    <td colspan="3" class="text-left">
+                                        <input v-once type="text" name="cntnt" id="cntnt" value="" class="form-control" placeholder="请输入内容" style="border:1px solid #a1a1a1"/>
+                                        
+                                        <input class="hiddenText" type="text" />
+                                    </td>
+                                    <td width="15%" rowspan="2" class="text-center">
+                                        <button type="button" class="btn btn-primary" onclick="search()">查询</button>
+                                        <button type="button" class="btn btn-warning" onclick="cleanForm()">清空</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        
+                        <!-- <div class="law_text mainBody catalog" v-if="btnPage=='lawlist'"> -->
+                        <div class="law_text mainBody catalog" v-if="btnPage=='lawlist'">
+                            <h3 class="list_icon1">正 文<label><input id="zhushi" type="checkbox" onclick="show()" v-once>显示注释</label></h3>
+                            <ul id="zhengwen" class="changeFontSize">
+                                <template v-if="!isEmpty(lawlist.law.secFutrsLawNameAnno)">
+                                    <li>
+                                        <div class="law_content">
+                                            <pre class="zhushi" v-html="lawlist.law.secFutrsLawNameAnno"></pre>
+                                        </div>
+                                    </li>
+                                </template>
+
+                                <template v-if="!isEmpty(lawlist.law.bodyAgoCntnt)">
+                                    <li>
+                                    <div class="law_content">
+                                        <pre v-html="lawlist.law.bodyAgoCntnt"></pre>
+                                        <template v-if="!isEmpty(lawlist.law.bodyAgoCntntAnno)">
+                                            <pre class="zhushi " v-html="lawlist.law.bodyAgoCntntAnno"></pre>
+                                        </template>
+                                    </div>
+                                    <template v-for="lawSgnOffPO in lawlist.lawSgnOffList"
+                                              v-if="lawSgnOffPO.sgnOffBlngsCntntCde=='2'">
+                                        <div class="law_cont">
+                                            <pre>{{lawSgnOffPO.sgnOffPsnOrgName}}<template
+                                                    v-if="allNotEmpty(lawSgnOffPO.sgnOffPsnOrgName,lawSgnOffPO.sgnOffPsnName)"
+                                            >:</template>{{lawSgnOffPO.sgnOffPsnName}}
+                                            <template v-if="!isEmpty(lawSgnOffPO.sgnOffDate)" >{{lawSgnOffPO.sgnOffDate | formatDate}}</template>
+                                            </pre>
+                                        </div>
+                                    </template>
+                                    </li>
+                                </template>
+                                <template v-for="secFutrsLawEntryPO in lawlist.lawEntryVOs">
+                                    
+                                    <template v-if="isChapter(secFutrsLawEntryPO.secFutrsLawEntryClsfCde)">
+                                        
+                                        <li class="chapter_title" :id="secFutrsLawEntryPO.secFutrsLawEntryId"
+                                            v-if="secFutrsLawEntryPO.lawEntryStsCde=='0'">
+                                            <a class="cc_color">{{secFutrsLawEntryPO.title}}  {{secFutrsLawEntryPO.cntnt}}</a>
+                                            <div class="law_content" v-if="!isEmpty(secFutrsLawEntryPO.anno)">
+                                                <p><pre class="zhushi" v-html="secFutrsLawEntryPO.anno"></pre></p>
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="chapter_title xg_icon" :id="secFutrsLawEntryPO.secFutrsLawEntryId"
+                                            v-if="secFutrsLawEntryPO.lawEntryStsCde=='1'">
+                                            <a class="cc_color">{{secFutrsLawEntryPO.title}}  {{secFutrsLawEntryPO.cntnt}}</a>
+                                            <div class="law_content" v-if="!isEmpty(secFutrsLawEntryPO.anno)">
+                                                <p><pre class="zhushi" v-html="secFutrsLawEntryPO.anno"></pre></p>
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="chapter_title sc_icon" :id="secFutrsLawEntryPO.secFutrsLawEntryId"
+                                            v-if="secFutrsLawEntryPO.lawEntryStsCde=='2'">
+                                            <a class="cc_color">{{secFutrsLawEntryPO.title}}  {{secFutrsLawEntryPO.cntnt}}</a>
+                                            <div class="law_content" v-if="!isEmpty(secFutrsLawEntryPO.anno)">
+                                                <p><pre class="zhushi" v-html="secFutrsLawEntryPO.anno"></pre></p>
+                                            </div>
+                                        </li>
+                                    </template>
+
+                                    
+                                    <template  v-if="secFutrsLawEntryPO.secFutrsLawEntryClsfCde=='4'">
+                                        
+                                        <li :id="secFutrsLawEntryPO.secFutrsLawEntryId"
+                                            v-if="secFutrsLawEntryPO.lawEntryStsCde=='0'">
+                                            <a href="JavaScript:void(0)"
+                                               @click="viewSecFutrsLawEntry(secFutrsLawEntryPO.secFutrsLawEntryId)">
+                                                {{secFutrsLawEntryPO.title}}&nbsp;&nbsp;&nbsp;
+                                                {{secFutrsLawEntryPO.cntnt}}</a>
+                                            <div class="law_content">
+                                            <template v-for="EntryPO in secFutrsLawEntryPO.itemList">
+                                                <pre v-html="EntryPO.cntnt"></pre>
+                                                <div style="clear:both;"></div>
+                                            </template>
+                                          
+                                               
+
+                                            </div>
+                                            <template v-if="listLen(secFutrsLawEntryPO.annoList)">
+                                                <pre class="zhushi pre_zhushi">
+                                                    <template v-for="Anno in secFutrsLawEntryPO.annoList"
+                                                              v-if="!isEmpty(Anno)" ><pre v-html="Anno"></pre>
+                                                    </template>
+                                                </pre>
+                                            </template>
+                                        </li>
+                                        
+                                        <li class="xg_icon" :id="secFutrsLawEntryPO.secFutrsLawEntryId"
+                                            v-if="secFutrsLawEntryPO.lawEntryStsCde=='1'">
+                                            <a href="JavaScript:void(0)"
+                                               @click="viewSecFutrsLawEntry(secFutrsLawEntryPO.secFutrsLawEntryId)">
+                                                {{secFutrsLawEntryPO.title}}&nbsp;&nbsp;&nbsp;
+                                                {{secFutrsLawEntryPO.cntnt}}</a>
+                                            <div class="law_content">
+                                                <template v-for="EntryPO in secFutrsLawEntryPO.itemList">
+                                                    <template v-if="EntryPO.lawEntryStsCde == '1' || EntryPO.lawEntryStsCde == '2'">
+                                                        <pre class="xg_txt" v-html="EntryPO.cntnt"></pre>
+                                                    </template>
+                                                    <template v-else>
+                                                        <pre v-html="EntryPO.cntnt"></pre>
+                                                    </template>
+                                                    <div style="clear:both;"></div>
+                                                </template>
+                                              
+                                                   
+                                                   
+                                              
+                                                   
+                                                   
+
+                                            </div>
+                                            <template v-if="listLen(secFutrsLawEntryPO.annoList)">
+                                                <pre class="zhushi pre_zhushi">
+                                                    <template v-for="Anno in secFutrsLawEntryPO.annoList"
+                                                              v-if="!isEmpty(Anno)" ><pre v-html="Anno"></pre>
+                                                    </template>
+                                                </pre>
+                                            </template>
+                                        </li>
+                                        
+                                        <li class="sc_icon" :id="secFutrsLawEntryPO.secFutrsLawEntryId"
+                                            v-if="secFutrsLawEntryPO.lawEntryStsCde=='2'">
+                                            <a href="JavaScript:void(0)"
+                                               @click="viewSecFutrsLawEntry(secFutrsLawEntryPO.secFutrsLawEntryId)">
+                                                {{secFutrsLawEntryPO.title}}&nbsp;&nbsp;&nbsp;
+                                                {{secFutrsLawEntryPO.cntnt}}</a>
+                                            <div class="law_content">
+                                                <template v-for="EntryPO in secFutrsLawEntryPO.itemList" >
+                                                    <template v-if="EntryPO.lawEntryStsCde == '1' || EntryPO.lawEntryStsCde == '2'">
+                                                        <pre class="xg_txt" v-html="EntryPO.cntnt"></pre>
+                                                    </template>
+                                                    <template v-else>
+                                                        <pre v-html="EntryPO.cntnt"></pre>
+                                                    </template>
+                                                    <div style="clear:both;"></div>
+                                                </template>
+                                              
+                                                   
+                                                   
+                                              
+                                                   
+                                                   
+
+                                            </div>
+                                            <template v-if="listLen(secFutrsLawEntryPO.annoList)">
+                                            <pre class="zhushi pre_zhushi"  >
+                                                <template v-for="Anno in secFutrsLawEntryPO.annoList"
+                                                          v-if="!isEmpty(Anno)" ><pre v-html="Anno"></pre>
+                                                </template>
+                                            </pre>
+                                            </template>
+                                        </li>
+                                    </template>
+                                    
+                                    <template v-if="secFutrsLawEntryPO.secFutrsLawEntryClsfCde=='5'">
+                                        
+                                        <li v-if="secFutrsLawEntryPO.lawEntryStsCde=='0'">
+                                            <a href="JavaScript:void(0)">{{secFutrsLawEntryPO.title}}</a>
+                                            <div class="law_content">
+                                                <pre v-html="secFutrsLawEntryPO.cntnt"></pre>
+                                                <pre class="zhushi" v-if="!isEmpty(secFutrsLawEntryPO.anno)"
+                                                     v-html="secFutrsLawEntryPO.anno"></pre>
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="xg_icon"
+                                            v-if="secFutrsLawEntryPO.lawEntryStsCde=='1'">
+                                            <a href="JavaScript:void(0)">{{secFutrsLawEntryPO.title}}</a>
+                                            <div class="law_content">
+                                              <pre v-html="secFutrsLawEntryPO.cntnt"></pre>
+                                              <pre class="zhushi" v-if="!isEmpty(secFutrsLawEntryPO.anno)"
+                                                   v-html="secFutrsLawEntryPO.anno"></pre>
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="sc_icon"
+                                            v-if="secFutrsLawEntryPO.lawEntryStsCde=='2'">
+                                            <a href="JavaScript:void(0)">{{secFutrsLawEntryPO.title}}</a>
+                                            <div class="law_content">
+                                                <pre v-html="secFutrsLawEntryPO.cntnt"></pre>
+                                              <pre class="zhushi" v-if="!isEmpty(secFutrsLawEntryPO.anno)"
+                                                   v-html="secFutrsLawEntryPO.anno"></pre>
+                                            </div>
+                                        </li>
+                                    </template>
+                                    <template v-if="secFutrsLawEntryPO.secFutrsLawEntryClsfCde=='8'">
+                                        
+                                        <li v-if="secFutrsLawEntryPO.lawEntryStsCde=='0'">
+                                            <a href="JavaScript:void(0)">{{secFutrsLawEntryPO.title}}</a>
+                                            <div class="law_content">
+                                                <pre v-html="secFutrsLawEntryPO.cntnt"></pre>
+                                                <pre class="zhushi" v-if="!isEmpty(secFutrsLawEntryPO.anno)"
+                                                     v-html="secFutrsLawEntryPO.anno"></pre>
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="xg_icon"
+                                            v-if="secFutrsLawEntryPO.lawEntryStsCde=='1'">
+                                            <a href="JavaScript:void(0)">{{secFutrsLawEntryPO.title}}</a>
+                                            <div class="law_content">
+                                              <pre v-html="secFutrsLawEntryPO.cntnt"></pre>
+                                              <pre class="zhushi" v-if="!isEmpty(secFutrsLawEntryPO.anno)"
+                                                   v-html="secFutrsLawEntryPO.anno"></pre>
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="sc_icon"
+                                            v-if="secFutrsLawEntryPO.lawEntryStsCde=='2'">
+                                            <a href="JavaScript:void(0)">{{secFutrsLawEntryPO.title}}</a>
+                                            <div class="law_content">
+                                                <pre v-html="secFutrsLawEntryPO.cntnt"></pre>
+                                              <pre class="zhushi" v-if="!isEmpty(secFutrsLawEntryPO.anno)"
+                                                   v-html="secFutrsLawEntryPO.anno"></pre>
+                                            </div>
+                                        </li>
+                                    </template>
+                                    
+                                    <template v-if="secFutrsLawEntryPO.secFutrsLawEntryClsfCde=='6'">
+                                        
+                                        <li :id="secFutrsLawEntryPO.secFutrsLawEntryId"
+                                            v-if="secFutrsLawEntryPO.lawEntryStsCde=='0'">
+                                            <a href="JavaScript:void(0)"
+                                               @click="viewSecFutrsLawEntry(secFutrsLawEntryPO.secFutrsLawEntryId)">{{secFutrsLawEntryPO.title}}</a>
+                                            <div class="law_content">
+                                                <pre v-html="secFutrsLawEntryPO.cntnt"></pre>
+                                                <div style="clear:both;"></div>
+                                              <pre class="zhushi" v-if="!isEmpty(secFutrsLawEntryPO.anno)"
+                                                   v-html="secFutrsLawEntryPO.anno"></pre>
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="xg_icon" :id="secFutrsLawEntryPO.secFutrsLawEntryId"
+                                            v-if="secFutrsLawEntryPO.lawEntryStsCde=='1'">
+                                            <a href="JavaScript:void(0)"
+                                               @click="viewSecFutrsLawEntry(secFutrsLawEntryPO.secFutrsLawEntryId)">{{secFutrsLawEntryPO.title}}</a>
+                                            <div class="law_content">
+                                                <pre v-html="secFutrsLawEntryPO.cntnt"></pre>
+                                                <div style="clear:both;"></div>
+                                              <pre class="zhushi" v-if="!isEmpty(secFutrsLawEntryPO.anno)"
+                                                   v-html="secFutrsLawEntryPO.anno"></pre>
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="sc_icon" :id="secFutrsLawEntryPO.secFutrsLawEntryId"
+                                            v-if="secFutrsLawEntryPO.lawEntryStsCde=='2'">
+                                            <a href="JavaScript:void(0)"
+                                               @click="viewSecFutrsLawEntry(secFutrsLawEntryPO.secFutrsLawEntryId)">{{secFutrsLawEntryPO.title}}</a>
+                                            <div class="law_content">
+                                                <pre v-html="secFutrsLawEntryPO.cntnt"></pre>
+                                                <div style="clear:both;"></div>
+                                              <pre class="zhushi" v-if="!isEmpty(secFutrsLawEntryPO.anno)"
+                                                   v-html="secFutrsLawEntryPO.anno"></pre>
+                                            </div>
+                                        </li>
+                                    </template>
+                                    
+                                    <template v-if="secFutrsLawEntryPO.secFutrsLawEntryClsfCde=='7'">
+                                        <li>
+                                            <div class="law_content">
+                                                <pre v-html="lawlist.law.body"></pre>
+                                            </div>
+                                        </li>
+                                    </template>
+                                </template>
+                                <template v-if="!isEmpty(lawlist.law.bodyAftCntnt)">
+                                    <div class="law_content">
+                                        <pre v-html="lawlist.law.bodyAftCntnt"></pre>
+                                    </div>
+                                    <template v-if="!isEmpty(lawlist.law.bodyAftCntntAnno)">
+                                        <div class="law_content">
+                                        <pre class="zhushi " v-html="lawlist.law.bodyAftCntntAnno"></pre>
+                                        </div>
+                                    </template>
+                                </template>
+                                <template v-for="lawSgnOffPO in lawlist.lawSgnOffList"
+                                          v-if="lawSgnOffPO.sgnOffBlngsCntntCde=='0'">
+                                        <li>
+                                            <div class="law_cont">
+                                        <pre>
+                                        {{lawSgnOffPO.sgnOffPsnOrgName}}<template v-if="allNotEmpty(lawSgnOffPO.sgnOffPsnOrgName,lawSgnOffPO.sgnOffPsnName)">:</template>{{lawSgnOffPO.sgnOffPsnName}}
+                                         <template v-if="!isEmpty(lawSgnOffPO.sgnOffDate)" >{{lawSgnOffPO.sgnOffDate | formatDate}}</template>
+                                        </pre>
+                                            </div>
+                                        </li>
+
+                                </template>
+                            </ul>
+                        </div>
+                        
+                        
+                        <div class="law_text mainBody catalog" v-if="btnPage =='draftDscr'">
+                            <h3 class="list_icon8">起草说明<label><input id="zhushi" type="checkbox" onclick="show()" v-once>显示注释</label></h3>
+                            <ul class="changeFontSize">
+                                <li v-if="draftDscr.secFutrsLawPO.draftDscr !=null">
+                                    <div class="law_content">
+                                        
+                                        
+                                        <pre v-html="draftDscr.secFutrsLawPO.draftDscr"></pre>
+                                            <template
+                                                    v-if="!isEmpty(draftDscr.secFutrsLawPO.draftDscrAnno)">
+                                        <pre class="zhushi "
+                                             v-html="draftDscr.secFutrsLawPO.draftDscrAnno"></pre>
+                                            </template>
+                                    </div>
+
+                                </li>
+                                <li v-if="draftDscr.secFutrsLawPO.draftDscr ==null">
+                                	<div class="text-left">没有符合条件的数据！</div>
+                                </li>
+                                <template v-for="lawSgnOffPO in draftDscr.lawSgnOffList"
+                                          v-if="lawSgnOffPO.sgnOffBlngsCntntCde=='1'">
+                                        <li>
+                                            <div class="law_cont">
+                                        <pre>
+                                        {{lawSgnOffPO.sgnOffPsnOrgName}}<template v-if="allNotEmpty(lawSgnOffPO.sgnOffPsnOrgName,lawSgnOffPO.sgnOffPsnName)">:</template>{{lawSgnOffPO.sgnOffPsnName}}
+                                        <template v-if="!isEmpty(lawSgnOffPO.sgnOffDate)" >{{lawSgnOffPO.sgnOffDate | formatDate}}</template>
+                                        </pre>
+                                            </div>
+                                        </li>
+
+                                </template>
+                            </ul>
+
+                        </div>
+                        
+                        
+                        <div class="fontSize_16 mainBody catalog law_text mainBody catalog" v-if="btnPage =='catalog'">
+                            <h3 class="list_icon3">法规目录</h3>
+                            <ul class="changeFontSize">
+                                <template v-if="listLen(catalog)">
+                                    <template v-for="secFutrsLawEntryPO in catalog">
+                                        <li class="piece" v-if="secFutrsLawEntryPO.secFutrsLawEntryClsfCde == '1'">
+                                            <a href="JavaScript:void(0)"
+                                               @click="clickCatalog(secFutrsLawEntryPO.secFutrsLawEntryId)">
+                                                {{secFutrsLawEntryPO.title}}
+                                                &nbsp;&nbsp;&nbsp;&nbsp;{{secFutrsLawEntryPO.cntnt}}</a>
+                                        </li>
+                                        <li class="chapter" v-if="secFutrsLawEntryPO.secFutrsLawEntryClsfCde == '2'">
+                                            <a href="JavaScript:void(0)"
+                                               @click="clickCatalog(secFutrsLawEntryPO.secFutrsLawEntryId)">
+                                                {{secFutrsLawEntryPO.title}}
+                                                &nbsp;&nbsp;&nbsp;&nbsp;{{secFutrsLawEntryPO.cntnt}}</a>
+                                        </li>
+                                        <li class="strip" v-if="secFutrsLawEntryPO.secFutrsLawEntryClsfCde == '3'">
+                                            <a href="JavaScript:void(0)"
+                                               @click="clickCatalog(secFutrsLawEntryPO.secFutrsLawEntryId)">
+                                                {{secFutrsLawEntryPO.title}}
+                                                &nbsp;&nbsp;&nbsp;&nbsp;{{secFutrsLawEntryPO.cntnt}}</a>
+                                        </li>
+                                        <li class="strip" v-if="secFutrsLawEntryPO.secFutrsLawEntryClsfCde == '4'">
+                                            <a href="JavaScript:void(0)">
+                                                {{secFutrsLawEntryPO.title}}
+                                                &nbsp;&nbsp;&nbsp;&nbsp;{{secFutrsLawEntryPO.cntnt}}</a>
+                                        </li>
+                                    </template>
+                                </template>
+                                <template v-else>
+                                    <td colspan="7" class="text-center font_red">
+                                    	<div class="text-left">没有符合条件的数据！</div>
+                                    </td>
+                                </template>
+
+                            </ul>
+                        </div>
+                        
+                        
+                        <div class="law_text changeFontSize fontSize_16 mainBody"
+                             v-if="btnPage =='seleItemP' && itemResult !=null">
+                            <ul>
+                                
+                                
+                                <template v-if="itemResult.entryVoList !=null">
+                                    <li v-for="entryVo in itemResult.entryVoList">
+                                        
+                                           
+                                        <span class="itemResult">{{entryVo.title}}</span>
+                                        <template v-if="entryVo.itemList ==null">
+                                            <div class="law_content">
+                                                <pre v-html="entryVo.cntnt"></pre>
+                                                <div style="clear:both;"></div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="law_content">
+                                        		<pre v-for="secFutrsLawEntryVO in entryVo.itemList"
+                                             		v-html="secFutrsLawEntryVO.cntnt"></pre>
+                                             	<div style="clear:both;"></div>
+                                            </div>
+                                        </template>
+                                    </li>
+                                </template>
+                                <template v-if="itemResult.entryVoList ==null">
+                                    <li>
+                                    	<div class="text-left">没有符合条件的数据！</div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                        
+                        
+                        <div class="law_text changeFontSize fontSize_16 mainBody"
+                             v-if="btnPage =='seleKeyword' && keywordResult !=null">
+                            <ul>
+                                <template v-if="listLen(keywordResult.pageUtil.pageList)">
+                                    <li v-for="secFutrsLawEntryPO in keywordResult.pageUtil.pageList">
+                                        <template v-if="secFutrsLawEntryPO.secFutrsLawEntryClsfCde =='4'">
+                                            <a href="javascript:void(0);" target="_self"
+                                               @click="viewSecFutrsLawEntry(secFutrsLawEntryPO.secFutrsLawEntryId)">{{secFutrsLawEntryPO.title}}</a>
+                                            <div class="law_content">
+                                                <pre v-for="EntryPO in secFutrsLawEntryPO.itemList" v-html="EntryPO.cntnt"></pre>
+                                                <div style="clear:both;"></div>
+                                            </div>
+                                        </template>
+                                        <template v-if="secFutrsLawEntryPO.secFutrsLawEntryClsfCde =='6'">
+                                            <a href="javascript:void(0);" target="_self" @click="viewSecFutrsLawEntry(secFutrsLawEntryPO.secFutrsLawEntryId)">{{secFutrsLawEntryPO.title}}</a>
+                                            <div class="law_content">
+                                                <pre v-html="secFutrsLawEntryPO.cntnt"></pre>
+                                                <div style="clear:both;"></div>
+                                            </div>
+                                        </template>
+                                        <template v-if="secFutrsLawEntryPO.secFutrsLawEntryClsfCde !='4'">
+                                            <template v-if="secFutrsLawEntryPO.secFutrsLawEntryClsfCde !='6'">
+                                                <a href="javascript:void(0);">{{secFutrsLawEntryPO.title}}  {{secFutrsLawEntryPO.cntnt}}</a>
+                                            </template>
+                                        </template>
+                                    </li>
+                                </template>
+                                <template v-else>
+                                    <li>
+                                        <div class="text-left">没有符合条件的数据！</div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                        
+                        
+                        <div class="law_text mainBody catalog fontSize_16" v-if="btnPage =='findLocalFile'">
+                            <h3 class="list_icon5">附件下载</h3>
+                            <ul class="changeFontSize">
+                                <template v-if="listLen(localFile.pageUtilList)">
+                                    <li v-for="lawAtchPO in localFile.pageUtilList">
+                                        <a href="JavaScript:void(0)"
+                                           @click="downloadLocal(lawAtchPO.lawAtchId)"
+                                        >{{lawAtchPO.atchName}}</a>
+                                    </li>
+                                </template>
+                                <template v-else>
+                                    <li>
+                                    	<div class="text-left">没有符合条件的数据！</div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                        
+                        
+                        <div class="law_text mainBody catalog fontSize_16 law_text mainBody catalog" v-if="btnPage =='relativeFiles'">
+                            <h3 class="list_icon6">关联文件</h3>
+                            <ul class="changeFontSize">
+                                <template v-if="listLen(relativeFiles.putLawList)">
+                                    <li v-for="putLawPO in relativeFiles.putLawList">
+                                        <a v-if="canClick(putLawPO.putAndLawId) && putLawPO.dataOpNetFlg =='4' " href="#"
+                                           @click="loadNewLaw(putLawPO.putAndLawId)" >{{putLawPO.putAndLawName}}</a>
+                                        <template v-else>
+                                            {{putLawPO.putAndLawName}}
+                                        </template>
+                                    </li>
+                                </template>
+                                <template v-else>
+                                    <li>
+                                    	<div class="text-left">没有符合条件的数据！</div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                        
+                        
+                        <div class="law_text fontSize_16 mainBody catalog" v-if="btnPage =='viewSecFutrsLawEntry'">
+                            <h3 class="list_icon1">正 文</h3>
+                            <ul class="changeFontSize">
+                                
+                                <template v-if="entryInfo.entryVO.secFutrsLawEntryClsfCde =='4'">
+                                    
+                                    <li v-if="entryInfo.entryVO.lawEntryStsCde =='0'">
+                                        <a href="JavaScript:void(0)"
+                                           @click="viewDetils()">
+                                            {{entryInfo.entryVO.title}}&nbsp;&nbsp;&nbsp;{{entryInfo.entryVO.cntnt}}
+                                        </a>
+                                        <div class="law_content">
+                                            
+                                            <pre v-for="EntryPO in entryInfo.entryVO.itemList" v-html="EntryPO.cntnt"></pre>
+                                        </div>
+                                        <template v-if="listLen(entryInfo.entryVO.annoList)">
+                                                <pre class="zhushi pre_zhushi">
+                                                    <template v-for="anno in entryInfo.entryVO.annoList"
+                                                              v-if="!isEmpty(anno)" ><pre v-html="anno"></pre>
+                                                    </template>
+                                                </pre>
+                                        </template>
+                                    </li>
+                                    
+                                    <li class="xg_icon" v-if="entryInfo.entryVO.lawEntryStsCde =='1'" >
+                                        <a href="JavaScript:void(0)"
+                                           @click="viewDetils()">
+                                            {{entryInfo.entryVO.title}}&nbsp;&nbsp;&nbsp;{{entryInfo.entryVO.cntnt}}
+                                        </a>
+                                        <div class="law_content">
+                                          <pre class="xg_txt" v-for="EntryPO in entryInfo.entryVO.itemList"
+                                               v-if="EntryPO.lawEntryStsCde == '1' || EntryPO.lawEntryStsCde == '2'"
+                                               v-html="EntryPO.cntnt"></pre>
+                                          <pre v-for="EntryPO in entryInfo.entryVO.itemList"
+                                               v-if="EntryPO.lawEntryStsCde == '0'"
+                                               v-html="EntryPO.cntnt"></pre>
+                                        </div>
+                                        <template v-if="listLen(entryInfo.entryVO.annoList)">
+                                            <pre class="zhushi pre_zhushi">
+                                                <template v-for="anno in entryInfo.entryVO.annoList"
+                                                          v-if="!isEmpty(anno)" ><pre v-html="anno"></pre>
+                                                </template>
+                                            </pre>
+                                        </template>
+                                    </li>
+                                    
+                                    <li class="sc_icon" v-if="entryInfo.entryVO.lawEntryStsCde =='2'" >
+                                        <a href="JavaScript:void(0)"
+                                           @click="viewDetils()">
+                                            {{entryInfo.entryVO.title}}&nbsp;&nbsp;&nbsp;{{entryInfo.entryVO.cntnt}}
+                                        </a>
+                                        <div class="law_content">
+                                          <pre class="xg_txt" v-for="EntryPO in entryInfo.entryVO.itemList"
+                                               v-if="EntryPO.lawEntryStsCde == '1' || EntryPO.lawEntryStsCde == '2'"
+                                               v-html="EntryPO.cntnt"></pre>
+                                          <pre v-for="EntryPO in entryInfo.entryVO.itemList"
+                                               v-if="EntryPO.lawEntryStsCde == '0'"
+                                               v-html="EntryPO.cntnt"></pre>
+                                        </div>
+                                        <template v-if="listLen(entryInfo.entryVO.annoList)">
+                                            <pre class="zhushi pre_zhushi">
+                                                <template v-for="anno in entryInfo.entryVO.annoList"
+                                                          v-if="!isEmpty(anno)" ><pre v-html="anno"></pre>
+                                                </template>
+                                            </pre>
+                                        </template>
+                                    </li>
+                                </template>
+                                <template v-if="entryInfo.entryVO.secFutrsLawEntryClsfCde =='5'">
+                                    
+                                    <li v-if="entryInfo.entryVO.lawEntryStsCde =='0'">
+                                        <div class="law_content">
+                                            
+                                            <pre v-for="EntryPO in entryInfo.entryVO.itemList" v-html="EntryPO.cntnt"></pre>
+                                        </div>
+                                        {{entryInfo.entryVO.cntnt}} 
+                                                <pre v-if="entryInfo.entryVO.anno" class="zhushi pre_zhushi">
+                                                    {{entryInfo.entryVO.anno}} 
+                                                </pre>
+                                    </li>
+                                    <li class="xg_icon" v-if="entryInfo.entryVO.lawEntryStsCde =='1'" >
+                                        <div class="law_content">
+                                        <pre v-for="EntryPO in entryInfo.entryVO.itemList" v-html="EntryPO.cntnt"></pre>
+                                        </div>
+                                                {{entryInfo.entryVO.cntnt}} 
+                                            <pre v-if="entryInfo.entryVO.anno" class="zhushi pre_zhushi">
+                                                    {{entryInfo.entryVO.anno}} 
+                                                </pre>
+                                    </li>
+                                    
+                                    <li class="sc_icon" v-if="entryInfo.entryVO.lawEntryStsCde =='2'" >
+                                         <div class="law_content">
+                                        <pre v-for="EntryPO in entryInfo.entryVO.itemList" v-html="EntryPO.cntnt"></pre>
+                                        </div>
+                                                {{entryInfo.entryVO.cntnt}} 
+                                            <pre v-if="entryInfo.entryVO.anno" class="zhushi pre_zhushi">
+                                                    {{entryInfo.entryVO.anno}} 
+                                                </pre>
+                                    </li>
+                                    </template>
+                                
+                                <template v-if="entryInfo.entryVO.secFutrsLawEntryClsfCde =='6'">
+                                    
+                                    <li v-if="entryInfo.entryVO.lawEntryStsCde =='0' ">
+                                        <a href="JavaScript:void(0)"
+                                           @click="viewDetils()">
+                                            {{entryInfo.entryVO.title}}
+                                        </a>
+                                        <div class="law_content" >
+                                            <pre v-html="entryInfo.entryVO.cntnt"></pre>
+                                            <pre class="zhushi "
+                                                 v-if="!isEmpty(entryInfo.entryVO.anno)"
+                                                 v-html="entryInfo.entryVO.anno"></pre>
+                                        </div>
+                                    </li>
+                                    
+                                    <li v-if="entryInfo.entryVO.lawEntryStsCde =='1'" class="xg_icon">
+                                        <a href="JavaScript:void(0)"
+                                           @click="viewDetils()">
+                                            {{entryInfo.entryVO.title}}
+                                        </a>
+                                        <div class="law_content" >
+                                            <pre v-html="entryInfo.entryVO.cntnt"></pre>
+                                            <pre class="zhushi "
+                                                 v-if="!isEmpty(entryInfo.entryVO.anno)"
+                                                 v-html="entryInfo.entryVO.anno"></pre>
+                                        </div>
+                                    </li>
+                                        
+                                        <li v-if="entryInfo.entryVO.lawEntryStsCde =='2'" class="sc_icon">
+                                            <a href="JavaScript:void(0)"
+                                               @click="viewDetils()">
+                                                {{entryInfo.entryVO.title}}
+                                            </a>
+                                            <div class="law_content" >
+                                                <pre v-html="entryInfo.entryVO.cntnt"></pre>
+                                        <pre class="zhushi "
+                                             v-if="!isEmpty(entryInfo.entryVO.anno)"
+                                             v-html="entryInfo.entryVO.anno"></pre>
+                                            </div>
+                                        </li>
+                                </template>
+                                <li class="cz_btn">
+                                    <input class="btn btn-info btn-sm" id="relativeExample" type="button"
+                                           value="相关案例" @click="queryRelative(entryInfo.entryVO.secFutrsLawEntryId);"/>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        
+                        <template v-if="btnPage =='relativeExample'">
+                            <div class="law_text fontSize_16 mainBody catalog" >
+                                <h3 class="list_icon3">相关案例</h3>
+                              <!--   案例详情   -->  
+                              <template v-if="relativeType == 'entry'">
+                                    <ul class="changeFontSize">
+                                       <!--  条4 -->
+                                        <template v-if="entryInfo.entryVO.secFutrsLawEntryClsfCde =='4'">
+                                         <!--    现行 -->
+                                            <li v-if="entryInfo.entryVO.lawEntryStsCde =='0'">
+                                                <a href="JavaScript:void(0)"
+                                                   @click="viewDetils()">
+                                                    {{entryInfo.entryVO.title}}&nbsp;&nbsp;&nbsp;{{entryInfo.entryVO.cntnt}}
+                                                </a>
+                                                <div class="law_content law_text fontSize_16 mainBody catalog">
+                                                    <pre v-for="EntryPO in entryInfo.entryVO.itemList" v-html="EntryPO.cntnt"></pre>
+                                                </div>
+                                                <template v-if="listLen(entryInfo.entryVO.annoList)">
+                                                <pre class="zhushi pre_zhushi">
+                                                    <template v-for="anno in entryInfo.entryVO.annoList"
+                                                              v-if="!isEmpty(anno)" ><pre v-html="anno"></pre>
+                                                    </template>
+                                                </pre>
+                                                </template>
+                                            </li>
+                                          <!--   修改 -->
+                                            <li class="xg_icon" v-if="entryInfo.entryVO.lawEntryStsCde =='1'" >
+                                                <a href="JavaScript:void(0)"
+                                                   @click="viewDetils()">
+                                                    {{entryInfo.entryVO.title}}&nbsp;&nbsp;&nbsp;{{entryInfo.entryVO.cntnt}}
+                                                </a>
+                                                <div class="law_content law_text fontSize_16 mainBody catalog">
+                                                  <pre class="xg_txt" v-for="EntryPO in entryInfo.entryVO.itemList"
+                                                       v-if="EntryPO.lawEntryStsCde == '1' || EntryPO.lawEntryStsCde == '2'"
+                                                       v-html="EntryPO.cntnt"></pre>
+                                                  <pre v-for="EntryPO in entryInfo.entryVO.itemList"
+                                                       v-if="EntryPO.lawEntryStsCde == '0'"
+                                                       v-html="EntryPO.cntnt"></pre>
+                                                </div>
+                                                <template v-if="listLen(entryInfo.entryVO.annoList)">
+                                                <pre class="zhushi pre_zhushi">
+                                                    <template v-for="anno in entryInfo.entryVO.annoList"
+                                                              v-if="!isEmpty(anno)" ><pre v-html="anno"></pre>
+                                                    </template>
+                                                </pre>
+                                                </template>
+                                            </li>
+                                     <!--        删除 -->
+                                            <li class="sc_icon" v-if="entryInfo.entryVO.lawEntryStsCde =='2'" >
+                                                <a href="JavaScript:void(0)"
+                                                   @click="viewDetils()">
+                                                    {{entryInfo.entryVO.title}}&nbsp;&nbsp;&nbsp;{{entryInfo.entryVO.cntnt}}
+                                                </a>
+                                                <div class="law_content law_text fontSize_16 mainBody catalog">
+                                                  <pre class="xg_txt" v-for="EntryPO in entryInfo.entryVO.itemList"
+                                                       v-if="EntryPO.lawEntryStsCde == '1' || EntryPO.lawEntryStsCde == '2'"
+                                                       v-html="EntryPO.cntnt"></pre>
+                                                  <pre v-for="EntryPO in entryInfo.entryVO.itemList"
+                                                       v-if="EntryPO.lawEntryStsCde == '0'"
+                                                       v-html="EntryPO.cntnt"></pre>
+                                                </div>
+                                                <template v-if="listLen(entryInfo.entryVO.annoList)">
+                                                <pre class="zhushi pre_zhushi">
+                                                    <template v-for="anno in entryInfo.entryVO.annoList"
+                                                              v-if="!isEmpty(anno)" ><pre v-html="anno"></pre>
+                                                    </template>
+                                                </pre>
+                                                </template>
+                                            </li>
+                                        </template>
+                                     <!--    不规范条6 -->
+                                        <template v-if="entryInfo.entryVO.secFutrsLawEntryClsfCde =='6'">
+                                            <!-- 现行0 -->
+                                            <li v-if="entryInfo.entryVO.lawEntryStsCde =='0'">
+                                                <a href="JavaScript:void(0)"
+                                                   @click="viewDetils()">
+                                                    {{entryInfo.entryVO.title}}
+                                                </a>
+                                                <div class="law_content law_text fontSize_16 mainBody catalog">
+                                                    <pre v-html="entryInfo.entryVO.cntnt"></pre>
+                                                    <pre class="zhushi "
+                                                         v-if="!isEmpty(entryInfo.entryVO.anno)"
+                                                         v-html="entryInfo.entryVO.anno"></pre>
+                                                </div>
+                                            </li>
+                                           <!--  修改1 -->
+                                            <li v-if="entryInfo.entryVO.lawEntryStsCde =='1'" class="xg_icon">
+                                                <a href="JavaScript:void(0)"
+                                                   @click="viewDetils()">
+                                                    {{entryInfo.entryVO.title}}
+                                                </a>
+                                                <div class="law_content law_text fontSize_16 mainBody catalog">
+                                                    <pre v-html="entryInfo.entryVO.cntnt"></pre>
+                                                    <pre class="zhushi "
+                                                         v-if="!isEmpty(entryInfo.entryVO.anno)"
+                                                         v-html="entryInfo.entryVO.anno"></pre>
+                                                </div>
+                                            </li>
+                                            <!-- 删除2 -->
+                                            <li v-if="entryInfo.entryVO.lawEntryStsCde =='2'" class="sc_icon">
+                                                <a href="JavaScript:void(0)"
+                                                   @click="viewDetils()">
+                                                    {{entryInfo.entryVO.title}}
+                                                </a>
+                                                <div class="law_content law_text fontSize_16 mainBody catalog">
+                                                    <pre v-html="entryInfo.entryVO.cntnt"></pre>
+                                                    <pre class="zhushi "
+                                                         v-if="!isEmpty(entryInfo.entryVO.anno)"
+                                                         v-html="entryInfo.entryVO.anno"></pre>
+                                                </div>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </template>
+                            </div>
+                             <div class="law_text">
+                               <div class="relativeTable">
+                                <sf-table :columns="columns" :data="tableDatas" :show-page="false" :loading-msg="loadMsg">
+                                </sf-table>
+                              </div>
+                             </div>
+                                <sf-page :page-size="20" :current="currentPage" :total="total" :show-jumpj="true" @on-change="onPageChange"></sf-page>
+                        </template>
+                        
+                        
+                        <div class="law_text " v-if="btnPage =='unOpen'">
+                                                                          相关文件正在入库
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+        </sf-main>
+        
+            <sf-footer  style="height: 120px" copyright="" address="" >
+
+                <div    style="float:left;width:35%;text-align:right;padding: 5px; ">
+                    
+                    <span id="_ideConac">
+                        <a href="http://bszs.conac.cn/sitename?method=show&amp;id=07D000F9927315F5E053022819ACAB12" target="_blank">
+                          <img id="imgConac" vspace="0" hspace="0" border="0" src="//neris.csrc.gov.cn/falvfagui//img/blue.png?v=1" data-bd-imgshare-binded="1">
+                        </a>
+                        <script id="_jiucuo_" sitecode="bm56000001" src="//neris.csrc.gov.cn/falvfagui//static/jiucuo.js"></script>
+                    </span>
+                </div>
+                <div  class="shengming_font"  style="float:right;width:65%;text-align:left;line-height:28px;font-size:14px;padding: 12px; ">
+                    <!--img src="./2014/images/foot_link.gif"><br /-->
+                    
+                    <a href="http://www.csrc.gov.cn/pub/newsite/fzlm/lxwm">联系我们</a> |
+                    <a href="http://www.csrc.gov.cn/pub/newsite/fzlm/flsm">法律声明</a><br/>
+                    主办单位：中国证券监督管理委员会&nbsp;&nbsp;&nbsp;&nbsp;版权所有：中国证券监督管理委员会<br/>
+                    网站识别码：bm56000001&nbsp;&nbsp;&nbsp;&nbsp;京ICP备 05035542号 　
+                    <a  href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11040102700080" style="text-decoration:none;" target="_blank"><img src="//neris.csrc.gov.cn/falvfagui/img/gaba.png" style="vertical-align:middle;" border="0"><font color="#333333"> 京公网安备 11040102700080号</font></a >
+                </div>
+            </sf-footer>
+
+    </sf-view>
+    <div class="scrool_menu">
+        <a class="top_h" href="#"></a>
+        <a class="feedback" href="#" onclick="feedback()"></a>
+    </div>
+
+</div>
+</body>
+<script type="text/javascript">
+
+$(document).keydown(function(event){
+    if(event.keyCode==13){ 
+        event.preventDefault();
+    } 
+});
+</script>
+</html>

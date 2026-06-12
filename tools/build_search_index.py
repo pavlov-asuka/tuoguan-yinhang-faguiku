@@ -128,9 +128,11 @@ def create_schema(con: sqlite3.Connection) -> str:
         """
         CREATE TABLE rules (
             rule_id TEXT PRIMARY KEY,
+            legacy_id TEXT,
             title TEXT NOT NULL,
             category TEXT,
             layer TEXT,
+            doc_type TEXT,
             issuer TEXT,
             rule_no TEXT,
             publish_date TEXT,
@@ -138,6 +140,11 @@ def create_schema(con: sqlite3.Connection) -> str:
             current_status TEXT,
             priority TEXT,
             is_core TEXT,
+            product_tags TEXT,
+            business_line_tags TEXT,
+            market_tags TEXT,
+            catalog_paths TEXT,
+            key_obligations TEXT,
             business_tags TEXT,
             source_urls TEXT,
             notes TEXT,
@@ -194,17 +201,20 @@ def insert_rule(con: sqlite3.Connection, row: dict[str, Any]) -> None:
     con.execute(
         """
         INSERT INTO rules (
-            rule_id, title, category, layer, issuer, rule_no, publish_date,
-            effective_date, current_status, priority, is_core, business_tags,
-            source_urls, notes, errors
+            rule_id, legacy_id, title, category, layer, doc_type, issuer, rule_no,
+            publish_date, effective_date, current_status, priority, is_core,
+            product_tags, business_line_tags, market_tags, catalog_paths,
+            key_obligations, business_tags, source_urls, notes, errors
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             row.get("id", ""),
+            row.get("legacy_id", ""),
             row.get("title", ""),
             row.get("category", ""),
             row.get("layer", ""),
+            row.get("doc_type", ""),
             row.get("issuer", ""),
             row.get("rule_no", ""),
             row.get("publish_date", ""),
@@ -212,6 +222,11 @@ def insert_rule(con: sqlite3.Connection, row: dict[str, Any]) -> None:
             row.get("current_status", ""),
             row.get("priority", ""),
             row.get("is_core", ""),
+            row.get("product_tags", ""),
+            row.get("business_line_tags", ""),
+            row.get("market_tags", ""),
+            row.get("catalog_paths", ""),
+            row.get("key_obligations", ""),
             row.get("business_tags", ""),
             row.get("source_url", ""),
             row.get("notes", ""),
