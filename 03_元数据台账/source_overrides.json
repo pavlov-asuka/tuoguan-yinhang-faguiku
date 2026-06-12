@@ -1,0 +1,296 @@
+[
+  {
+    "id": "TB032",
+    "title": "关于规范金融机构资产管理业务的指导意见",
+    "source_type": "官方正文",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.gov.cn/gongbao/content/2018/content_5323101.htm"
+    ]
+  },
+  {
+    "id": "TB071",
+    "title": "金融机构反洗钱和反恐怖融资监督管理办法",
+    "source_type": "官方正文",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.moj.gov.cn/pub/sfbgw/flfggz/flfggzbmgz/202106/t20210617_427769.html"
+    ]
+  },
+  {
+    "id": "TB041",
+    "title": "基金托管人资格核准行政许可服务指南",
+    "source_type": "证监会行政许可服务指南",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.csrc.gov.cn/csrc/c101968/c4179850/content.shtml"
+    ]
+  },
+  {
+    "id": "TB072",
+    "title": "金融机构大额交易和可疑交易报告管理办法",
+    "source_type": "官方正文",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.moj.gov.cn/pub/sfbgw/flfggz/flfggzbmgz/201701/t20170122_145949.html",
+      "https://camlmac.pbc.gov.cn/fanxiqianju/135153/135173/3286153/index.html"
+    ]
+  },
+  {
+    "id": "TB076",
+    "title": "人民币银行结算账户管理办法",
+    "source_type": "官方正文",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.moj.gov.cn/pub/sfbgw/flfggz/flfggzbmgz/200308/t20030813_143500.html"
+    ]
+  },
+  {
+    "id": "TB078",
+    "title": "支付结算办法",
+    "source_type": "人民银行清算总中心转载",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.cncc.cn/zcfg/200903/t20090323_286.html"
+    ]
+  },
+  {
+    "id": "TB092",
+    "title": "企业会计准则——基本准则",
+    "source_type": "财政部规章库",
+    "current_status": "现行有效",
+    "urls": [
+      "https://tfs.mof.gov.cn/caizhengbuling/201407/t20140729_1119494.htm"
+    ]
+  },
+  {
+    "id": "TB093",
+    "title": "企业会计准则第22号——金融工具确认和计量",
+    "source_type": "财政部规章库",
+    "current_status": "现行有效",
+    "urls": [
+      "https://kjs.mof.gov.cn/zt/kjzzss/kuaijizhunzeshishi/201709/t20170908_2694655.htm"
+    ]
+  },
+  {
+    "id": "TB094",
+    "title": "企业会计准则第23号——金融资产转移",
+    "source_type": "财政部规章库",
+    "current_status": "现行有效",
+    "urls": [
+      "https://kjs.mof.gov.cn/zt/kjzzss/kuaijizhunzeshishi/201709/t20170908_2694626.htm"
+    ]
+  },
+  {
+    "id": "TB095",
+    "title": "企业会计准则第24号——套期会计",
+    "source_type": "财政部官网",
+    "current_status": "现行有效",
+    "urls": [
+      "https://kjs.mof.gov.cn/zt/kjzzss/kuaijizhunzeshishi/201709/t20170908_2694624.htm"
+    ]
+  },
+  {
+    "id": "TB096",
+    "title": "企业会计准则第37号——金融工具列报",
+    "source_type": "财政部会计司",
+    "current_status": "现行有效",
+    "urls": [
+      "https://kjs.mof.gov.cn/zt/kjzzss/kuaijizhunzeshishi/201709/t20170907_2694118.htm"
+    ]
+  },
+  {
+    "id": "TB097",
+    "title": "企业会计准则第39号——公允价值计量",
+    "source_type": "财政部规章库",
+    "current_status": "现行有效",
+    "urls": [
+      "https://kjs.mof.gov.cn/zt/kjzzss/kuaijizhunzeshishi/201512/t20151208_1602631.htm"
+    ]
+  },
+  {
+    "id": "TB140",
+    "title": "证券期货经营机构私募资产管理业务管理办法",
+    "source_type": "证监会规章",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.csrc.gov.cn/csrc/c101953/c6987995/content.shtml"
+    ]
+  },
+  {
+    "id": "TB141",
+    "title": "证券期货经营机构私募资产管理计划运作管理规定",
+    "source_type": "证监会规范性文件",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.csrc.gov.cn/csrc/c101954/c6987994/content.shtml"
+    ]
+  },
+  {
+    "id": "TB142",
+    "title": "商业银行理财业务监督管理办法",
+    "source_type": "官方正文",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.moj.gov.cn/pub/sfbgw/flfggz/flfggzbmgz/201903/t20190318_146227.html",
+      "https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=194055"
+    ]
+  },
+  {
+    "id": "TB143",
+    "title": "保险资金运用管理办法",
+    "source_type": "官方正文",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.moj.gov.cn/pub/sfbgw/flfggz/flfggzbmgz/201803/t20180309_146148.html"
+    ]
+  },
+  {
+    "id": "TB172",
+    "title": "银行保险机构消费者权益保护管理办法",
+    "source_type": "官方正文",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=1087524&generaltype=0&itemId=4098"
+    ]
+  },
+  {
+    "id": "TB144",
+    "title": "基本养老保险基金投资管理办法",
+    "source_type": "全国社会保障基金理事会转载",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.ssf.gov.cn/portal/zcfg/nbgzzd/webinfo/2021/12/1640743468474484.htm"
+    ]
+  },
+  {
+    "id": "TB146",
+    "title": "企业年金基金管理办法",
+    "source_type": "官方正文",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.moj.gov.cn/pub/sfbgw/flfggz/flfggzbmgz/201108/t20110823_144980.html"
+    ]
+  },
+  {
+    "id": "TB147",
+    "title": "职业年金基金管理暂行办法",
+    "source_type": "地方人社部门官方转载",
+    "current_status": "现行有效",
+    "urls": [
+      "https://rst.fujian.gov.cn/zw/zxwj/rsbwj/201612/t20161219_913922.htm"
+    ]
+  },
+  {
+    "id": "TB173",
+    "title": "证券期货投资者适当性管理办法",
+    "source_type": "证监会规章",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.csrc.gov.cn/csrc/c106256/c1653849/content.shtml",
+      "https://www.csrc.gov.cn/csrc/c101939/c1045348/content.shtml"
+    ]
+  },
+  {
+    "id": "TB215",
+    "title": "私募投资基金监督管理暂行办法",
+    "source_type": "证监会规章",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.csrc.gov.cn/csrc/c101939/c1045352/content.shtml"
+    ]
+  },
+  {
+    "id": "TB216",
+    "title": "私募投资基金登记备案办法",
+    "source_type": "中基协自律规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://fg.amac.org.cn/governmentrules_3854/zcgz_zlgz/zlgz_smjj/zlgz_smjj_cpl/202303/P020231126438070516230.pdf"
+    ]
+  },
+  {
+    "id": "TB219",
+    "title": "私募证券投资基金运作指引",
+    "source_type": "中基协自律规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.amac.org.cn/xwfb/xhyw/202404/P020240430698706100795.pdf"
+    ]
+  },
+  {
+    "id": "TB220",
+    "title": "私募投资基金募集行为管理办法",
+    "source_type": "中基协自律规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.amac.org.cn/fwdt/wyb/jgdjhcpbeian/zcglcpba/xgzc/201912/t20191222_19878.html",
+      "https://www.amac.org.cn/xwfb/tzgg/201604/t20160415_18610.html"
+    ]
+  },
+  {
+    "id": "TB231",
+    "title": "商业银行理财子公司管理办法",
+    "source_type": "官方正文",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.moj.gov.cn/pub/sfbgw/flfggz/flfggzbmgz/201903/t20190318_146286.html"
+    ]
+  },
+  {
+    "id": "TB232",
+    "title": "理财公司理财产品销售管理暂行办法",
+    "source_type": "官方正文",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.moj.gov.cn/pub/sfbgw/flfggz/flfggzbmgz/202108/t20210820_435379.html"
+    ]
+  },
+  {
+    "id": "TB247",
+    "title": "保险资产管理产品管理暂行办法",
+    "source_type": "官方正文",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.moj.gov.cn/pub/sfbgw/flfggz/flfggzbmgz/202101/t20210105_146495.html",
+      "https://www.nfra.gov.cn/cn/view/pages/rulesDetail.html?docId=1024945&generaltype=1&itemId=4214"
+    ]
+  },
+  {
+    "id": "TB252",
+    "title": "个人养老金实施办法",
+    "source_type": "地方政府官方转载",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.xinjiang.gov.cn/xinjiang/qtwj/202211/a0aafddd60a04d4dbfaa6c571c57af82.shtml"
+    ]
+  },
+  {
+    "id": "TB253",
+    "title": "个人养老金投资公开募集证券投资基金业务管理暂行规定",
+    "source_type": "证监会公告",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.csrc.gov.cn/csrc/c100028/c6289632/content.shtml"
+    ]
+  },
+  {
+    "id": "TB257",
+    "title": "合格境外机构投资者和人民币合格境外机构投资者境内证券期货投资管理办法",
+    "source_type": "证监会规章",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.csrc.gov.cn/csrc/c106256/c1653823/content.shtml",
+      "https://www.csrc.gov.cn/csrc/c101862/c1022466/content.shtml"
+    ]
+  },
+  {
+    "id": "TB258",
+    "title": "境外机构投资者境内证券期货投资资金管理规定",
+    "source_type": "外汇局官方正文",
+    "current_status": "现行有效",
+    "urls": [
+      "https://m.safe.gov.cn/safe/2024/0726/24815.html"
+    ]
+  }
+]

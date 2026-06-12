@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国务院客户端下载页</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+        .bg{
+            background: #fff url(bg.png) no-repeat center top;
+            background-size: 100% auto;
+            background-position: center top;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #00558e;
+            position: relative;
+        }
+        .container{
+            width: 90%;
+            max-width: 750px;
+            margin: 0 auto;
+            text-align: center;
+            position: absolute;
+            left: 50%;
+            top: 110vw;
+            transform: translateX(-50%);
+        }
+        .container img{
+            display: block;
+            width: 40vw;
+            max-width: 127pt;
+            height: auto;
+            margin: 2vh auto;
+        }
+        .iPhone, .Android, .harmonyOS {
+            margin: 2vh auto;
+            position: static;
+            cursor: pointer;
+        }
+        
+        /* 遮罩层样式 */
+        .zhezhaoceng {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            padding-top: 0;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .zhezhaoceng.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .zhezhaoceng-content {
+            text-align: center;
+            max-width: 80%;
+        }
+        
+        .zhezhaoceng-content img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+        }
+        
+        /* 横屏适配 */
+        @media (orientation: landscape) {
+            .bg {
+                background-size: auto 100%;
+                background-color: #fff;
+            }
+            
+            .container {
+                top: 63vh;
+            }
+            
+            .container img {
+                width: 13vw;
+                max-width: 90pt;
+            }
+        }
+    </style>
+    <script>
+        // 检查是否在微信中
+        function isWeiXin() {
+            var ua = window.navigator.userAgent.toLowerCase();
+            return ua.match(/MicroMessenger/i) == 'micromessenger';
+        }
+        
+        // 页面加载完成后执行
+        window.addEventListener('DOMContentLoaded', function() {
+            // 获取Android下载按钮
+            var androidBtn = document.querySelector('.Android');
+            var zhezhaoceng = document.querySelector('.zhezhaoceng');
+            
+            // 绑定Android按钮点击事件
+            if (androidBtn) {
+                androidBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var inWeixin = isWeiXin();
+                    if (inWeixin) {
+                        // 在微信中，显示遮罩层
+                        zhezhaoceng.classList.add('show');
+                    } else {
+                        // 不在微信中，直接跳转到下载链接
+                        window.location.href = 'https://app.www.gov.cn/govdata/StateCouncil_v5.11.2.apk';
+                    }
+                });
+            }
+            
+            // 绑定遮罩层关闭事件
+            if (zhezhaoceng) {
+                zhezhaoceng.addEventListener('click', function(e) {
+                    // 点击遮罩层的任何位置都关闭
+                    zhezhaoceng.classList.remove('show');
+                });
+            }
+        });
+    </script>
+</head>
+<body class="bg">
+    <div class="container">
+        <a href="https://apps.apple.com/cn/app/%E5%9B%BD%E5%8A%A1%E9%99%A2/id1077644533"><img src="iPhone.png" class="iPhone" alt=""></a>
+        <a href="https://app.www.gov.cn/govdata/StateCouncil_v5.12.0.apk"><img src="Android.png" class="Android"  alt=""></a>
+        <a href="store://appgallery.huawei.com/app/detail?id=cn.gov.har"><img src="harmonyOS.png" class="harmonyOS"   alt=""></a>
+    </div>
+    
+    <!-- 遮罩层 -->
+    <div class="zhezhaoceng">
+        <div class="zhezhaoceng-content">
+            <img src="float_c1.png" alt="请在浏览器中打开" />
+        </div>
+    </div>
+</body>
+</html>

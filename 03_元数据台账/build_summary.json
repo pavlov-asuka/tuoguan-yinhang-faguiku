@@ -4,20 +4,20 @@
   "source": "中国商业银行托管业务条线大法规库总目录.md",
   "total_rules": 348,
   "p0_rules": 192,
-  "rules_with_files": 68,
-  "p0_without_files": 138,
-  "rules_waiting": 279,
+  "rules_with_files": 236,
+  "p0_without_files": 51,
+  "rules_waiting": 129,
   "legacy_reused_records": 61,
   "legacy_manifest_entries": 179,
   "search_index": {
     "path": "03_元数据台账\\search.db",
     "rules": 348,
-    "documents": 90,
-    "chunks": 7724,
+    "documents": 273,
+    "chunks": 10531,
     "missing_texts": 0,
-    "built_at": "2026-06-12 11:58:52",
+    "built_at": "2026-06-12 14:21:34",
     "sqlite_version": "3.50.4",
     "fts_tokenizer": "trigram"
   },
-  "built_at": "2026-06-12 11:58:52"
+  "built_at": "2026-06-12 14:21:34"
 }

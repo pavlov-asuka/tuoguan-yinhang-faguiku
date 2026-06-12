@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>文档下载</title>
+    <link rel="stylesheet" href="../../images/swiper.css">
+    <link rel="stylesheet" type="text/css" href="../../images/lanrenzhijia.css">
+    <link rel="stylesheet" type="text/css" href="../../images/base.css">
+<style>
+@media screen and (min-width: 1000px) {
+
+  .top_banner{
+    background: url("../images/P020180123414009774146.png") no-repeat center center ;
+  }
+
+
+  body .con{
+    border: none;
+    background-color:#f5f5f5;
+    margin-top: 0px;
+  }
+  .con_fl{
+    margin-top: 32px;
+    width: 233px;
+    /* height: 232px; */
+    background-color: #ffffff;
+  }
+  .con_fl ul{
+    background-color: #fff;
+  }
+  .con_fl ul li{
+    height: 45px;
+    line-height: 45px;
+    font-size: 14px;
+    padding-left: 15px;
+    border-bottom: 1px solid #f2f2f2;
+    font-weight: bold;
+    cursor:pointer;
+  }
+
+  .cap{
+    color: #205b9b;
+    font-weight: bold;
+  }
+  .con_fr{
+    margin-top: 32px;
+    width: 742px;
+    border-top: 2px solid #205b9b;
+    border-bottom: 1px solid #ebebeb;
+    background-color: #ffffff;
+  }
+  .gzdt{
+    height: 85px;
+    background:url('../../images/qszhx_bj_1000_2018.1.8.png');
+    padding-left: 80px;
+  }
+  .gzdt div{
+    color: #ffffff;
+    font-size: 28px;
+  }
+  .gzdt td{
+    color: #ffffff;
+    font-size: 28px;
+  }
+  .gzdt .eng{
+    font-size: 14px;
+    margin-top:7px; 
+    color: #a1c3e8;
+  }
+  .con_conent .list{
+    margin: 12px 0 0 33px;
+  }
+  .con_conent .list li {
+    height: 49px;
+    line-height: 49px;
+    border-bottom: 1px dashed #eeeeee;
+  }
+  .con_conent .list li span{
+    color: #999999;
+    padding-right: 34px;
+    font-size: 14px;
+  }
+ .con_conent .list li a{
+    display: block;
+    float: left;
+    width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+   body .con_conent{
+     padding-bottom: 0px;
+   }
+}
+    
+@media screen and (min-width: 1440px) {
+  .top_banner{
+
+
+    background: url("../images/P020180123415508617072.png") no-repeat center center ;
+
+
+
+  }
+  .con_conent{
+    margin-top: 39px;
+  }  
+  .con_fl{
+    width: 280px;
+    height: 104px;
+  }
+  .con_fr{
+    width: 890px;
+  }
+  .con_fr .con_conent{
+    margin-top: 0px;
+  }
+  .con_conent .list{
+    margin:14px 0 0 40px;
+  }
+  .con_conent .list li{
+    height: 59px;
+    line-height: 59px;
+  }
+  .con_conent .list li a,.con_conent .list li span{
+    font-size: 16px;
+  }
+ .con_conent .list li a{
+    display: block;
+    float: left;
+    width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+  .gzdt{
+    height: 104px;
+    background:url('../../images/qszhx_bj_1200_2018.1.8.png');
+    padding-left: 100px;
+  }
+  .gzdt div{
+    font-size: 40px;
+  }
+  .gzdt td{
+    font-size: 40px;
+  }
+
+  .gzdt .eng{
+    font-size: 18px;
+  }
+
+ body .con_conent{
+   padding-bottom: 0px;
+ }
+
+}
+    
+    
+@media screen and (max-width: 1000px) {
+  .top_banner{
+
+    background: url("../images/P020180123414009774146.png") no-repeat center center ;
+
+
+  }
+  body .con{
+    border: none;
+    background-color:#f5f5f5;
+    margin-top: 0px;
+  }
+  .cap{
+    color: #205b9b;
+    font-weight: bold;
+  }
+  .con_fr{
+    width: 100%;
+    border-top: 2px solid #205b9b;
+    border-bottom: 1px solid #ebebeb;
+    background-color: #ffffff;
+  }
+  .con_conent .list li {
+    /* height: 1.06rem; */
+    padding: 0.1rem 0 0.1rem 0;
+    line-height: 0.48rem;
+    border-bottom: 1px dashed #eeeeee;
+  }
+  .h_span{
+    height: 0.65rem;
+  }
+   .con_conent .list li a{
+     font-size: 0.34rem;
+   }
+  .con_conent .list li span{
+    color: #999999;
+    padding-right: 0.18rem;
+    font-size: 0.28rem;
+  }
+  .timeSpan1{
+    display: block;
+    text-align: right;
+    float: none;
+  }
+  .click_more{
+    width: 6.86rem;
+    height: 0.84rem;
+    line-height: 0.84rem;
+    background-color: #205b9b;
+    border-radius: 0.1rem;
+    margin-top: 0.6rem;
+    font-size: 0.34rem;
+    text-align: center;
+    color: #ffffff;
+    cursor: pointer;
+    margin-bottom: 0.2rem;
+  }
+   body .con_conent{
+     padding-bottom: 0px;
+   }  
+}
+</style>
+    
+    
+    <script src="../../images/jquery-1.11.2.min.js"></script>
+    <script src="../../images/swiper.min.js"></script>
+    <script src="../../images/tendina.min.js"></script>
+    <script src="../../images/respond.src.js"></script>
+    <script src="../../images/base.js"></script>
+      <script>
+            
+                    (function(doc, win) {
+                        var html = doc.getElementsByTagName("html")[0],
+                        // orientationchange->手机屏幕转屏事件
+                        // resize->页面大小改变事件(一边pc端有用)
+                            reEvt = "orientationchange" in win ? "orientationchange" : "resize",
+                            reFontSize = function() {
+                                var clientW = doc.documentElement.clientWidth || doc.body.clientWidth;
+                                if(!clientW) {
+                                    return;
+                                }
+                                if(clientW>1000){
+                                    html.style.fontSize = '16px'
+                                }else{
+                                    html.style.fontSize = (clientW / 7.5) + "px";
+                                }
+            
+                        }
+            
+                        function addEventHandler(target,type,func){
+                         if(target.addEventListener){
+                          //监听IE9，谷歌和火狐主流
+                          target.addEventListener(type, func, false);
+                         }else if(target.attachEvent){
+                          target.attachEvent("on" + type, func);
+                         }else{
+                          target["on" + type] = func;
+                         }
+                        }
+                        addEventHandler(win ,reEvt, reFontSize)
+                        addEventHandler(doc ,"DOMContentLoaded", reFontSize)
+            
+            
+                        // win.addEventListener(reEvt, reFontSize);
+                        // DOMContentLoaded->dom加载完就执行,onload要dom/./images/js都加载完才执行
+                        // doc.addEventListener("DOMContentLoaded", reFontSize);
+            
+            
+            
+            
+                    })(document, window);
+    </script>
+</head>
+<body>
+<!--头部嵌套开始-->
+<!-- 头部 -->
+    <div class="header">
+        <div class="header_logo fl">
+            <img src="../../images/logo_1_03.png" alt="" />
+        </div>
+        <!-- 头部导航栏 -->
+        <div class="headerList fl">
+            <ul>
+                <li class="noness iteam_li fl"><a href='../../'>首页<span class="nones"></span></a><ul class="nav_hover iteam_con">
+                    
+                </ul></li>
+                <li class="heder_sel iteam_li fl"><a  href="../../gywm/" target="_self" >关于我们<span class=""></span></a>
+                   <ul class="nav_hover iteam_con">
+                    <li id="boreder_top"></li>
+  
+<li><a href="../../gywm/zzxjs/">单位概况</a></li>
+
+<li><a href="../../gywm/ldjj/">现任领导</a></li>
+
+<li><a href="../../gywm/jgsz/">组织机构</a></li>
+
+<li><a href="../../gywm/jgsz_91/">直属企业</a></li>
+
+<li><a href="../../gywm/zzry/">资质荣誉</a></li>
+
+<li><a href="../../gywm/shzr/">社会责任</a></li>
+
+                    <li id="border_bottom"></li>
+                   </ul>
+                </li>
+
+                <li class="heder_sel iteam_li fl"><a href="../../gzdt/" target="_self" >工作动态<span class=""></span></a>
+                  <ul class="nav_hover iteam_con">
+                    <li id="boreder_top"></li> 
+  
+<li><a href="../../gzdt/xydt/">工作要闻</a></li>
+
+<li><a href="../../gzdt/djgz/">党建工作</a></li>
+
+<li><a href="../../gzdt/qtgzdt/">文化宣传</a></li>
+
+                    <li id="border_bottom"></li>
+                  </ul>
+                </li>
+
+                 <li class="heder_sel iteam_li fl"><a href="../" target="_self" >业务服务<span class=""></span></a>
+                  <ul class="nav_hover iteam_con">
+                    <li id="boreder_top"></li>
+  
+<li><a href="../xxgg/">信息公告</a></li>
+
+<li><a href="../tjsj/">统计数据</a></li>
+
+<li><a href="https://ccsp.cncc.cn/">中国人民银行清算总中心用户服务平台</a></li>
+
+<li><a href="./">文档下载</a></li>
+
+                    <li id="border_bottom"></li>
+                  </ul>
+                </li>
+
+
+               
+                <li class="heder_sel iteam_li fl"><a  href="../../zfqszs/" target="_self" >支付知识<span class=""></span></a>
+                  <ul class="nav_hover iteam_con">
+                    <li id="boreder_top"></li>
+  
+<li><a href="../../zfqszs/zfqsxtjj/">系统介绍</a></li>
+
+<li><a href="../../zfqszs/qtzs/">研究交流</a></li>
+
+<li><a href="../../zfqszs/jrzs/">金融知识</a></li>
+
+                    <li id="border_bottom"></li>
+                  </ul>
+                </li>
+
+
+                <li class="heder_sel iteam_li fl"><a  href="../../ryzp/" target="_self">人才招聘<span class=""></span></a>
+                   <ul class="nav_hover iteam_con">
+                    <li id="boreder_top"></li>
+  
+<li><a href="../../ryzp/qszzxzp/">清算总中心招聘信息</a></li>
+
+<li><a href="../../ryzp/zsqyzp/">直属企业招聘信息</a></li>
+
+                    <li id="border_bottom"></li>
+                   </ul>
+                </li>
+
+
+
+
+                <li class="heder_sel iteam_li fl"><a  href="../../zcfg/" target="_self">政策法规<span class="nones"></span></a>
+                   <ul class="nav_hover iteam_con">
+                   </ul>
+                </li>
+
+
+
+
+            </ul>
+        </div>
+
+
+
+       <!-- <div class="headerBtn fr">
+<form method="get"  action="/was5/web/search?" name="search">
+<input type="tel" id="orsen" name="orsen" value="请输入搜索内容" onfocus="if(value=='请输入搜索内容') {value=''}" onblur="if (value=='') {value=''}" />
+<input type="hidden" name="channelid" value="298445" />
+<a href='#' class="search_ss fl"   onclick="document.forms['search'].submit();"   ></a>
+</form>
+        </div>   -->
+        <div class="headerBtn fr">
+<form method="get"  action="/was5/web/search?" name="search" id="search">
+<input type="tel" id="orsen" name="orsen" value="" placeholder="请输入检索内容" />
+<input type="hidden" name="channelid" value="298445" />
+<a href='javascript:onSubmit()' class="search_ss fl"></a>
+</form>
+        </div>
+
+
+        <!--**************************************** 移动端头部导航 **********************************************-->
+
+
+        <div class="headerList_wap fl">
+            <input type="button" name="" class="fl btns1" />
+            <input type="button" name="" class="fr btns2" />
+        </div>
+        <div class="wap_content">
+            <ul id="menu" class="wap_1">
+              <li>
+                <a href="../../gywm/">关于我们</a>
+                <ul>
+  
+<li><a href="../../gywm/zzxjs/">单位概况</a></li>
+
+<li><a href="../../gywm/ldjj/">现任领导</a></li>
+
+<li><a href="../../gywm/jgsz/">组织机构</a></li>
+
+<li><a href="../../gywm/jgsz_91/">直属企业</a></li>
+
+<li><a href="../../gywm/zzry/">资质荣誉</a></li>
+
+<li><a href="../../gywm/shzr/">社会责任</a></li>
+
+                </ul>
+              </li>
+
+              <li>
+                <a href="../../gzdt/">工作动态</a>
+                <ul>
+  
+<li><a href="../../gzdt/xydt/">工作要闻</a></li>
+
+<li><a href="../../gzdt/djgz/">党建工作</a></li>
+
+<li><a href="../../gzdt/qtgzdt/">文化宣传</a></li>
+
+                </ul>
+              </li>
+
+              <li>
+                <a href="../">业务服务</a>
+                <ul>
+  
+<li><a href="../xxgg/">信息公告</a></li>
+
+<li><a href="../tjsj/">统计数据</a></li>
+
+<li><a href="https://ccsp.cncc.cn/">中国人民银行清算总中心用户服务平台</a></li>
+
+<li><a href="./">文档下载</a></li>
+
+                </ul>
+              </li>
+
+
+              <li>
+                <a href="../../zfqszs/">支付知识</a>
+                <ul>
+  
+<li><a href="../../zfqszs/zfqsxtjj/">系统介绍</a></li>
+
+<li><a href="../../zfqszs/qtzs/">研究交流</a></li>
+
+<li><a href="../../zfqszs/jrzs/">金融知识</a></li>
+
+                </ul>
+              </li>
+
+              <li>
+                <a href="../../ryzp/">人才招聘</a>
+                <ul>
+  
+<li><a href="../../ryzp/qszzxzp/">清算总中心招聘信息</a></li>
+
+<li><a href="../../ryzp/zsqyzp/">直属企业招聘信息</a></li>
+
+                </ul>
+              </li>
+
+
+              <li>
+                <a href="../../zcfg/">政策法规</a>
+                <ul>
+  
+                </ul>
+              </li>
+
+            </ul>
+
+        </div>
+
+
+		
+<div class="wap_Input">
+        <form   method="get"  action="/was5/web/search?">
+            <div class="wap_InputBox">
+            <input name="orsen" id="orsen" class="wap_InputSearch" placeholder="请输入检索内容" type="text" />
+            <input type="hidden" name="channelid" value="298445" />
+            <input class="wap_InputA" type="submit" value="" />
+             </div>
+        </form>
+</div>
+</div>
+<!--头部嵌套结束-->
+<!--栏目图片及说明开始-->
+<div class="top_banner" style="background:url(../images/P020180123414009774146.png) no-repeat center center;">
+        <div class="top_banner_con">
+
+          安全 高效 快捷 惠民
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+<!--栏目图片及说明结束-->
+
+     <div class="hidden_pc con_title_wap clearfix">
+        <div class=" fl"><a href="../../" title="首页" class="CurrChnlCls">首页</a>><a href="../" title="业务服务" class="CurrChnlCls">业务服务</a>><a href="./" title="文档下载" class="CurrChnlCls">文档下载</a></div>
+    </div>
+    <!-- 内容 -->
+       <!-- 内容 -->
+       <div class="con clearfix">
+<!--左侧嵌套开始-->
+<div class="fl con_fl hidden_wap">
+
+            <div class="gzdt">
+                <!-- <div>业务服务</div>-->
+                <table><tr><td>
+                   业务服务
+                </td></tr></table>
+              <!--  <div class="eng">Business Services</div>-->
+            </div>
+            <ul>
+            
+            
+                <li ><a href='../xxgg/' >·　信息公告</a></li>
+            
+
+            
+            
+                <li ><a href='../tjsj/' >·　统计数据</a></li>
+            
+
+            
+            
+                <li ><a href='https://ccsp.cncc.cn/' >·　中国人民银行清算总中心用户服务平台</a></li>
+            
+
+            
+            
+                <li ><a href='./' class=" cap">·　文档下载</a></li>
+            
+
+                
+            </ul>
+
+
+</div>
+<!--左侧嵌套结束-->
+        <div class="fr con_fr  iteams">
+            <div class="con_title clearfix">
+                <span class=" fl">文档下载</span>
+                <div class="hidden_wap fr"><a href="../../" title="首页" class="CurrChnlCls">首页</a>><a href="../" title="业务服务" class="CurrChnlCls">业务服务</a>><a href="./" title="文档下载" class="CurrChnlCls">文档下载</a></div>
+            </div>
+            <div class="con_conent">
+               <ul class="list" id='div' style='min-height:300px;'>
+    
+               <li><span class="fl" style="padding-right:12px">▪</span><a href="./202203/t20220324_929.html">2022年支付清算系统运行维护安排</a><span class="fr timeSpan1">2022-02-23</span></li>
+    
+               <li><span class="fl" style="padding-right:12px">▪</span><a href="../xxgg/202001/t20200113_654.html">2020年支付清算系统运行维护安排</a><span class="fr timeSpan1">2020-02-18</span></li>
+    
+               <li><span class="fl" style="padding-right:12px">▪</span><a href="./201812/t20181225_591.html">2019年支付清算系统运行维护安排</a><span class="fr timeSpan1">2019-01-03</span></li>
+    
+
+               </ul>
+               <button class="click_more hidden_pc"  id='anniu' type="button" onclick="goto()" >点击加载更多</button>
+
+<script>
+$.ajax({
+	url:'index_41_1.html',
+	success: function(html){
+			data_html_N = html;
+		},
+	error: function(error){
+		data_html_N = 'error';
+		$('#anniu').hide();
+	}
+});
+
+var page = 1;
+function goto(){
+	console.log('aaaaaa');
+	console.log(page);
+	$.ajax({
+		url:'index_41_' + page + '.html',
+		success: function(html){
+				data_html = html;
+				page = page + 1;
+				$('#div').append('<sun style="display:none;">' + data_html + '</sun>');
+				$('sun').eq(-1).slideDown("slow");
+			},
+		error: function(error){
+			data_html = 'error';
+		}
+	});
+	page_N = page + 1;
+	$.ajax({
+		url:'index_41_' + page_N + '.html',
+		success: function(html){
+				data_html_N = html;
+			},
+		error: function(error){
+			data_html_N = 'error';
+			$('#anniu').hide();
+		}
+	});
+	
+	console.log('bbbbbb');
+	console.log(page);
+};
+</script>
+      <!--分页-->
+<div id="fanye" class="clearfix hidden_wap">
+<script language="javascript">
+	var currentPage=0;
+	var prevPage=currentPage-1
+	var nextPage=currentPage+1
+	var countPage=1
+	var endPage=countPage-1
+	//document.write("<a href=\"index.shtml\" target=\"_self\" >首页</a>&nbsp;");
+	if(countPage>1&&currentPage!=0&&currentPage!=1)
+document.write("<a class='fl' href=\"index"+"_"+prevPage+"."+"html\" target=\"_self\">上一页</a><ul class='fl clearfix'>");
+	else if(countPage>1&&currentPage!=0&&currentPage==1)
+document.write("<a class='fl' href=\"index.html\" target=\"_self\">上一页</a><ul class='fl clearfix'>");
+	else
+document.write("<a class='fl'>上一页</a><ul class='fl clearfix'>");
+	var num=5;
+	var startPage=currentPage-2;
+	if(startPage<0)startPage=0;
+	var endpage=startPage+num;
+	if(endpage>countPage)
+	endpage=countPage;
+	startPage=endpage-6;
+	if(startPage<0)startPage=0;
+	for(var i=startPage;i<endpage;i++){
+		if(currentPage==i)
+document.write("<li class='fl'><a class='iteam cur' >"+(i+1)+"</a></li>");
+	else if(i==0){
+document.write("<li class='fl'><a  class='iteam' href=\"index.html\" target=\"_self\">"+1+"</a></li>");
+		 }else
+document.write("<li class='fl'><a class='iteam'  href=\"index"+"_"+i+"."+"html\" target=\"_self\">"+(i+1)+"</a></li>");}
+	if(countPage>1&&currentPage!=(countPage-1))
+document.write("</ul><a class='fl' href=\"index"+"_"+nextPage+"."+"html\" target=\"_self\">下一页</a>");
+	else
+document.write("</ul><a class='fl'>下一页</a>&nbsp;");
+</script>
+ </div>
+      <!--分页-->
+      </div>
+        </div>
+    </div>  
+    <!--嵌套尾部开始-->
+<div class="footer">
+        <div class="footer_c">
+            <div class="footer_left fl" style="cursor:pointer"  onclick="window.location='//bszs.conac.cn/sitename?method=show&amp;id=29099553D1623D77E053022819AC36E4';">
+
+            </div>
+            <div class="footer_moudle fl" style="text-align:center;">
+              <!--  <ul>
+                    <li class="fl footer_ani1"><a href="../../lxwm/">联系我们</a><span>丨</span></li>
+                    <li class="fl footer_ani"><a href="../../ryzp/">人员招聘</a><span>丨</span></li>
+                    <li class="fl footer_ani"><a href="../../wzdt/">网站地图</a><span>丨</span></li>
+                    <li class="fl footer_ani4"><a href="../../sysm/">使用说明</a><span></span></li>
+                </ul>-->
+<p><a href="../../lxwm/">联系我们</a><span>丨</span><a href="../../ryzp/">人才招聘</a><span>丨</span><a href="../../wzdt/">网站地图</a><span>丨</span><a href="../../sysm/">使用说明</a></p>
+                <p>中国人民银行清算总中心&nbsp;&nbsp;版权所有<span>丨</span>北京市海淀区阜成路18号华融大厦<span>丨</span>邮政编码:100048</p>
+                <p><img style="vertical-align: middle;" src="../../images/cncc_footerJH_v202211.png" /> 京公网安备 11010802040696号 &nbsp; &nbsp; &nbsp; 京ICP备09009692号-1<span>丨</span><img src="../../images/ipv6logo2.png" style="padding-top:7px;"OLDSRC="ipv6logo2.png" /></p>
+            </div>
+             
+                 <div class="footer_right fr" style="background:url(../../footerewm/201804/W020180611550825325670.jpg) no-repeat 100% 0%;"></div>
+             
+        </div>
+        <div class="footer_wap">
+             <p>中国人民清算总中心&nbsp;&nbsp;版权所有</p>
+<p>
+<img style="vertical-align: middle;width: 0.4rem;" src="../../images/cncc_footerJH_v202211.png" /> 京公网安备 11010802040696号
+</p>
+              <p>京ICP备09009692号</p>
+<p></span><img src="../../images/ipv6logo2.png" style="padding-top:7px;"OLDSRC="ipv6logo2.png" /></p>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+    $(function(){
+ 
+               
+                 //移动端下拉列表插件
+                 $('#menu').tendina();
+                 // 移动端点击下拉
+ 
+                //  PC端下拉列表
+                 $(".heder_sel").on("mouseenter",function(){
+                    $(this).addClass("active").siblings('li').removeClass('active');
+                 })
+                 $(".heder_sel").on("mouseleave",function(){
+                     $(this).removeClass('active')
+                 })
+
+                $(".iteam_li").on("mouseenter",function(){
+                    var w=$(this).index();
+                    var widthThisul = $(this).find('ul').width();
+                    var windowWidth=$(window).width();
+                    if(windowWidth>1440){
+                         var widthThisTopLi =  $(this).width()+30;
+                    }else{
+                         var widthThisTopLi =  $(this).width()+windowWidth*0.6*0.015;
+                    }
+                   
+                    $(".iteam_con").eq(w).css('left', -Math.abs((widthThisul-widthThisTopLi)/2)+'px')
+                    $(".iteam_con").eq(w).stop().slideDown(500)
+                  })
+                  $(".iteam_li").on("mouseleave",function(){
+                     var w=$(this).index();
+                     $(".iteam_con").eq(w).stop().slideUp(500);
+                  })
+
+              $(".iteam_con").on("mouseenter",function(){
+                    var w=$(this).index()-1;
+                     var widthThisul = $(this).width();
+                    var widthThisTopLi =  $(this).parent('.iteam_li').width()+30;
+                    $(".iteam_con").eq(w).css('left', -Math.abs((widthThisul-widthThisTopLi)/2)+'px')
+                    $(".iteam_con").eq(w).stop().slideDown(500)
+                  })
+                  $(".iteam_con").on("mouseleave",function(){
+                     var w=$(this).index()-1;
+                     $(".iteam_con").eq(w).stop().slideUp(500);
+              })
+
+
+
+
+                 // 标签切换
+$(".header_tab>li").on('click',function(){
+	// alert("1")
+	$(this).find('div').addClass('active').parent().siblings('li').find('div').removeClass('active');
+	// alert($(this).index())
+	if($(this).index()=="3")
+	{
+	$('.yw_clumn').eq(2).addClass("active").siblings('.yw_clumn').removeClass('active');
+	}else{
+		$('.yw_clumn').eq($(this).index()).addClass("active").siblings('.yw_clumn').removeClass('active');
+	}
+})
+                 //移动端字体溢出隐藏
+                 webfont()
+                 function webfont(){
+                    var p_list = $(".yw_con ol li p a")
+                     // console.log(p_list.length)
+                     if(document.documentElement.clientWidth <= 1000){
+                        for(var i = 0,len = p_list.length; i<len;i++){
+
+                            var texts = p_list.eq(i).text().slice(0, 26)+'...'
+                            // console.log(texts)
+                            p_list.eq(i).text(texts)
+                        }
+
+                     }
+                 }
+
+                 $(window).resize(function () { 
+            
+                   var windowWidth=$(window).width();
+                    if(windowWidth>1440){
+                      //  console.log(123123)
+                         $(".wap_Input").hide("normal")
+                         $(".wap_content").hide("normal")
+                    }
+
+            })
+
+
+
+    })
+        function onSubmit(){
+                        var orsen = document.getElementById('orsen').value;
+                        orsen = encodeURI(orsen);
+                        document.getElementById('orsen').value = orsen;
+                        $("#search").submit();
+                        }
+
+
+      </script>
+<!--百度统计代码-->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1f26238df79f1c43a794ec37ab158552";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!--百度统计代码结束-->
+<!--插件代码-->
+<script id="_trs_ta_js" src="//ta.trs.cn/c/js/ta.js?mpid=1327" async="async" defer="defer"></script> 
+<!--插件代码结束-->
+   <!--嵌套尾部结束-->
+</body>
+
+</html>

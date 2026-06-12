@@ -154,12 +154,13 @@ def create_schema(con: sqlite3.Connection) -> str:
         CREATE TABLE documents (
             doc_id INTEGER PRIMARY KEY,
             rule_id TEXT NOT NULL,
-            text_path TEXT NOT NULL UNIQUE,
+            text_path TEXT NOT NULL,
             raw_path TEXT,
             file_type TEXT,
             source_type TEXT,
             line_count INTEGER NOT NULL,
             char_count INTEGER NOT NULL,
+            UNIQUE(rule_id, text_path),
             FOREIGN KEY(rule_id) REFERENCES rules(rule_id)
         );
 

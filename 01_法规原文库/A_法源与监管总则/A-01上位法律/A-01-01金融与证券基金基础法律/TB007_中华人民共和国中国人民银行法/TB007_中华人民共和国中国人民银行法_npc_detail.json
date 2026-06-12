@@ -1,0 +1,77 @@
+{
+  "search_row": {
+    "bbbs": "2c909fdd678bf17901678bf6200302cb",
+    "title": "<em class='highlight'>中</em><em class='highlight'>华</em><em class='highlight'>人</em><em class='highlight'>民</em><em class='highlight'>共</em><em class='highlight'>和</em><em class='highlight'>国</em><em class='highlight'>中</em><em class='highlight'>国</em><em class='highlight'>人</em><em class='highlight'>民</em><em class='highlight'>银</em><em class='highlight'>行</em><em class='highlight'>法</em>",
+    "gbrq": "2003-12-27",
+    "sxrq": "2004-02-01",
+    "sxx": 3,
+    "zdjgName": "全国人民代表大会",
+    "xgzlHighLight": null,
+    "flxz": "法律",
+    "zdjgCodeId": 100,
+    "flfgCodeId": 140,
+    "titleHightLightList": [
+      {
+        "value": "中",
+        "highLight": true
+      },
+      {
+        "value": "华",
+        "highLight": true
+      },
+      {
+        "value": "人",
+        "highLight": true
+      },
+      {
+        "value": "民",
+        "highLight": true
+      },
+      {
+        "value": "共",
+        "highLight": true
+      },
+      {
+        "value": "和",
+        "highLight": true
+      },
+      {
+        "value": "国",
+        "highLight": true
+      },
+      {
+        "value": "中",
+        "highLight": true
+      },
+      {
+        "value": "国",
+        "highLight": true
+      },
+      {
+        "value": "人",
+        "highLight": true
+      },
+      {
+        "value": "民",
+        "highLight": true
+      },
+      {
+        "value": "银",
+        "highLight": true
+      },
+      {
+        "value": "行",
+        "highLight": true
+      },
+      {
+        "value": "法",
+        "highLight": true
+      }
+    ],
+    "score": 63.38318
+  },
+  "detail": {
+    "_detail_error": "国家法律法规数据库详情接口返回非 JSON，已跳过详情元数据",
+    "_response_preview": "<!DOCTYPE HTML>\n<html>\n\n<head>\n    <meta charset=\"utf-8\">\n</head>\n\n<body>\n    <noscript>\n        <h1><strong>Please enable JavaScript and refresh the page.</strong></h1>\n    </noscript>\n\n    <script type=\"text/javascript\">\n        (function(o,s){function g(o,s){return u(o- -'0x1c0',s);}var q=o();fun"
+  }
+}

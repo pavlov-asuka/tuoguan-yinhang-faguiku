@@ -6,7 +6,10 @@ import html
 import json
 import re
 import shutil
+import ssl
+import tempfile
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 import zipfile
@@ -15,6 +18,7 @@ from pathlib import Path
 from typing import Any
 
 from lxml import etree
+from lxml import html as lxml_html
 from pypdf import PdfReader
 
 from build_search_index import build_index
@@ -25,11 +29,13 @@ CATALOG_PATH = ROOT / "中国商业银行托管业务条线大法规库总目录
 RAW_ROOT = ROOT / "01_法规原文库"
 TEXT_ROOT = ROOT / "02_文本抽取库"
 META_ROOT = ROOT / "03_元数据台账"
+SOURCE_OVERRIDES_PATH = META_ROOT / "source_overrides.json"
 TOPIC_ROOT = ROOT / "04_托管业务专题地图"
 ENTRY_ROOT = ROOT / "00_入口与索引"
 UNRESOLVED_ROOT = ROOT / "99_unresolved"
 ARCHIVE_ROOT = ROOT / "98_历史归档" / "2026-06-12_公募基金托管库"
 ARCHIVE_MARKER = ARCHIVE_ROOT / ".archived"
+BUILD_CACHE_ROOT: Path | None = None
 
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -44,6 +50,25 @@ INTERNAL_KEYWORDS = (
     "流程图",
     "知识运营",
     "制度模板",
+)
+
+COMPOSITE_TITLE_KEYWORDS = (
+    "相关",
+    "配套",
+    "规则组",
+    "清单",
+    "入口",
+    "案例",
+    "模板",
+    "样表",
+    "手册",
+    "体系",
+    "指引库",
+    "报告规则",
+    "职责规则",
+    "税务规则",
+    "差异对照",
+    "总目录",
 )
 
 TAG_PRODUCTS = (
@@ -105,6 +130,52 @@ TAG_MARKETS = (
     "期货",
     "衍生品",
 )
+
+OFFICIAL_ENTRY_URLS = [
+    (("国家法律法规数据库",), ["https://flk.npc.gov.cn/"]),
+    (("中国政府网",), ["https://www.gov.cn/zhengce/"]),
+    (("中国人民银行",), ["https://www.pbc.gov.cn/"]),
+    (("国家金融监督管理总局",), ["https://www.nfra.gov.cn/"]),
+    (("中国证监会", "证监会"), ["https://www.csrc.gov.cn/"]),
+    (("国家外汇管理局", "外汇局"), ["https://www.safe.gov.cn/"]),
+    (("财政部",), ["https://www.mof.gov.cn/"]),
+    (("国家税务总局", "税务总局"), ["https://www.chinatax.gov.cn/"]),
+    (("中国证券投资基金业协会", "中基协", "AMBERS"), ["https://www.amac.org.cn/"]),
+    (("中国银行业协会", "中银协"), ["https://www.china-cba.net/"]),
+    (("中国证券业协会", "中证协"), ["https://www.sac.net.cn/"]),
+    (("中国期货业协会", "期货业协会"), ["https://www.cfachina.org/"]),
+    (("中国保险资产管理业协会", "保险资管业协会"), ["https://www.iamac.org.cn/"]),
+    (("中国银行间市场交易商协会", "交易商协会"), ["https://www.nafmii.org.cn/"]),
+    (("上海证券交易所",), ["https://www.sse.com.cn/"]),
+    (("深圳证券交易所",), ["https://www.szse.cn/"]),
+    (("北京证券交易所",), ["https://www.bse.cn/"]),
+    (("港交所", "香港结算"), ["https://www.hkex.com.hk/"]),
+    (("中国结算", "中登", "中国证券登记结算"), ["https://www.chinaclear.cn/"]),
+    (("上海清算所", "银行间市场清算所"), ["https://www.shclearing.com.cn/"]),
+    (("中央结算", "中债", "中央国债登记结算"), ["https://www.chinabond.com.cn/"]),
+    (("外汇交易中心",), ["https://www.chinamoney.com.cn/"]),
+    (("中国证券投资基金电子披露网站", "电子披露网站"), ["https://eid.csrc.gov.cn/fund/"]),
+    (("资产托管网上服务平台",), ["https://www.chinaclear.cn/"]),
+    (("个人养老金基金行业平台", "FIRM"), ["https://www.chinaclear.cn/", "https://www.amac.org.cn/"]),
+    (("FISP",), ["https://www.amac.org.cn/"]),
+    (("交易所", "交易所纪律处分"), ["https://www.sse.com.cn/", "https://www.szse.cn/", "https://www.bse.cn/"]),
+    (("地方证监局",), ["https://www.csrc.gov.cn/"]),
+    (("资管新规",), ["https://www.gov.cn/zhengce/", "https://www.pbc.gov.cn/"]),
+    (("商业银行资产托管业务指引",), ["https://www.china-cba.net/"]),
+    (("基金估值",), ["https://www.amac.org.cn/"]),
+    (("会计准则",), ["https://kjs.mof.gov.cn/", "https://fgk.mof.gov.cn/"]),
+    (("证券期货",), ["https://www.csrc.gov.cn/"]),
+    (("私募资产管理", "私募基金"), ["https://www.csrc.gov.cn/", "https://www.amac.org.cn/"]),
+    (("银行理财", "理财公司"), ["https://www.nfra.gov.cn/"]),
+    (("信托",), ["https://www.nfra.gov.cn/"]),
+    (("保险资金", "保险资管", "保险资产管理"), ["https://www.nfra.gov.cn/", "https://www.iamac.org.cn/"]),
+    (("企业年金", "职业年金", "社保基金", "养老金"), ["https://www.mohrss.gov.cn/", "https://www.ssf.gov.cn/"]),
+    (("QDII", "QFII", "外汇管理"), ["https://www.safe.gov.cn/", "https://www.csrc.gov.cn/"]),
+    (("沪港通", "深港通", "港股通", "互联互通"), ["https://www.sse.com.cn/", "https://www.szse.cn/", "https://www.chinaclear.cn/", "https://www.hkex.com.hk/"]),
+    (("资产证券化", "资产支持证券", "ABS", "ABN", "资产支持票据"), ["https://www.csrc.gov.cn/", "https://www.sse.com.cn/", "https://www.szse.cn/", "https://www.nafmii.org.cn/"]),
+    (("转融通", "融资融券"), ["https://www.csrc.gov.cn/", "https://www.sse.com.cn/", "https://www.szse.cn/", "https://www.chinaclear.cn/"]),
+    (("银行间债券", "债券登记托管", "债券借贷", "质押式回购", "买断式回购"), ["https://www.chinabond.com.cn/", "https://www.chinamoney.com.cn/", "https://www.shclearing.com.cn/"]),
+]
 
 TITLE_ALIASES = {
     "证券投资基金法": "中华人民共和国证券投资基金法",
@@ -376,8 +447,8 @@ def parse_catalog() -> tuple[list[CatalogItem], dict[str, Any]]:
 
 def load_legacy_rows() -> list[dict[str, Any]]:
     candidates = [
-        ARCHIVE_ROOT / "03_元数据台账" / "rules_index.json",
         META_ROOT / "rules_index.json",
+        ARCHIVE_ROOT / "03_元数据台账" / "rules_index.json",
     ]
     for path in candidates:
         if path.is_file():
@@ -536,6 +607,18 @@ def reset_generated_dirs() -> None:
         path.mkdir(parents=True, exist_ok=True)
 
 
+def snapshot_generated_dirs() -> Path | None:
+    cache_root = Path(tempfile.mkdtemp(prefix="custody_kb_cache_"))
+    copied = False
+    for source in [RAW_ROOT, TEXT_ROOT, META_ROOT]:
+        if not source.exists():
+            continue
+        target = cache_root / source.name
+        shutil.copytree(source, target)
+        copied = True
+    return cache_root if copied else None
+
+
 def ensure_category_dirs(records: list[RuleRecord]) -> None:
     for record in records:
         (RAW_ROOT / record.category).mkdir(parents=True, exist_ok=True)
@@ -551,7 +634,10 @@ def sha256(path: Path) -> str:
 
 
 def source_for_legacy_path(path_value: str) -> Path | None:
-    for base in [ROOT, ARCHIVE_ROOT]:
+    bases = [ROOT, ARCHIVE_ROOT]
+    if BUILD_CACHE_ROOT:
+        bases.insert(0, BUILD_CACHE_ROOT)
+    for base in bases:
         candidate = base / path_value
         if candidate.is_file():
             return candidate
@@ -644,9 +730,32 @@ def request_bytes(url: str, *, method: str = "GET", data: bytes | None = None, h
     req_headers = {"User-Agent": USER_AGENT, "Accept": "*/*"}
     if headers:
         req_headers.update(headers)
-    req = urllib.request.Request(url, data=data, headers=req_headers, method=method)
-    with urllib.request.urlopen(req, timeout=35) as resp:
-        return resp.read(), dict(resp.headers)
+    current_url = url
+    cookie = ""
+    for _ in range(3):
+        effective_headers = dict(req_headers)
+        if cookie:
+            effective_headers["Cookie"] = cookie
+        req = urllib.request.Request(current_url, data=data, headers=effective_headers, method=method)
+        try:
+            with urllib.request.urlopen(req, timeout=35) as resp:
+                return resp.read(), dict(resp.headers)
+        except urllib.error.HTTPError as exc:
+            if exc.code not in {301, 302, 303, 307, 308}:
+                raise
+            set_cookie = exc.headers.get("Set-Cookie", "")
+            if set_cookie:
+                cookie = set_cookie.split(";", 1)[0]
+            location = exc.headers.get("Location")
+            if not location:
+                raise
+            current_url = urllib.parse.urljoin(current_url, location)
+        except urllib.error.URLError as exc:
+            if isinstance(getattr(exc, "reason", None), ssl.SSLCertVerificationError):
+                with urllib.request.urlopen(req, timeout=35, context=ssl._create_unverified_context()) as resp:
+                    return resp.read(), dict(resp.headers)
+            raise
+    raise RuntimeError(f"重定向次数过多：{url}")
 
 
 def npc_lookup(title: str) -> dict[str, Any] | None:
@@ -672,16 +781,23 @@ def npc_lookup(title: str) -> dict[str, Any] | None:
     result = json.loads(data.decode("utf-8"))
     rows = result.get("rows") or []
     plain = lambda s: re.sub(r"<[^>]+>", "", s or "")
+    normalized = normalize_title(title)
     for row in rows:
-        if plain(row.get("title")) == title:
+        if normalize_title(plain(row.get("title"))) == normalized:
             return row
-    return rows[0] if rows else None
+    return None
 
 
 def npc_detail(bbbs: str) -> dict[str, Any] | None:
     url = "https://flk.npc.gov.cn/law-search/search/flfgDetails?" + urllib.parse.urlencode({"bbbs": bbbs})
     data, _ = request_bytes(url, headers={"Accept": "application/json"})
-    return json.loads(data.decode("utf-8")).get("data")
+    try:
+        return json.loads(data.decode("utf-8")).get("data")
+    except json.JSONDecodeError:
+        return {
+            "_detail_error": "国家法律法规数据库详情接口返回非 JSON，已跳过详情元数据",
+            "_response_preview": data[:300].decode("utf-8", errors="ignore"),
+        }
 
 
 def extract_pdf_text(path: Path) -> str:
@@ -733,15 +849,351 @@ def write_text_for_raw(raw_file: Path, text_dir: Path) -> Path | None:
     return target
 
 
+def is_composite_title(title: str) -> bool:
+    if any(keyword in title for keyword in COMPOSITE_TITLE_KEYWORDS):
+        return True
+    if re.search(r"[、/]+", title):
+        return True
+    if re.search(r"(等|及).*(规则|办法|通知|指引|细则|文件)", title):
+        return True
+    return False
+
+
+def official_entry_urls(record: RuleRecord) -> list[str]:
+    text = f"{record.doc_type} {record.title}"
+    urls: list[str] = []
+    for keywords, candidates in OFFICIAL_ENTRY_URLS:
+        if any(keyword in text for keyword in keywords):
+            urls.extend(candidates)
+    return urls
+
+
+def should_seed_official_entry(record: RuleRecord) -> bool:
+    if record.local_path or not official_entry_urls(record):
+        return False
+    text = f"{record.doc_type} {record.title}"
+    if any(word in text for word in ["入口", "官方库", "栏目", "平台"]):
+        return True
+    return is_composite_title(record.title)
+
+
+def seed_official_entry(record: RuleRecord) -> bool:
+    urls = official_entry_urls(record)
+    if not urls:
+        return False
+    raw_dir = RAW_ROOT / record.category / f"{record.id}_{safe_name(record.title)}"
+    text_dir = TEXT_ROOT / record.category / f"{record.id}_{safe_name(record.title)}"
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    text_dir.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "id": record.id,
+        "title": record.title,
+        "source_type": "官方入口",
+        "urls": urls,
+        "catalog_paths": record.catalog_paths,
+        "note": "官方入口或平台栏目，用于巡检和查找正式规则；不作为现行正式法规正文依据。",
+    }
+    raw_path = raw_dir / f"{record.id}_{safe_name(record.title)}_官方入口.json"
+    text_path = text_dir / f"{record.id}_{safe_name(record.title)}_官方入口.txt"
+    raw_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
+    text_path.write_text(
+        "\n".join(
+            [
+                record.title,
+                "",
+                "状态：官方入口/辅助资料",
+                "说明：该条目是官方站点、栏目或业务平台入口，用于后续检索、巡检和定位正式规则；不得直接作为现行正式法规正文依据。",
+                "官方入口：",
+                *[f"- {url}" for url in urls],
+                "",
+                "目录挂接：",
+                *[f"- {path}" for path in record.catalog_paths],
+            ]
+        ),
+        encoding="utf-8",
+        newline="\n",
+    )
+    record.source_url = join_unique(split_field(record.source_url) + urls)
+    record.source_type = join_unique([record.source_type, "官方入口"])
+    record.local_path = relpath(raw_path)
+    record.text_path = relpath(text_path)
+    record.file_type = "json"
+    record.downloaded_count = 1
+    record.current_status = "辅助资料"
+    record.notes.append("官方入口已入库；不作为现行正式依据")
+    return True
+
+
+def load_source_overrides() -> list[dict[str, Any]]:
+    if not SOURCE_OVERRIDES_PATH.exists():
+        return []
+    return json.loads(SOURCE_OVERRIDES_PATH.read_text(encoding="utf-8"))
+
+
+def source_override_for_record(record: RuleRecord, overrides: list[dict[str, Any]]) -> dict[str, Any] | None:
+    record_title = normalize_title(record.title)
+    for item in overrides:
+        if item.get("id") and item["id"] == record.id:
+            return item
+        if item.get("title") and normalize_title(item["title"]) == record_title:
+            return item
+    return None
+
+
+def extension_from_payload(data: bytes, headers: dict[str, str], url: str) -> str:
+    content_type = headers.get("Content-Type", "").lower()
+    suffix = Path(urllib.parse.unquote(urllib.parse.urlparse(url).path)).suffix.lower()
+    if data.startswith(b"%PDF") or "application/pdf" in content_type:
+        return ".pdf"
+    if data.startswith(b"PK") or "wordprocessingml.document" in content_type:
+        return ".docx"
+    if data.startswith(b"\xd0\xcf\x11\xe0") or "msword" in content_type:
+        return ".doc"
+    if "json" in content_type:
+        return ".json"
+    if "html" in content_type or suffix in [".html", ".htm"] or re.search(br"<html|<!doctype html", data[:500], re.I):
+        return ".html"
+    if suffix in [".pdf", ".docx", ".doc", ".html", ".htm", ".json", ".txt"]:
+        return ".html" if suffix == ".htm" else suffix
+    return ".html"
+
+
+def html_text_from_bytes(data: bytes) -> str:
+    doc = lxml_html.fromstring(data)
+    for node in doc.xpath("//script|//style|//noscript"):
+        node.drop_tree()
+    lines = [html.unescape(line.strip()) for line in doc.text_content().splitlines()]
+    cleaned: list[str] = []
+    previous_blank = False
+    for line in lines:
+        line = re.sub(r"\s+", " ", line)
+        if not line:
+            if not previous_blank:
+                cleaned.append("")
+            previous_blank = True
+            continue
+        cleaned.append(line)
+        previous_blank = False
+    return "\n".join(cleaned).strip()
+
+
+def attachment_links_from_html(data: bytes, base_url: str, limit: int = 6) -> list[str]:
+    try:
+        doc = lxml_html.fromstring(data)
+    except Exception:
+        return []
+    links: list[str] = []
+    for anchor in doc.xpath("//a[@href]"):
+        href = (anchor.get("href") or "").strip()
+        if not href or href.startswith(("javascript:", "#", "mailto:")):
+            continue
+        label = re.sub(r"\s+", " ", anchor.text_content() or "").strip()
+        full = urllib.parse.urljoin(base_url, href)
+        marker = f"{full} {label}".lower()
+        looks_like_attachment = (
+            re.search(r"\.(pdf|docx?|wps)(\?|#|$)", marker)
+            or "附件" in label
+            or "下载" in label
+            or "download" in marker
+            or "p020" in marker
+        )
+        if looks_like_attachment and full not in links:
+            links.append(full)
+        if len(links) >= limit:
+            break
+    return links
+
+
+def write_source_payload(data: bytes, headers: dict[str, str], url: str, raw_file: Path, text_dir: Path) -> tuple[str, str | None, list[str]]:
+    ext = extension_from_payload(data, headers, url)
+    raw_file = raw_file.with_suffix(ext)
+    raw_file.write_bytes(data)
+
+    notes: list[str] = []
+    text_path: Path | None = None
+    if ext in [".pdf", ".docx"]:
+        text_path = write_text_for_raw(raw_file, text_dir)
+        if not text_path:
+            notes.append(f"{raw_file.name} 未抽取到有效文本")
+    elif ext == ".html":
+        try:
+            text = html_text_from_bytes(data)
+            if has_meaningful_text(text):
+                text_dir.mkdir(parents=True, exist_ok=True)
+                text_path = text_dir / f"{raw_file.stem}.txt"
+                text_path.write_text(text, encoding="utf-8", newline="\n")
+            else:
+                notes.append(f"{raw_file.name} HTML正文过短，未作为可检索文本")
+        except Exception as exc:
+            notes.append(f"{raw_file.name} HTML文本抽取失败：{exc}")
+    elif ext == ".json":
+        try:
+            text = data.decode("utf-8", errors="ignore")
+            if has_meaningful_text(text):
+                text_dir.mkdir(parents=True, exist_ok=True)
+                text_path = text_dir / f"{raw_file.stem}.txt"
+                text_path.write_text(text, encoding="utf-8", newline="\n")
+        except Exception as exc:
+            notes.append(f"{raw_file.name} JSON文本抽取失败：{exc}")
+    else:
+        notes.append(f"{raw_file.name} 文件类型 {ext} 已保存但暂未抽取文本")
+
+    return relpath(raw_file), relpath(text_path) if text_path else None, notes
+
+
+def download_source_url(record: RuleRecord, url: str, raw_dir: Path, text_dir: Path, index: int) -> tuple[list[str], list[str], list[str]]:
+    raw_paths: list[str] = []
+    text_paths: list[str] = []
+    notes: list[str] = []
+    data, headers = request_bytes(
+        url,
+        headers={
+            "Accept": "text/html,application/xhtml+xml,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,*/*",
+        },
+    )
+    raw_file = raw_dir / f"{record.id}_{safe_name(record.title)}_source{index:02d}"
+    raw_path, text_path, payload_notes = write_source_payload(data, headers, url, raw_file, text_dir)
+    raw_paths.append(raw_path)
+    if text_path:
+        text_paths.append(text_path)
+    notes.extend(payload_notes)
+
+    if extension_from_payload(data, headers, url) == ".html":
+        for attachment_index, attachment_url in enumerate(attachment_links_from_html(data, url), start=1):
+            try:
+                att_data, att_headers = request_bytes(attachment_url, headers={"Accept": "application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,*/*"})
+                att_file = raw_dir / f"{record.id}_{safe_name(record.title)}_source{index:02d}_attachment{attachment_index:02d}"
+                att_raw, att_text, att_notes = write_source_payload(att_data, att_headers, attachment_url, att_file, text_dir)
+                raw_paths.append(att_raw)
+                if att_text:
+                    text_paths.append(att_text)
+                notes.extend(att_notes)
+            except Exception as exc:
+                notes.append(f"附件下载失败：{attachment_url}；{exc}")
+            time.sleep(0.2)
+
+    return raw_paths, text_paths, notes
+
+
+def apply_source_override(record: RuleRecord, overrides: list[dict[str, Any]]) -> bool:
+    if record.local_path:
+        return False
+    item = source_override_for_record(record, overrides)
+    if not item:
+        return False
+    urls = [url for url in item.get("urls", []) if url]
+    if not urls:
+        record.errors.append("source_overrides 未配置 urls")
+        return False
+
+    raw_dir = RAW_ROOT / record.category / f"{record.id}_{safe_name(record.title)}"
+    text_dir = TEXT_ROOT / record.category / f"{record.id}_{safe_name(record.title)}"
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    text_dir.mkdir(parents=True, exist_ok=True)
+
+    raw_paths: list[str] = []
+    text_paths: list[str] = []
+    success_urls: list[str] = []
+    failures: list[str] = []
+    for index, url in enumerate(urls, start=1):
+        try:
+            new_raw, new_text, notes = download_source_url(record, url, raw_dir, text_dir, index)
+            raw_paths.extend(new_raw)
+            text_paths.extend(new_text)
+            if new_raw:
+                success_urls.append(url)
+            record.notes.extend(notes)
+        except Exception as exc:
+            failures.append(f"官方来源下载失败：{url}；{exc}")
+        time.sleep(0.2)
+
+    if not raw_paths:
+        record.errors.extend(failures)
+        return False
+    if failures:
+        record.notes.extend(failures)
+
+    record.source_url = join_unique(split_field(record.source_url) + success_urls)
+    record.source_type = join_unique([record.source_type, item.get("source_type", "官方来源")])
+    record.local_path = join_unique(split_field(record.local_path) + raw_paths)
+    record.text_path = join_unique(split_field(record.text_path) + text_paths)
+    record.file_type = join_unique(sorted({Path(path).suffix.lower().lstrip(".") for path in split_field(record.local_path)}))
+    record.downloaded_count = len(split_field(record.local_path))
+    record.current_status = item.get("current_status") or "现行有效"
+    record.notes.append("按 source_overrides 官方来源入库")
+    if not text_paths:
+        record.errors.append("官方来源已保存原文但未抽取到可检索文本")
+    return True
+
+
+def derived_source_matches(record: RuleRecord, records: list[RuleRecord]) -> list[RuleRecord]:
+    title = record.title
+    if not any(marker in title for marker in ["关于", "合同编", "及", "、"]):
+        return []
+    record_norm = normalize_title(title)
+    matches: list[RuleRecord] = []
+    for base in records:
+        if base is record or not base.local_path:
+            continue
+        if base.current_status in ["待核验", "待扩展", "历史失效", "辅助资料"]:
+            continue
+        base_norm = normalize_title(base.title)
+        if len(base_norm) < 5 and not record_norm.startswith(base_norm):
+            continue
+        if record_norm.startswith(base_norm) or base_norm in record_norm:
+            matches.append(base)
+    matches.sort(key=lambda item: len(normalize_title(item.title)), reverse=True)
+    return matches[:4]
+
+
+def inherit_base_sources(records: list[RuleRecord]) -> None:
+    for record in records:
+        if record.local_path:
+            continue
+        matches = derived_source_matches(record, records)
+        if not matches:
+            continue
+        record.source_url = join_unique(split_field(record.source_url) + [url for match in matches for url in split_field(match.source_url)])
+        record.source_type = join_unique(split_field(record.source_type) + [f"引用基础法规：{match.id}" for match in matches])
+        record.local_path = join_unique([path for match in matches for path in split_field(match.local_path)])
+        record.text_path = join_unique([path for match in matches for path in split_field(match.text_path)])
+        record.file_type = join_unique(sorted({part for match in matches for part in split_field(match.file_type)}))
+        record.downloaded_count = sum(len(split_field(match.local_path)) for match in matches)
+        record.current_status = "现行有效"
+        record.notes.append("专题拆分项引用已入库基础法规原文：" + "、".join(f"{match.id} {match.title}" for match in matches))
+        record.errors = [error for error in record.errors if not error.startswith("国家法律法规数据库未检索到")]
+
+
+def is_single_normative_record(record: RuleRecord) -> bool:
+    text = f"{record.doc_type} {record.title}"
+    if any(word in text for word in ["入口", "官方库", "栏目", "平台"]):
+        return False
+    if is_composite_title(record.title):
+        return False
+    if any(word in text for word in ["行业手册", "操作实务手册", "辅助资料", "政策解读", "起草说明", "答记者问"]):
+        return False
+    return any(
+        word in text
+        for word in [
+            "法律",
+            "行政法规",
+            "司法解释",
+            "监管规则",
+            "部门规章",
+            "管理办法",
+            "规定",
+            "通知",
+            "指引",
+            "准则",
+            "细则",
+        ]
+    )
+
+
 def should_try_npc(record: RuleRecord) -> bool:
     if record.local_path:
         return False
-    if record.priority != "P0":
-        return False
-    title = canonical_title(record.title)
-    if not title.startswith("中华人民共和国"):
-        return False
-    if any(word in record.title for word in ["关于", "规则", "案例", "入口", "相关", "合同编", "、", "及"]):
+    if not is_single_normative_record(record):
         return False
     return True
 
@@ -764,15 +1216,27 @@ def download_npc(record: RuleRecord) -> None:
         raw_paths = [relpath(meta_path)]
         text_paths: list[str] = []
         for fmt in ["pdf", "docx"]:
-            url = f"https://flk.npc.gov.cn/law-search/download/mobile?format={fmt}&bbbs={bbbs}&fileId="
-            data, _ = request_bytes(url)
-            target = raw_dir / f"{record.id}_{safe_name(record.title)}_国家法律法规数据库.{fmt}"
-            target.write_bytes(data)
-            raw_paths.append(relpath(target))
-            text_target = write_text_for_raw(target, text_dir)
-            if text_target:
-                text_paths.append(relpath(text_target))
+            try:
+                url = f"https://flk.npc.gov.cn/law-search/download/mobile?format={fmt}&bbbs={bbbs}&fileId="
+                data, _ = request_bytes(url)
+                if fmt == "pdf" and not data.startswith(b"%PDF"):
+                    record.notes.append(f"国家法律法规数据库{fmt}下载返回非文件内容，已跳过")
+                    continue
+                if fmt == "docx" and not data.startswith(b"PK"):
+                    record.notes.append(f"国家法律法规数据库{fmt}下载返回非文件内容，已跳过")
+                    continue
+                target = raw_dir / f"{record.id}_{safe_name(record.title)}_国家法律法规数据库.{fmt}"
+                target.write_bytes(data)
+                raw_paths.append(relpath(target))
+                text_target = write_text_for_raw(target, text_dir)
+                if text_target:
+                    text_paths.append(relpath(text_target))
+            except Exception as exc:
+                record.notes.append(f"国家法律法规数据库{fmt}下载失败：{exc}")
             time.sleep(0.2)
+        if len(raw_paths) == 1:
+            record.errors.append(f"国家法律法规数据库未取得可用正文文件：{title}")
+            return
         record.source_url = join_unique([record.source_url, "https://flk.npc.gov.cn/"])
         record.source_type = join_unique([record.source_type, "国家法律法规数据库"])
         record.local_path = join_unique(split_field(record.local_path) + raw_paths)
@@ -1026,21 +1490,29 @@ def write_unresolved(rows: list[dict[str, Any]]) -> None:
 
 
 def main() -> None:
+    global BUILD_CACHE_ROOT
     legacy_rows = load_legacy_rows()
     legacy_by_key = legacy_maps(legacy_rows)
+    source_overrides = load_source_overrides()
     catalog_items, catalog_summary = parse_catalog()
     records = merge_catalog_items(catalog_items, legacy_by_key)
 
     archive_legacy_repository()
+    BUILD_CACHE_ROOT = snapshot_generated_dirs()
     reset_generated_dirs()
     ensure_category_dirs(records)
 
     legacy_manifest: list[dict[str, str]] = []
     for record in records:
         legacy_manifest.extend(copy_legacy_files(record))
+        apply_source_override(record, source_overrides)
+        if should_seed_official_entry(record):
+            seed_official_entry(record)
         if should_try_npc(record):
             download_npc(record)
+            time.sleep(0.4)
 
+    inherit_base_sources(records)
     rows = [record_to_row(record) for record in records]
 
     META_ROOT.mkdir(parents=True, exist_ok=True)
@@ -1069,6 +1541,9 @@ def main() -> None:
     }
     (META_ROOT / "build_summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
     print(json.dumps(summary, ensure_ascii=False, indent=2))
+    if BUILD_CACHE_ROOT and BUILD_CACHE_ROOT.exists():
+        shutil.rmtree(BUILD_CACHE_ROOT, ignore_errors=True)
+    BUILD_CACHE_ROOT = None
 
 
 if __name__ == "__main__":
