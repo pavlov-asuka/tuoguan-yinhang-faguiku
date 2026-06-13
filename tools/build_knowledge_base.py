@@ -248,6 +248,8 @@ FIELDS = [
     "publish_date",
     "effective_date",
     "current_status",
+    "record_role",
+    "ingest_status",
     "is_core",
     "source_type",
     "product_tags",
@@ -293,6 +295,8 @@ class RuleRecord:
     publish_date: str = ""
     effective_date: str = ""
     current_status: str = "待扩展"
+    record_role: str = ""
+    ingest_status: str = ""
     is_core: str = "否"
     source_type: str = ""
     product_tags: list[str] = field(default_factory=list)
@@ -312,6 +316,215 @@ class RuleRecord:
     first_line: int = 0
 
 
+BINDING_SINGLE_RULE_IDS = {
+    "TB037",
+    "TB080",
+    "TB101",
+    "TB114",
+    "TB115",
+    "TB116",
+    "TB117",
+    "TB118",
+    "TB119",
+    "TB120",
+    "TB121",
+    "TB126",
+    "TB165",
+    "TB184",
+    "TB186",
+    "TB187",
+    "TB189",
+    "TB192",
+    "TB205",
+    "TB206",
+    "TB221",
+    "TB226",
+    "TB233",
+    "TB239",
+    "TB265",
+    "TB266",
+    "TB267",
+    "TB269",
+    "TB270",
+    "TB273",
+    "TB276",
+    "TB279",
+    "TB283",
+    "TB284",
+    "TB285",
+    "TB287",
+    "TB288",
+    "TB300",
+    "TB310",
+    "TB320",
+    "TB328",
+    "TB329",
+}
+
+RULE_GROUP_IDS = {
+    "TB043",
+    "TB058",
+    "TB059",
+    "TB060",
+    "TB061",
+    "TB062",
+    "TB063",
+    "TB064",
+    "TB065",
+    "TB075",
+    "TB079",
+    "TB081",
+    "TB082",
+    "TB085",
+    "TB087",
+    "TB089",
+    "TB090",
+    "TB102",
+    "TB113",
+    "TB128",
+    "TB150",
+    "TB153",
+    "TB156",
+    "TB157",
+    "TB158",
+    "TB159",
+    "TB160",
+    "TB166",
+    "TB170",
+    "TB171",
+    "TB175",
+    "TB177",
+    "TB178",
+    "TB190",
+    "TB193",
+    "TB194",
+    "TB195",
+    "TB196",
+    "TB197",
+    "TB201",
+    "TB202",
+    "TB207",
+    "TB208",
+    "TB211",
+    "TB213",
+    "TB214",
+    "TB223",
+    "TB224",
+    "TB225",
+    "TB227",
+    "TB229",
+    "TB230",
+    "TB234",
+    "TB235",
+    "TB236",
+    "TB240",
+    "TB241",
+    "TB243",
+    "TB244",
+    "TB245",
+    "TB246",
+    "TB248",
+    "TB251",
+    "TB254",
+    "TB255",
+    "TB256",
+    "TB259",
+    "TB260",
+    "TB261",
+    "TB262",
+    "TB263",
+    "TB268",
+    "TB271",
+    "TB272",
+    "TB274",
+    "TB275",
+    "TB277",
+    "TB278",
+    "TB280",
+    "TB281",
+    "TB282",
+    "TB286",
+    "TB289",
+    "TB290",
+    "TB291",
+    "TB292",
+    "TB293",
+    "TB295",
+    "TB296",
+    "TB297",
+    "TB298",
+    "TB299",
+    "TB301",
+    "TB302",
+    "TB303",
+    "TB304",
+    "TB305",
+    "TB306",
+    "TB307",
+    "TB308",
+    "TB313",
+    "TB315",
+    "TB317",
+    "TB318",
+    "TB322",
+    "TB326",
+    "TB327",
+    "TB330",
+    "TB332",
+    "TB341",
+    "TB344",
+    "TB345",
+}
+
+MIXED_RULE_AUX_IDS = {
+    "TB013",
+    "TB033",
+    "TB034",
+    "TB038",
+    "TB039",
+    "TB042",
+    "TB047",
+    "TB067",
+    "TB074",
+    "TB088",
+    "TB091",
+    "TB151",
+    "TB155",
+    "TB161",
+    "TB167",
+    "TB174",
+    "TB228",
+    "TB249",
+    "TB250",
+    "TB294",
+    "TB309",
+    "TB311",
+    "TB312",
+    "TB314",
+    "TB334",
+    "TB335",
+    "TB339",
+    "TB340",
+    "TB342",
+    "TB343",
+    "TB346",
+    "TB347",
+    "TB348",
+}
+
+OFFICIAL_ENTRY_RE = re.compile(r"入口|栏目|政策文件库|法规库|官方库|查询")
+AUXILIARY_MATERIAL_RE = re.compile(
+    r"案例|处罚|处分|监管措施|监管通报|问答|口径|申请材料|申请表|流程说明|模板|样表|培训资料|"
+    r"云课堂|测试资料|报文样例|交易日历|结算日历|汇率|权益事件|停牌退市|统计|行业分析|"
+    r"起草说明|答记者问|政策解读|系统说明|资料$"
+)
+NORMATIVE_RE = re.compile(
+    r"法律|法规|法典|条例|司法解释|规则|办法|规定|指引|通知|细则|准则|规程|规范|业务指南|操作实务手册|管理|披露|报送|"
+    r"登记|结算|交易|托管|清算|账户|债券|基金|资管|理财|信托|保险资金|会计|审计|税收|"
+    r"税务|合规|风险|内控|职责"
+)
+
+
 def split_field(value: str) -> list[str]:
     return [part.strip() for part in (value or "").split(";") if part.strip()]
 
@@ -327,11 +540,66 @@ def join_unique(values: list[str]) -> str:
     return "; ".join(out)
 
 
+def add_note(record: RuleRecord, note: str) -> None:
+    if note and note not in record.notes:
+        record.notes.append(note)
+
+
+def classify_record(record: RuleRecord) -> tuple[str, str, str]:
+    text = f"{record.doc_type} {record.title} {record.category}"
+    if record.id in BINDING_SINGLE_RULE_IDS:
+        return "正式规则", "待核验原文" if not record.local_path else "已入库待复核", "命中误分类修正清单：单项具约束力规则"
+    if record.id in RULE_GROUP_IDS:
+        return "规则组索引", "待拆分入库", "命中误分类修正清单：规则集合需拆分为具体规则"
+    if record.id in MIXED_RULE_AUX_IDS:
+        return "混合资料", "待拆分核验", "命中误分类修正清单：同时包含规则和辅助资料"
+    if record.local_path and record.current_status == "现行有效":
+        return "正式规则", "已入库", "已有正式原文且状态为现行有效"
+    if OFFICIAL_ENTRY_RE.search(text):
+        return "官方入口", "仅入口", "官方入口或栏目，不作为单项规则正文"
+    if NORMATIVE_RE.search(text):
+        if is_composite_title(record.title):
+            if record.local_path and record.current_status == "现行有效":
+                return "正式规则", "已入库", "集合型专题已引用正式原文"
+            return "规则组索引", "待拆分入库", "标题包含规则关键词且为集合型条目"
+        return "正式规则", "待核验原文" if not record.local_path else "已入库", "标题包含规则关键词，按正式规则处理"
+    if AUXILIARY_MATERIAL_RE.search(text):
+        return "辅助资料", "仅辅助资料", "动态资料、案例、模板、培训或说明性材料"
+    return "辅助资料", "仅辅助资料", "未命中规则关键词，暂按辅助资料处理"
+
+
+def apply_classification_guardrail(record: RuleRecord) -> None:
+    if record.current_status == "历史失效":
+        record.record_role = record.record_role or "正式规则"
+        record.ingest_status = record.ingest_status or "已失效"
+        return
+
+    role, ingest_status, reason = classify_record(record)
+    record.record_role = role
+    record.ingest_status = "已入库" if record.local_path and ingest_status.startswith("待核验原文") else ingest_status
+    add_note(record, f"分类口径：{reason}")
+
+    if role == "正式规则":
+        if record.current_status in ["辅助资料", "辅助索引", "不适用", "待扩展"] or not record.current_status:
+            record.current_status = "待核验"
+        if not record.local_path:
+            add_note(record, "正式规则不得以辅助资料状态结案；需补入官方原文并核验现行性")
+    elif role in ["规则组索引", "混合资料"]:
+        if record.current_status in ["辅助资料", "辅助索引", "不适用", "待扩展"] or not record.current_status:
+            record.current_status = "待核验"
+        add_note(record, "规则集合不得以辅助资料状态结案；需拆分具体规则后逐条入库")
+    elif role in ["官方入口", "辅助资料"]:
+        if record.current_status in ["辅助资料", "辅助索引", "待核验", "待扩展"] or not record.current_status:
+            record.current_status = "不适用"
+
+
 def clean_notes(notes: list[str], *, auxiliary_p0: bool = False) -> list[str]:
     cleaned: list[str] = []
     replacement = "组合型P0目录已入官方入口；正式适用应回到具体规则正文核验"
     for note in notes:
         for part in split_field(note):
+            if part == "官方入口已入库；不作为现行正式依据":
+                continue
             if part == "P0规则尚无本地正式原文，待月度巡检":
                 if auxiliary_p0 and replacement not in cleaned:
                     cleaned.append(replacement)
@@ -613,6 +881,18 @@ def ensure_category_dirs(records: list[RuleRecord]) -> None:
         (TEXT_ROOT / record.category).mkdir(parents=True, exist_ok=True)
 
 
+def prune_empty_dirs(root: Path) -> int:
+    removed = 0
+    for path in sorted([p for p in root.rglob("*") if p.is_dir()], key=lambda item: len(item.parts), reverse=True):
+        try:
+            if not any(path.iterdir()):
+                path.rmdir()
+                removed += 1
+        except OSError:
+            continue
+    return removed
+
+
 def sha256(path: Path) -> str:
     h = hashlib.sha256()
     with path.open("rb") as fh:
@@ -646,6 +926,8 @@ def copy_legacy_files(record: RuleRecord) -> list[dict[str, str]]:
     text_paths: list[str] = []
 
     for path_value in split_field(record.legacy_row.get("local_path", "")):
+        if is_placeholder_path(path_value) or not has_formal_raw_path(path_value):
+            continue
         src = source_for_legacy_path(path_value)
         if not src:
             record.errors.append(f"旧原文不存在：{path_value}")
@@ -665,6 +947,8 @@ def copy_legacy_files(record: RuleRecord) -> list[dict[str, str]]:
         )
 
     for path_value in split_field(record.legacy_row.get("text_path", "")):
+        if is_placeholder_path(path_value):
+            continue
         src = source_for_legacy_path(path_value)
         if not src:
             record.errors.append(f"旧文本不存在：{path_value}")
@@ -822,6 +1106,23 @@ def text_file_has_meaningful_content(path: Path) -> bool:
         return False
 
 
+FORMAL_RAW_EXTS = {".pdf", ".docx", ".doc", ".html", ".htm", ".txt"}
+
+
+def has_formal_raw_path(path_value: str) -> bool:
+    return Path(path_value).suffix.lower() in FORMAL_RAW_EXTS
+
+
+def record_has_formal_raw(record: RuleRecord) -> bool:
+    return any(has_formal_raw_path(path) for path in split_field(record.local_path))
+
+
+def is_placeholder_path(path_value: str) -> bool:
+    path = Path(path_value)
+    stem = path.stem
+    return path.suffix.lower() == ".json" or stem.endswith("_官方入口") or stem.endswith("_npc_detail")
+
+
 def write_text_for_raw(raw_file: Path, text_dir: Path) -> Path | None:
     if raw_file.suffix.lower() == ".pdf":
         text = extract_pdf_text(raw_file)
@@ -880,7 +1181,7 @@ def official_entry_urls(record: RuleRecord) -> list[str]:
 
 
 def should_seed_official_entry(record: RuleRecord) -> bool:
-    if record.text_path or not official_entry_urls(record):
+    if record_has_formal_raw(record) or not official_entry_urls(record):
         return False
     text = f"{record.doc_type} {record.title}"
     if any(word in text for word in ["入口", "官方库", "栏目", "平台"]):
@@ -892,50 +1193,13 @@ def seed_official_entry(record: RuleRecord) -> bool:
     urls = official_entry_urls(record)
     if not urls:
         return False
-    raw_dir = RAW_ROOT / record.category / f"{record.id}_{safe_name(record.title)}"
-    text_dir = TEXT_ROOT / record.category / f"{record.id}_{safe_name(record.title)}"
-    raw_dir.mkdir(parents=True, exist_ok=True)
-    text_dir.mkdir(parents=True, exist_ok=True)
-    payload = {
-        "id": record.id,
-        "title": record.title,
-        "source_type": "官方入口",
-        "urls": urls,
-        "catalog_paths": record.catalog_paths,
-        "note": "官方入口或平台栏目，用于巡检和查找正式规则；不作为现行正式法规正文依据。",
-    }
-    raw_path = raw_dir / f"{record.id}_{safe_name(record.title)}_官方入口.json"
-    text_path = text_dir / f"{record.id}_{safe_name(record.title)}_官方入口.txt"
-    raw_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
-    text_path.write_text(
-        "\n".join(
-            [
-                record.title,
-                "",
-                "状态：官方入口/辅助资料",
-                "说明：该条目是官方站点、栏目或业务平台入口，用于后续检索、巡检和定位正式规则；不得直接作为现行正式法规正文依据。",
-                "官方入口：",
-                *[f"- {url}" for url in urls],
-                "",
-                "目录挂接：",
-                *[f"- {path}" for path in record.catalog_paths],
-            ]
-        ),
-        encoding="utf-8",
-        newline="\n",
-    )
     if record.errors:
-        record.notes.extend([f"自动下载未完成，已转官方入口辅助资料：{error}" for error in record.errors])
+        record.notes.extend([f"自动下载未完成，保留官方入口线索：{error}" for error in record.errors])
         record.errors.clear()
     record.source_url = join_unique(split_field(record.source_url) + urls)
     record.source_type = join_unique(split_field(record.source_type) + ["官方入口"])
-    record.local_path = join_unique(split_field(record.local_path) + [relpath(raw_path)])
-    record.text_path = join_unique(split_field(record.text_path) + [relpath(text_path)])
-    record.file_type = join_unique(split_field(record.file_type) + ["json"])
-    record.downloaded_count = len(split_field(record.local_path))
-    record.current_status = "辅助资料"
     record.notes = clean_notes(record.notes, auxiliary_p0=record.priority == "P0")
-    record.notes.append("官方入口已入库；不作为现行正式依据")
+    record.notes.append("官方入口仅记入台账；不作为本地正式原文")
     return True
 
 
@@ -1019,8 +1283,11 @@ def attachment_links_from_html(data: bytes, base_url: str, limit: int = 6) -> li
     return links
 
 
-def write_source_payload(data: bytes, headers: dict[str, str], url: str, raw_file: Path, text_dir: Path) -> tuple[str, str | None, list[str]]:
+def write_source_payload(data: bytes, headers: dict[str, str], url: str, raw_file: Path, text_dir: Path) -> tuple[str | None, str | None, list[str]]:
     ext = extension_from_payload(data, headers, url)
+    if ext == ".json":
+        return None, None, [f"{url} 返回 JSON，未作为法规原文保存"]
+
     raw_file = raw_file.with_suffix(ext)
     raw_file.write_bytes(data)
 
@@ -1041,15 +1308,6 @@ def write_source_payload(data: bytes, headers: dict[str, str], url: str, raw_fil
                 notes.append(f"{raw_file.name} HTML正文过短，未作为可检索文本")
         except Exception as exc:
             notes.append(f"{raw_file.name} HTML文本抽取失败：{exc}")
-    elif ext == ".json":
-        try:
-            text = data.decode("utf-8", errors="ignore")
-            if has_meaningful_text(text):
-                text_dir.mkdir(parents=True, exist_ok=True)
-                text_path = text_dir / f"{raw_file.stem}.txt"
-                text_path.write_text(text, encoding="utf-8", newline="\n")
-        except Exception as exc:
-            notes.append(f"{raw_file.name} JSON文本抽取失败：{exc}")
     else:
         notes.append(f"{raw_file.name} 文件类型 {ext} 已保存但暂未抽取文本")
 
@@ -1068,7 +1326,8 @@ def download_source_url(record: RuleRecord, url: str, raw_dir: Path, text_dir: P
     )
     raw_file = raw_dir / f"{record.id}_{safe_name(record.title)}_source{index:02d}"
     raw_path, text_path, payload_notes = write_source_payload(data, headers, url, raw_file, text_dir)
-    raw_paths.append(raw_path)
+    if raw_path:
+        raw_paths.append(raw_path)
     if text_path:
         text_paths.append(text_path)
     notes.extend(payload_notes)
@@ -1091,8 +1350,6 @@ def download_source_url(record: RuleRecord, url: str, raw_dir: Path, text_dir: P
 
 
 def apply_source_override(record: RuleRecord, overrides: list[dict[str, Any]]) -> bool:
-    if record.local_path:
-        return False
     item = source_override_for_record(record, overrides)
     if not item:
         return False
@@ -1100,6 +1357,34 @@ def apply_source_override(record: RuleRecord, overrides: list[dict[str, Any]]) -
     if not urls:
         record.errors.append("source_overrides 未配置 urls")
         return False
+    had_formal_raw = record_has_formal_raw(record)
+
+    def refresh_override_metadata(success_urls: list[str]) -> None:
+        record.source_url = join_unique(split_field(record.source_url) + success_urls)
+        record.source_type = join_unique([record.source_type, item.get("source_type", "官方来源")])
+        record.current_status = item.get("current_status") or "现行有效"
+        if record.current_status not in ["待核验", "待扩展"]:
+            stale_fragments = [
+                "自动下载未完成，已转官方入口辅助资料",
+                "组合型P0目录已入官方入口",
+                "现行适用关系待核验",
+                "衔接关系待核验",
+                "尚无本地正式原文",
+            ]
+            record.notes = [
+                note
+                for note in record.notes
+                if not any(fragment in note for fragment in stale_fragments)
+            ]
+        override_notes = item.get("notes", [])
+        if isinstance(override_notes, str):
+            override_notes = [override_notes]
+        record.notes.extend([note for note in override_notes if note])
+        record.notes.append("按 source_overrides 官方来源入库")
+
+    if had_formal_raw:
+        refresh_override_metadata(urls)
+        return True
 
     raw_dir = RAW_ROOT / record.category / f"{record.id}_{safe_name(record.title)}"
     text_dir = TEXT_ROOT / record.category / f"{record.id}_{safe_name(record.title)}"
@@ -1123,8 +1408,12 @@ def apply_source_override(record: RuleRecord, overrides: list[dict[str, Any]]) -
         time.sleep(0.2)
 
     if not raw_paths:
-        record.errors.extend(failures)
-        return False
+        if had_formal_raw:
+            raw_paths = []
+            success_urls = urls
+        else:
+            record.errors.extend(failures)
+            return False
     if failures:
         record.notes.extend(failures)
 
@@ -1134,12 +1423,7 @@ def apply_source_override(record: RuleRecord, overrides: list[dict[str, Any]]) -
     record.text_path = join_unique(split_field(record.text_path) + text_paths)
     record.file_type = join_unique(sorted({Path(path).suffix.lower().lstrip(".") for path in split_field(record.local_path)}))
     record.downloaded_count = len(split_field(record.local_path))
-    record.current_status = item.get("current_status") or "现行有效"
-    override_notes = item.get("notes", [])
-    if isinstance(override_notes, str):
-        override_notes = [override_notes]
-    record.notes.extend([note for note in override_notes if note])
-    record.notes.append("按 source_overrides 官方来源入库")
+    refresh_override_metadata(success_urls)
     if not text_paths:
         record.errors.append("官方来源已保存原文但未抽取到可检索文本")
     return True
@@ -1210,7 +1494,7 @@ def is_single_normative_record(record: RuleRecord) -> bool:
 
 
 def should_try_npc(record: RuleRecord) -> bool:
-    if record.local_path:
+    if record_has_formal_raw(record):
         return False
     if not is_single_normative_record(record):
         return False
@@ -1229,10 +1513,8 @@ def download_npc(record: RuleRecord) -> None:
             record.errors.append(f"国家法律法规数据库未检索到：{title}")
             return
         bbbs = row["bbbs"]
-        detail = npc_detail(bbbs) or {}
-        meta_path = raw_dir / f"{record.id}_{safe_name(record.title)}_npc_detail.json"
-        meta_path.write_text(json.dumps({"search_row": row, "detail": detail}, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
-        raw_paths = [relpath(meta_path)]
+        npc_detail(bbbs)
+        raw_paths: list[str] = []
         text_paths: list[str] = []
         for fmt in ["pdf", "docx"]:
             try:
@@ -1253,7 +1535,7 @@ def download_npc(record: RuleRecord) -> None:
             except Exception as exc:
                 record.notes.append(f"国家法律法规数据库{fmt}下载失败：{exc}")
             time.sleep(0.2)
-        if len(raw_paths) == 1:
+        if not raw_paths:
             record.errors.append(f"国家法律法规数据库未取得可用正文文件：{title}")
             return
         record.source_url = join_unique([record.source_url, "https://flk.npc.gov.cn/"])
@@ -1269,10 +1551,24 @@ def download_npc(record: RuleRecord) -> None:
 
 
 def record_to_row(record: RuleRecord) -> dict[str, Any]:
-    if record.priority == "P0" and not record.local_path and record.current_status not in ["历史失效", "辅助资料"]:
-        if "待月度巡检" not in record.notes:
-            record.notes.append("P0规则尚无本地正式原文，待月度巡检")
-    if record.priority == "P0" and not record.source_url and record.current_status not in ["历史失效", "辅助资料"]:
+    apply_classification_guardrail(record)
+    if record.record_role != "辅助资料":
+        record.business_tags = [tag for tag in record.business_tags if tag != "辅助资料"]
+    if (
+        not record.local_path
+        and record.current_status != "历史失效"
+        and record.record_role not in ["官方入口", "辅助资料"]
+    ):
+        record.notes = [note for note in record.notes if note != "复用旧公募基金托管库原文/文本"]
+        note = "尚无本地正式原文，待月度巡检"
+        if note not in record.notes:
+            record.notes.append(note)
+    if (
+        record.priority == "P0"
+        and not record.source_url
+        and record.current_status not in ["历史失效", "不适用"]
+        and record.record_role not in ["官方入口", "辅助资料"]
+    ):
         record.current_status = "待核验"
     if "flk.npc.gov.cn" in record.source_url and not record.source_type:
         record.source_type = "国家法律法规数据库"
@@ -1290,6 +1586,8 @@ def record_to_row(record: RuleRecord) -> dict[str, Any]:
         "publish_date": record.publish_date,
         "effective_date": record.effective_date,
         "current_status": record.current_status,
+        "record_role": record.record_role,
+        "ingest_status": record.ingest_status,
         "is_core": "是" if record.priority == "P0" else "否",
         "source_type": record.source_type,
         "product_tags": join_unique(record.product_tags),
@@ -1352,9 +1650,10 @@ def write_html_index(rows: list[dict[str, Any]], now: str) -> None:
                 f"""
                 <article id="{rule_id}" class="card">
                   <h3><span>{html.escape(item['id'])}</span>{html.escape(item['title'])}</h3>
-                  <p class="badges">{html.escape(item['priority'])}｜{html.escape(item['current_status'])}｜{html.escape(item['doc_type'])}</p>
+                  <p class="badges">{html.escape(item['priority'])}｜{html.escape(item['current_status'])}｜{html.escape(item.get('record_role', '未分类'))}｜{html.escape(item.get('ingest_status', '未标注'))}</p>
                   <dl>
                     <div><dt>目录挂接</dt><dd>{html.escape(item['catalog_paths'])}</dd></div>
+                    <div><dt>文档类型</dt><dd>{html.escape(item['doc_type'])}</dd></div>
                     <div><dt>产品标签</dt><dd>{html.escape(item['product_tags'] or '未标注')}</dd></div>
                     <div><dt>条线标签</dt><dd>{html.escape(item['business_line_tags'] or '未标注')}</dd></div>
                     <div><dt>市场标签</dt><dd>{html.escape(item['market_tags'] or '未标注')}</dd></div>
@@ -1410,7 +1709,7 @@ def write_html_index(rows: list[dict[str, Any]], now: str) -> None:
           <span>{len(rows)} 条台账记录</span>
           <span>{sum(1 for r in rows if r['priority'] == 'P0')} 条 P0</span>
           <span>{sum(1 for r in rows if r.get('local_path'))} 条已有本地原文</span>
-          <span>{sum(1 for r in rows if r['current_status'] in ['待核验','待扩展'])} 条待核验/待扩展</span>
+          <span>{sum(1 for r in rows if r['current_status'] in ['待核验','待扩展'] or str(r.get('ingest_status', '')).startswith('待'))} 条待核验/待处理</span>
         </div>
       </header>
       {"".join(sections)}
@@ -1425,14 +1724,14 @@ def write_html_index(rows: list[dict[str, Any]], now: str) -> None:
 def write_markdown_indexes(rows: list[dict[str, Any]]) -> None:
     now = time.strftime("%Y-%m-%d %H:%M:%S")
     table = "\n".join(
-        f"| {r['id']} | {r['legacy_id']} | {r['priority']} | {r['category']} | {r['title']} | {r['current_status']} | {r['product_tags']} | {r['business_line_tags']} | {r['market_tags']} |"
+        f"| {r['id']} | {r['legacy_id']} | {r['priority']} | {r['category']} | {r['title']} | {r['current_status']} | {r.get('record_role', '')} | {r.get('ingest_status', '')} | {r['product_tags']} | {r['business_line_tags']} | {r['market_tags']} |"
         for r in rows
     )
     (META_ROOT / "rules_index.md").write_text(
         "# 法规元数据台账\n\n"
         f"生成时间：{now}\n\n"
-        "| ID | 旧ID | 优先级 | 分类 | 文件名称 | 状态 | 产品标签 | 条线标签 | 市场标签 |\n"
-        "|---|---|---|---|---|---|---|---|---|\n"
+        "| ID | 旧ID | 优先级 | 分类 | 文件名称 | 效力/核验状态 | 记录角色 | 入库状态 | 产品标签 | 条线标签 | 市场标签 |\n"
+        "|---|---|---|---|---|---|---|---|---|---|---|\n"
         f"{table}\n",
         encoding="utf-8",
         newline="\n",
@@ -1452,17 +1751,32 @@ def write_unresolved(rows: list[dict[str, Any]]) -> None:
         for r in rows
         if r["current_status"] in ["待核验", "待扩展"]
         or r["errors"]
-        or (r["priority"] == "P0" and not r["local_path"])
+        or str(r.get("ingest_status", "")).startswith("待")
+        or str(r.get("ingest_status", "")).endswith("待复核")
     ]
-    lines = ["# 待核验与未完成项目", "", "以下项目均标注“待月度巡检”。", ""]
+    lines = [
+        "# 待核验与未完成项目",
+        "",
+        "以下项目均标注“待月度巡检”。正式规则、规则组索引和混合资料不得以“辅助资料”状态结案。",
+        "",
+    ]
     if not selected:
         lines.append("暂无待核验、待扩展或待入库项目。")
     for row in selected:
-        source_state = "已联网或本地定位到官方来源但尚未完整入库" if row.get("source_url") else "仅有目录线索，尚待核验"
-        if row.get("source_type") in ["辅助资料", "政策解读", "起草说明", "答记者问"]:
-            source_state = "可先作为辅助资料但不能作为现行正式依据"
+        role = row.get("record_role", "")
+        ingest_status = row.get("ingest_status", "")
+        if role == "正式规则":
+            source_state = "具约束力规则，需补入官方原文并核验现行性" if not row.get("local_path") else "已入库但需复核效力状态和版本"
+        elif role == "规则组索引":
+            source_state = "规则集合或规则库索引，需拆分为具体规则后逐条入库"
+        elif role == "混合资料":
+            source_state = "同时包含规则和辅助资料，需拆分规则正文、模板、问答或案例"
+        else:
+            source_state = "已联网或本地定位到官方来源但尚未完整入库" if row.get("source_url") else "仅有目录线索，尚待核验"
         lines.append(f"## {row['id']} {row['title']}")
-        lines.append(f"- 状态：{row['current_status']}")
+        lines.append(f"- 效力/核验状态：{row['current_status']}")
+        lines.append(f"- 记录角色：{role or '未分类'}")
+        lines.append(f"- 入库状态：{ingest_status or '未标注'}")
         lines.append(f"- 优先级：{row['priority']}")
         lines.append(f"- 目录挂接：{row['catalog_paths']}")
         lines.append(f"- 缺口类型：{source_state}")
@@ -1505,6 +1819,7 @@ def main() -> None:
     (META_ROOT / "rules_index.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
     write_markdown_indexes(rows)
     write_unresolved(rows)
+    empty_dirs_removed = prune_empty_dirs(RAW_ROOT) + prune_empty_dirs(TEXT_ROOT)
     search_index_summary = build_index(ROOT)
 
     summary = {
@@ -1512,9 +1827,37 @@ def main() -> None:
         "total_rules": len(rows),
         "p0_rules": sum(1 for row in rows if row["priority"] == "P0"),
         "rules_with_files": sum(1 for row in rows if row["local_path"]),
+        "rules_with_formal_raw": sum(
+            1
+            for row in rows
+            if any(has_formal_raw_path(path) for path in split_field(row["local_path"]))
+        ),
+        "json_only_rules": sum(
+            1
+            for row in rows
+            if row["local_path"]
+            and not any(has_formal_raw_path(path) for path in split_field(row["local_path"]))
+        ),
         "p0_without_files": sum(1 for row in rows if row["priority"] == "P0" and not row["local_path"]),
-        "rules_waiting": sum(1 for row in rows if row["current_status"] in ["待核验", "待扩展"]),
+        "rules_waiting": sum(
+            1
+            for row in rows
+            if row["current_status"] in ["待核验", "待扩展"]
+            or str(row.get("ingest_status", "")).startswith("待")
+            or str(row.get("ingest_status", "")).endswith("待复核")
+        ),
+        "record_roles": {
+            role: sum(1 for row in rows if row.get("record_role") == role)
+            for role in sorted({row.get("record_role", "") for row in rows})
+            if role
+        },
+        "ingest_statuses": {
+            status: sum(1 for row in rows if row.get("ingest_status") == status)
+            for status in sorted({row.get("ingest_status", "") for row in rows})
+            if status
+        },
         "legacy_reused_records": sum(1 for row in rows if row["legacy_id"]),
+        "empty_dirs_removed": empty_dirs_removed,
         "search_index": search_index_summary,
         "built_at": time.strftime("%Y-%m-%d %H:%M:%S"),
     }

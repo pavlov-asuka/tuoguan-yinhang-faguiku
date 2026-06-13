@@ -304,5 +304,139 @@
     "urls": [
       "https://m.safe.gov.cn/safe/2024/0726/24815.html"
     ]
+  },
+  {
+    "id": "TB077",
+    "title": "人民币银行结算账户管理办法实施细则",
+    "source_type": "人民银行官方正文",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.pbc.gov.cn/zhifujiesuansi/128525/128535/128620/2840213/index.html"
+    ],
+    "notes": [
+      "补充人民银行支付结算司账户管理类正文页。"
+    ]
+  },
+  {
+    "id": "TB123",
+    "title": "深圳证券交易所证券投资基金交易和申购赎回实施细则",
+    "source_type": "深交所业务规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://docs.static.szse.cn/www/lawrules/rule/fund/trade/W020220610536157903323.pdf"
+    ],
+    "notes": [
+      "补充深交所2022年修订PDF正文。"
+    ]
+  },
+  {
+    "id": "TB149",
+    "title": "公开募集证券投资基金年度/半年度/季度报告内容与格式准则",
+    "source_type": "证监会格式准则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.csrc.gov.cn/csrc/c101954/c7619929/7619929/files/%E9%99%84%E4%BB%B61%EF%BC%9A%E5%85%AC%E5%BC%80%E5%8B%9F%E9%9B%86%E8%AF%81%E5%88%B8%E6%8A%95%E8%B5%84%E5%9F%BA%E9%87%91%E4%BF%A1%E6%81%AF%E6%8A%AB%E9%9C%B2%E5%86%85%E5%AE%B9%E4%B8%8E%E6%A0%BC%E5%BC%8F%E5%87%86%E5%88%99%E7%AC%AC2%E5%8F%B7%E2%80%94%E5%AE%9A%E6%9C%9F%E6%8A%A5%E5%91%8A%E7%9A%84%E5%86%85%E5%AE%B9%E4%B8%8E%E6%A0%BC%E5%BC%8F.pdf"
+    ],
+    "notes": [
+      "补充证监会公开募集证券投资基金定期报告内容与格式准则PDF。"
+    ]
+  },
+  {
+    "id": "TB154",
+    "title": "私募投资基金信息披露管理办法",
+    "source_type": "中基协自律规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.amac.org.cn/fwdt/wyb/sjbs/smjjxxplbf/xxplxgtz/202001/t20200101_20871.html",
+      "https://www.amac.org.cn/xwfb/tzgg/202606/t20260605_27780.html",
+      "https://www.amac.org.cn/xwfb/tzgg/202606/P020260605683618804893.pdf"
+    ],
+    "notes": [
+      "补充中基协旧规发布页及2026年新细则发布页；截至2026-06-13旧办法仍按现行规则入库，2026-09-01起应与《私募投资基金信息披露实施细则》和证监会《私募投资基金信息披露监督管理办法》衔接更新。"
+    ]
+  },
+  {
+    "id": "TB217",
+    "title": "私募基金管理人登记指引",
+    "source_type": "中基协自律规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.amac.org.cn/xwfb/xhyw/202302/t20230224_15636.html"
+    ],
+    "notes": [
+      "补充中基协登记备案办法及管理人登记指引发布页。"
+    ]
+  },
+  {
+    "id": "TB218",
+    "title": "私募投资基金备案指引",
+    "source_type": "中基协自律规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.amac.org.cn/xwfb/xhyw/202309/t20230928_24136.html"
+    ],
+    "notes": [
+      "补充中基协私募投资基金备案指引发布页。"
+    ]
+  },
+  {
+    "id": "TB222",
+    "title": "私募投资基金服务业务管理办法（试行）",
+    "source_type": "中基协自律规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.amac.org.cn/fwdt/wyb/jgdjhcpbeian/smjjglrdjhcpba/xgzc/202001/P020231126371916585686.pdf"
+    ],
+    "notes": [
+      "补充中基协PDF正文。"
+    ]
+  },
+  {
+    "id": "TB237",
+    "title": "信托公司管理办法",
+    "source_type": "金监总局规章",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.nfra.gov.cn/cn/view/pages/rulesDetail.html?docId=1225642"
+    ],
+    "notes": [
+      "补充国家金融监督管理总局规章正文页。"
+    ]
+  },
+  {
+    "id": "TB238",
+    "title": "信托公司集合资金信托计划管理办法",
+    "source_type": "金监总局规章",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.nfra.gov.cn/cn/view/pages/rulesDetail.html?docId=1025228"
+    ],
+    "notes": [
+      "补充国家金融监督管理总局规章正文页；后续《资产管理信托管理办法》正式发布后的替代或废止关系需持续跟踪。"
+    ]
+  },
+  {
+    "id": "TB264",
+    "title": "公募基金投资信用衍生品指引",
+    "source_type": "AMAC法规库转载",
+    "current_status": "现行有效",
+    "urls": [
+      "https://fg.amac.org.cn/governmentrules_3854/zcgz_gfxwj/gfxwj_gmjj/gfxwj_gmjj_tzyz/202003/t20200312_24729.html"
+    ],
+    "notes": [
+      "与TB212公开募集证券投资基金投资信用衍生品指引对应，补充AMAC法规库转载正文页。"
+    ]
+  },
+  {
+    "id": "TB316",
+    "title": "公募基金定期报告内容与格式准则",
+    "source_type": "证监会格式准则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.csrc.gov.cn/csrc/c101954/c7619929/7619929/files/%E9%99%84%E4%BB%B61%EF%BC%9A%E5%85%AC%E5%BC%80%E5%8B%9F%E9%9B%86%E8%AF%81%E5%88%B8%E6%8A%95%E8%B5%84%E5%9F%BA%E9%87%91%E4%BF%A1%E6%81%AF%E6%8A%AB%E9%9C%B2%E5%86%85%E5%AE%B9%E4%B8%8E%E6%A0%BC%E5%BC%8F%E5%87%86%E5%88%99%E7%AC%AC2%E5%8F%B7%E2%80%94%E5%AE%9A%E6%9C%9F%E6%8A%A5%E5%91%8A%E7%9A%84%E5%86%85%E5%AE%B9%E4%B8%8E%E6%A0%BC%E5%BC%8F.pdf"
+    ],
+    "notes": [
+      "补充证监会公开募集证券投资基金定期报告内容与格式准则PDF。"
+    ]
   }
 ]

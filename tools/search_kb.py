@@ -8,7 +8,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 INDEX_PATH = ROOT / "03_元数据台账" / "search.db"
 
-EXCLUDED_STATUSES = ("历史失效", "辅助资料")
+EXCLUDED_STATUSES = ("历史失效",)
+EXCLUDED_RECORD_ROLES = ("官方入口", "辅助资料")
 
 
 def query_terms(raw_query: str) -> list[str]:
@@ -53,8 +54,7 @@ def status_rank_expr() -> str:
             WHEN '现行有效' THEN 0
             WHEN '待核验' THEN 1
             WHEN '待扩展' THEN 2
-            WHEN '辅助索引' THEN 3
-            WHEN '辅助资料' THEN 4
+            WHEN '不适用' THEN 4
             WHEN '历史失效' THEN 5
             ELSE 9
         END
@@ -96,6 +96,9 @@ def search(args: argparse.Namespace) -> list[sqlite3.Row]:
         placeholders = ", ".join("?" for _ in EXCLUDED_STATUSES)
         where.append(f"rules.current_status NOT IN ({placeholders})")
         params.extend(EXCLUDED_STATUSES)
+        placeholders = ", ".join("?" for _ in EXCLUDED_RECORD_ROLES)
+        where.append(f"COALESCE(rules.record_role, '') NOT IN ({placeholders})")
+        params.extend(EXCLUDED_RECORD_ROLES)
 
     def add_like_filter(column: str, values: list[str] | None) -> None:
         if not values:
@@ -114,6 +117,8 @@ def search(args: argparse.Namespace) -> list[sqlite3.Row]:
     add_like_filter("rules.business_line_tags", args.line)
     add_like_filter("rules.market_tags", args.market)
     add_like_filter("rules.catalog_paths", args.catalog)
+    add_like_filter("rules.record_role", args.role)
+    add_like_filter("rules.ingest_status", args.ingest_status)
     if args.rule_id:
         placeholders = ", ".join("?" for _ in args.rule_id)
         where.append(f"rules.rule_id IN ({placeholders})")
@@ -124,6 +129,8 @@ def search(args: argparse.Namespace) -> list[sqlite3.Row]:
             rules.rule_id,
             rules.title,
             rules.current_status,
+            rules.record_role,
+            rules.ingest_status,
             rules.priority,
             rules.product_tags,
             rules.business_line_tags,
@@ -165,13 +172,15 @@ def main() -> None:
     parser.add_argument("--line", action="append", help="Filter by business_line_tags. Can be repeated.")
     parser.add_argument("--market", action="append", help="Filter by market_tags. Can be repeated.")
     parser.add_argument("--catalog", action="append", help="Filter by catalog_paths. Can be repeated.")
-    parser.add_argument("--include-aux", action="store_true", help="Include 历史失效 and 辅助资料 results.")
+    parser.add_argument("--role", action="append", help="Filter by record_role. Can be repeated.")
+    parser.add_argument("--ingest-status", action="append", help="Filter by ingest_status. Can be repeated.")
+    parser.add_argument("--include-aux", action="store_true", help="Include 历史失效、官方入口 and 辅助资料 results.")
     parser.add_argument("--limit", type=int, default=8, help="Maximum number of results.")
     args = parser.parse_args()
 
     rows = search(args)
     if not rows:
-        print("未命中。可以尝试减少关键词，或使用 --include-aux 查看辅助资料/历史规则。")
+        print("未命中。可以尝试减少关键词，或使用 --include-aux 查看辅助资料/入口/历史规则。")
         return
 
     for idx, row in enumerate(rows, start=1):
@@ -180,7 +189,10 @@ def main() -> None:
             location += f"-{row['line_end']}"
         heading = row["article_no"] or row["section_title"] or "片段"
         print(f"[{idx}] {row['rule_id']} {row['title']}")
-        print(f"状态：{row['current_status']}｜优先级：{row['priority']}｜命中：{heading}")
+        print(
+            f"状态：{row['current_status']}｜角色：{row['record_role']}｜"
+            f"入库：{row['ingest_status']}｜优先级：{row['priority']}｜命中：{heading}"
+        )
         if row["business_tags"]:
             print(f"标签：{row['business_tags']}")
         scoped_tags = "｜".join(part for part in [row["product_tags"], row["business_line_tags"], row["market_tags"]] if part)

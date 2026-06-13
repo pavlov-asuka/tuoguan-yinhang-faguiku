@@ -138,6 +138,8 @@ def create_schema(con: sqlite3.Connection) -> str:
             publish_date TEXT,
             effective_date TEXT,
             current_status TEXT,
+            record_role TEXT,
+            ingest_status TEXT,
             priority TEXT,
             is_core TEXT,
             product_tags TEXT,
@@ -203,11 +205,11 @@ def insert_rule(con: sqlite3.Connection, row: dict[str, Any]) -> None:
         """
         INSERT INTO rules (
             rule_id, legacy_id, title, category, layer, doc_type, issuer, rule_no,
-            publish_date, effective_date, current_status, priority, is_core,
+            publish_date, effective_date, current_status, record_role, ingest_status, priority, is_core,
             product_tags, business_line_tags, market_tags, catalog_paths,
             key_obligations, business_tags, source_urls, notes, errors
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             row.get("id", ""),
@@ -221,6 +223,8 @@ def insert_rule(con: sqlite3.Connection, row: dict[str, Any]) -> None:
             row.get("publish_date", ""),
             row.get("effective_date", ""),
             row.get("current_status", ""),
+            row.get("record_role", ""),
+            row.get("ingest_status", ""),
             row.get("priority", ""),
             row.get("is_core", ""),
             row.get("product_tags", ""),
