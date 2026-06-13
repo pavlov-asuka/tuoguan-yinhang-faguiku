@@ -30,11 +30,8 @@ RAW_ROOT = ROOT / "01_法规原文库"
 TEXT_ROOT = ROOT / "02_文本抽取库"
 META_ROOT = ROOT / "03_元数据台账"
 SOURCE_OVERRIDES_PATH = META_ROOT / "source_overrides.json"
-TOPIC_ROOT = ROOT / "04_托管业务专题地图"
 ENTRY_ROOT = ROOT / "00_入口与索引"
-UNRESOLVED_ROOT = ROOT / "99_unresolved"
-ARCHIVE_ROOT = ROOT / "98_历史归档" / "2026-06-12_公募基金托管库"
-ARCHIVE_MARKER = ARCHIVE_ROOT / ".archived"
+UNRESOLVED_PATH = ENTRY_ROOT / "unresolved.md"
 BUILD_CACHE_ROOT: Path | None = None
 
 USER_AGENT = (
@@ -475,7 +472,6 @@ def parse_catalog() -> tuple[list[CatalogItem], dict[str, Any]]:
 def load_legacy_rows() -> list[dict[str, Any]]:
     candidates = [
         META_ROOT / "rules_index.json",
-        ARCHIVE_ROOT / "03_元数据台账" / "rules_index.json",
     ]
     for path in candidates:
         if path.is_file():
@@ -589,49 +585,13 @@ def merge_catalog_items(items: list[CatalogItem], legacy_by_key: dict[str, dict[
     return ordered
 
 
-def archive_legacy_repository() -> None:
-    ARCHIVE_ROOT.mkdir(parents=True, exist_ok=True)
-    ensure_under(ARCHIVE_ROOT, ROOT)
-    if ARCHIVE_MARKER.exists():
-        return
-
-    for name in ["00_入口与索引", "03_元数据台账", "04_托管业务专题地图", "99_unresolved"]:
-        src = ROOT / name
-        dst = ARCHIVE_ROOT / name
-        if src.exists() and not dst.exists():
-            if src.is_dir():
-                shutil.copytree(src, dst)
-            else:
-                dst.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(src, dst)
-
-    for name in ["01_法规原文库", "02_文本抽取库"]:
-        src_root = ROOT / name
-        dst_root = ARCHIVE_ROOT / name
-        dst_root.mkdir(parents=True, exist_ok=True)
-        if not src_root.exists():
-            continue
-        ensure_under(src_root, ROOT)
-        for child in list(src_root.iterdir()):
-            dst = dst_root / child.name
-            if dst.exists():
-                continue
-            shutil.move(str(child), str(dst))
-
-    ARCHIVE_MARKER.write_text(
-        f"Archived legacy public-fund custody library at {time.strftime('%Y-%m-%d %H:%M:%S')}.\n",
-        encoding="utf-8",
-        newline="\n",
-    )
-
-
 def reset_generated_dirs() -> None:
     for path in [RAW_ROOT, TEXT_ROOT]:
         ensure_under(path, ROOT)
         if path.exists():
             shutil.rmtree(path)
         path.mkdir(parents=True, exist_ok=True)
-    for path in [META_ROOT, TOPIC_ROOT, ENTRY_ROOT, UNRESOLVED_ROOT]:
+    for path in [META_ROOT, ENTRY_ROOT]:
         path.mkdir(parents=True, exist_ok=True)
 
 
@@ -662,7 +622,7 @@ def sha256(path: Path) -> str:
 
 
 def source_for_legacy_path(path_value: str) -> Path | None:
-    bases = [ROOT, ARCHIVE_ROOT]
+    bases = [ROOT]
     if BUILD_CACHE_ROOT:
         bases.insert(0, BUILD_CACHE_ROOT)
     for base in bases:
@@ -1480,44 +1440,10 @@ def write_markdown_indexes(rows: list[dict[str, Any]]) -> None:
     write_html_index(rows, now)
     (ENTRY_ROOT / "更新记录.md").write_text(
         "# 更新记录\n\n"
-        f"- {now}：按《中国商业银行托管业务条线大法规库总目录》重构商业银行托管业务法规库；旧公募基金托管库归档至 `98_历史归档/2026-06-12_公募基金托管库/`，并复用已核验原文和文本。\n",
+        f"- {now}：重建商业银行托管业务法规库，刷新元数据台账、入口索引、待核验清单和搜索索引。\n",
         encoding="utf-8",
         newline="\n",
     )
-
-
-def write_topic_map(rows: list[dict[str, Any]]) -> None:
-    lines = ["# 托管业务专题地图", "", "本专题地图由大法规库目录、产品标签、条线标签和市场标签自动生成。", ""]
-
-    by_catalog: dict[str, list[dict[str, Any]]] = {}
-    for row in rows:
-        first_path = split_field(row.get("catalog_paths", ""))[0] if row.get("catalog_paths") else row["category"]
-        by_catalog.setdefault(first_path, []).append(row)
-
-    lines.extend(["## 按大目录导航", ""])
-    for catalog_path, items in by_catalog.items():
-        lines.extend([f"### {catalog_path}", ""])
-        for row in items:
-            lines.append(f"- `{row['id']}` {row['title']}（{row['priority']}，{row['current_status']}）")
-        lines.append("")
-
-    for field, heading in [
-        ("product_tags", "按适用产品"),
-        ("business_line_tags", "按适用条线"),
-        ("market_tags", "按适用市场"),
-    ]:
-        grouped: dict[str, list[dict[str, Any]]] = {}
-        for row in rows:
-            for tag in split_field(row.get(field, "")):
-                grouped.setdefault(tag, []).append(row)
-        lines.extend([f"## {heading}", ""])
-        for tag in sorted(grouped):
-            lines.extend([f"### {tag}", ""])
-            for row in grouped[tag]:
-                lines.append(f"- `{row['id']}` {row['title']}（{row['priority']}，{row['current_status']}）")
-            lines.append("")
-
-    (TOPIC_ROOT / "托管业务专题地图.md").write_text("\n".join(lines), encoding="utf-8", newline="\n")
 
 
 def write_unresolved(rows: list[dict[str, Any]]) -> None:
@@ -1547,7 +1473,7 @@ def write_unresolved(rows: list[dict[str, Any]]) -> None:
         if row["errors"]:
             lines.append(f"- 错误/提示：{row['errors']}")
         lines.append("")
-    (UNRESOLVED_ROOT / "unresolved.md").write_text("\n".join(lines), encoding="utf-8", newline="\n")
+    UNRESOLVED_PATH.write_text("\n".join(lines), encoding="utf-8", newline="\n")
 
 
 def main() -> None:
@@ -1558,14 +1484,12 @@ def main() -> None:
     catalog_items, catalog_summary = parse_catalog()
     records = merge_catalog_items(catalog_items, legacy_by_key)
 
-    archive_legacy_repository()
     BUILD_CACHE_ROOT = snapshot_generated_dirs()
     reset_generated_dirs()
     ensure_category_dirs(records)
 
-    legacy_manifest: list[dict[str, str]] = []
     for record in records:
-        legacy_manifest.extend(copy_legacy_files(record))
+        copy_legacy_files(record)
         apply_source_override(record, source_overrides)
         if should_try_npc(record):
             download_npc(record)
@@ -1578,13 +1502,8 @@ def main() -> None:
 
     META_ROOT.mkdir(parents=True, exist_ok=True)
     write_csv(META_ROOT / "rules_index.csv", rows, FIELDS)
-    write_csv(META_ROOT / "download_log.csv", rows, FIELDS)
-    write_csv(META_ROOT / "legacy_manifest.csv", legacy_manifest, ["legacy_id", "new_id", "kind", "old_path", "new_path", "sha256"])
     (META_ROOT / "rules_index.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
-    (META_ROOT / "master_rules.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
-    (META_ROOT / "catalog_staging.json").write_text(json.dumps([item.__dict__ for item in catalog_items], ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
     write_markdown_indexes(rows)
-    write_topic_map(rows)
     write_unresolved(rows)
     search_index_summary = build_index(ROOT)
 
@@ -1596,11 +1515,9 @@ def main() -> None:
         "p0_without_files": sum(1 for row in rows if row["priority"] == "P0" and not row["local_path"]),
         "rules_waiting": sum(1 for row in rows if row["current_status"] in ["待核验", "待扩展"]),
         "legacy_reused_records": sum(1 for row in rows if row["legacy_id"]),
-        "legacy_manifest_entries": len(legacy_manifest),
         "search_index": search_index_summary,
         "built_at": time.strftime("%Y-%m-%d %H:%M:%S"),
     }
-    (META_ROOT / "build_summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     if BUILD_CACHE_ROOT and BUILD_CACHE_ROOT.exists():
         shutil.rmtree(BUILD_CACHE_ROOT, ignore_errors=True)
