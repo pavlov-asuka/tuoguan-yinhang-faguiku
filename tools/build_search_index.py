@@ -17,6 +17,7 @@ RULES_INDEX_PATH = META_ROOT / "rules_index.json"
 
 MAX_CHUNK_CHARS = 1400
 CHUNK_OVERLAP_CHARS = 180
+METADATA_ONLY_RECORD_ROLES = {"官方入口", "辅助资料"}
 
 ARTICLE_RE = re.compile(r"第[一二三四五六七八九十百千万零〇两\d]+条")
 SECTION_RE = re.compile(r"第[一二三四五六七八九十百千万零〇两\d]+[章节]")
@@ -24,6 +25,25 @@ SECTION_RE = re.compile(r"第[一二三四五六七八九十百千万零〇两\d
 
 def split_field(value: str) -> list[str]:
     return [part.strip() for part in (value or "").split(";") if part.strip()]
+
+
+def metadata_text(row: dict[str, Any]) -> str:
+    parts = [
+        row.get("title", ""),
+        row.get("category", ""),
+        row.get("layer", ""),
+        row.get("doc_type", ""),
+        row.get("issuer", ""),
+        row.get("rule_no", ""),
+        row.get("product_tags", ""),
+        row.get("business_line_tags", ""),
+        row.get("market_tags", ""),
+        row.get("business_tags", ""),
+        row.get("catalog_paths", ""),
+        row.get("key_obligations", ""),
+        row.get("notes", ""),
+    ]
+    return " ".join(part.strip() for part in parts if part and part.strip())
 
 
 def relpath(path: Path, root: Path) -> str:
@@ -264,6 +284,7 @@ def build_index(root: Path = ROOT, index_path: Path | None = None) -> dict[str, 
         text_paths = split_field(row.get("text_path", ""))
         raw_paths = split_field(row.get("local_path", ""))
         file_types = split_field(row.get("file_type", ""))
+        has_document = False
 
         for idx, text_path_value in enumerate(text_paths):
             text_path = (root / text_path_value).resolve()
@@ -296,6 +317,7 @@ def build_index(root: Path = ROOT, index_path: Path | None = None) -> dict[str, 
             )
             doc_id = int(cur.lastrowid)
             document_count += 1
+            has_document = True
 
             for chunk_index, chunk in enumerate(chunk_text(normalized, starts, line_numbers), start=1):
                 cur = con.execute(
@@ -321,6 +343,45 @@ def build_index(root: Path = ROOT, index_path: Path | None = None) -> dict[str, 
                 con.execute(
                     "INSERT INTO chunk_fts(rowid, title, business_tags, text) VALUES (?, ?, ?, ?)",
                     (chunk_id, row.get("title", ""), row.get("business_tags", ""), chunk["text"]),
+                )
+                chunk_count += 1
+
+        if not has_document and row.get("record_role") in METADATA_ONLY_RECORD_ROLES:
+            text = metadata_text(row)
+            if text:
+                cur = con.execute(
+                    """
+                    INSERT INTO documents (
+                        rule_id, text_path, raw_path, file_type, source_type, line_count, char_count
+                    )
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        row.get("id", ""),
+                        "",
+                        "",
+                        "metadata",
+                        "metadata",
+                        0,
+                        len(text),
+                    ),
+                )
+                doc_id = int(cur.lastrowid)
+                document_count += 1
+                cur = con.execute(
+                    """
+                    INSERT INTO chunks (
+                        doc_id, rule_id, chunk_index, article_no, section_title,
+                        line_start, line_end, text
+                    )
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (doc_id, row.get("id", ""), 1, "", "元数据", 0, 0, text),
+                )
+                chunk_id = int(cur.lastrowid)
+                con.execute(
+                    "INSERT INTO chunk_fts(rowid, title, business_tags, text) VALUES (?, ?, ?, ?)",
+                    (chunk_id, row.get("title", ""), row.get("business_tags", ""), text),
                 )
                 chunk_count += 1
 

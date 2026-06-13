@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import sqlite3
+import sys
 from pathlib import Path
 
 
@@ -9,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 INDEX_PATH = ROOT / "03_元数据台账" / "search.db"
 
 EXCLUDED_STATUSES = ("历史失效",)
-EXCLUDED_RECORD_ROLES = ("官方入口", "辅助资料")
+EXCLUDED_RECORD_ROLES = ("官方入口",)
 
 
 def query_terms(raw_query: str) -> list[str]:
@@ -59,6 +60,12 @@ def status_rank_expr() -> str:
             ELSE 9
         END
     """
+
+
+def configure_output() -> None:
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8", errors="replace")
 
 
 def search(args: argparse.Namespace) -> list[sqlite3.Row]:
@@ -160,6 +167,7 @@ def search(args: argparse.Namespace) -> list[sqlite3.Row]:
 
 
 def main() -> None:
+    configure_output()
     parser = argparse.ArgumentParser(description="Search the local regulatory knowledge-base SQLite FTS index.")
     parser.add_argument("query", help="Search keywords. Space-separated terms use OR by default; OR/AND/NOT are supported.")
     parser.add_argument("--status", action="append", help="Filter by current_status. Can be repeated.")
@@ -174,19 +182,22 @@ def main() -> None:
     parser.add_argument("--catalog", action="append", help="Filter by catalog_paths. Can be repeated.")
     parser.add_argument("--role", action="append", help="Filter by record_role. Can be repeated.")
     parser.add_argument("--ingest-status", action="append", help="Filter by ingest_status. Can be repeated.")
-    parser.add_argument("--include-aux", action="store_true", help="Include 历史失效、官方入口 and 辅助资料 results.")
+    parser.add_argument(
+        "--include-excluded",
+        "--include-aux",
+        dest="include_aux",
+        action="store_true",
+        help="Include 历史失效 and 官方入口 results. 辅助资料 is included by default.",
+    )
     parser.add_argument("--limit", type=int, default=8, help="Maximum number of results.")
     args = parser.parse_args()
 
     rows = search(args)
     if not rows:
-        print("未命中。可以尝试减少关键词，或使用 --include-aux 查看辅助资料/入口/历史规则。")
+        print("未命中。可以尝试减少关键词，或使用 --include-excluded 查看官方入口/历史规则。辅助资料已默认纳入检索。")
         return
 
     for idx, row in enumerate(rows, start=1):
-        location = f"{row['text_path']}:{row['line_start']}"
-        if row["line_end"] != row["line_start"]:
-            location += f"-{row['line_end']}"
         heading = row["article_no"] or row["section_title"] or "片段"
         print(f"[{idx}] {row['rule_id']} {row['title']}")
         print(
@@ -198,7 +209,13 @@ def main() -> None:
         scoped_tags = "｜".join(part for part in [row["product_tags"], row["business_line_tags"], row["market_tags"]] if part)
         if scoped_tags:
             print(f"范围：{scoped_tags}")
-        print(f"本地文本：{location}")
+        if row["text_path"]:
+            location = f"{row['text_path']}:{row['line_start']}"
+            if row["line_end"] != row["line_start"]:
+                location += f"-{row['line_end']}"
+            print(f"本地文本：{location}")
+        else:
+            print("本地文本：未入库正文（元数据命中）")
         if row["source_urls"]:
             print(f"官方来源：{row['source_urls']}")
         print(f"片段：{snippet(row['text'])}")
