@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <title>国家金融监督管理总局</title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="SiteName" content="">
+    <meta name="SiteDomain" content="">
+    <meta name="SiteIDCode" content="">
+    <meta name="ColumnName" content="">
+    <meta name="ColumnType" content="">
+    <meta name="ArticleTitle" content="">
+    <meta name="PubDate" content="">
+    <meta name="ContentSource" content="">
+    <meta http-equiv="Window-target" content="_top">
+    <!-- <link rel="Shortcut Icon" href="favicon.ico"> -->
+    <link rel="Shortcut Icon" href="/cn/static/favicon.ico">
+    <meta property="og:image" content="/cn/static/images/share.jpg">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/cn/css/common/base.css?v=20200108" rel="stylesheet" />
+    <link href="/cn/css/common/Common.css?v=20200108" rel="stylesheet" />
+    <link href="/cn/css/details/guizhang.css?v=20200108" rel="stylesheet" />
+    <!--[if lt IE 9]>
+       <script src="/cn/js/common/html5shiv.min.js"></script>
+       <script src="/cn/js/common/respond.js"></script>
+    <![endif]-->
+    <style>
+    .newcontent {
+      padding-bottom:25px;
+    }
+        .content,
+        .footer {
+            display: none;
+        }
+        .Section0 {
+            layout-grid-mode: line !important;
+            -ms-layout-grid-mode: line !important;
+        }
+        .lyxd {
+          color: #000;
+          font-size: 20px;
+          font-family: '仿宋';
+          line-height: 28px;
+          display: block;
+        }
+        .lyxd-left{
+          float: left;
+        }
+        .lyxd-padding{
+          padding-left: 25px;
+        }
+        .zh-child{
+          display: block;
+        }
+        .video {
+          text-align:center;
+          margin: 30px 0;
+        }
+        .video > video {
+          background:#000;
+        }
+    </style>
+</head>
+
+<body>
+    <div  style="display: none">
+        <img src="/cn/static/images/share.jpg"   />
+    </div>
+    <div class="main ng-cloak" ng-app="myApp">
+      <div   ng-controller="itemDetailCtrl">
+        <div ng-show="isGuiZhang == 1">
+            <tpl src="/cn/view/components/Header.html"></tpl>
+            <div class="content newcontent">
+                <link href="/cn/css/common/share.css?v=20200108" rel="stylesheet" />
+                <div class="breadcrumb">
+                    <ul>
+                        <li>当前位置：
+                            <a href="/cn/view/pages/index/index.html">首页</a>
+                        </li>
+                        <li ng-repeat="x in breadcrumb_detail">
+                            <a ng-href="{{x|breadcrumbitemUrl}}">{{x.itemName}}&nbsp;</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="container">
+                    <div class="row pages-dateprint">
+                        <div class="col-lg-8 pages-date">
+                            <span>发布时间：{{data.publishDate|dateFormat2}}</span>
+                            <!-- <span class="pages-date-laiyuan" ng-hide="data.docSource==null||data.interviewTypeName=='功能监管'||data.interviewTypeName=='政策法规'||data.interviewTypeName=='机构监管'||data.interviewTypeName=='综合管理'||data.editDocumentType=='政府信息公开'">来源：{{data.docSource}}</span> -->
+                              <!-- <span class="pages-date-laiyuan" ng-hide="data.docSource==null||data.interviewTypeName=='功能监管'||data.interviewTypeName=='政策法规'||data.interviewTypeName=='机构监管'||data.interviewTypeName=='综合管理'||data.interviewTypeName=='政府信息公开'">来源：{{data.docSource}}</span> -->
+                              <span class="pages-date-laiyuan" ng-hide="data.docSource==null">来源：{{data.docSource | branchFilter}}</span>
+                              <span class="pages-date-laiyuan" ng-hide="data.documentType==null||data.documentType==''">文章类型：{{documentTypeDetail}}</span>
+                            </div>
+                        <div class="col-lg-4" style="padding-left: 38px;">
+                            <span onclick="printpage();">&emsp;
+                                <img ng-src="/cn/static/{{image_path}}/common/dayin.png" alt="" class="pages-print-pic-dayin" />打印&emsp;</span>
+                            <span id="share-weibo"></span>微博&nbsp;
+                            <span id="share-weixin"></span>微信&nbsp;
+                            <div style="display: inline;">
+                                <span id="share-more">
+                                    <img ng-src="/cn/static/{{image_path}}/common/more.png" alt="" class="share-more-img" />更多
+                                    <table id="share-more-all" class="share-more-all">
+                                        <tr>
+                                            <td id="share-qzone"></td>
+                                            <td style="cursor:text;">QQ空间</td>
+                                        </tr>
+                                        <tr>
+                                            <td id="share-qq"></td>
+                                            <td style="float: left;cursor:text;">QQ</td>
+                                        </tr>
+                                    </table>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="row">
+                            <div ng-show="generaltype==1" class="mb25">
+                                <div class="ItemDetailRed-header" ng-if="isXingzhengxuke!=true">
+                                    <div>
+                                        <span class="ItemDetailRed-header-row12-span">索&ensp;引&ensp;号：
+                                            <span class="ItemDetailRed-header-row12-content">{{data.indexNo}}</span>
+                                        </span>
+                                        <span class="ItemDetailRed-header-row12-span">主题分类：
+                                            <span class="ItemDetailRed-header-row12-content">{{data.interviewTypeName}}</span>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="ItemDetailRed-header-row12-span">办文部门：
+                                            <span class="ItemDetailRed-header-row12-content">{{data.agencyTypeName}}</span>
+                                        </span>
+                                        <span class="ItemDetailRed-header-row12-span">发文日期：
+                                            <span class="ItemDetailRed-header-row12-content">{{data.builddate|dateFormat2}}</span>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="ItemDetailRed-header-row34-span">公文名称：
+                                            <span class="ItemDetailRed-header-row34-content">{{data.docSubtitle}}</span>
+                                        </span>
+                                    </div>
+                                    <div class="ItemDetailRed-header-row34" ng-show="data.documentNo!=null&&data.documentNo!=''&&data.documentNo!='无[]号'">
+                                        <span class="ItemDetailRed-header-row34-span">文&emsp;&emsp;号：
+                                            <span class="ItemDetailRed-header-row34-content">{{data.documentNo | ljkh}}</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="ItemDetailRed-header-title mt25" ng-if="afterCeremony">
+                                    国家金融监督管理总局
+                                </div>
+                                <div class="ItemDetailRed-header-title mt25" ng-if="!afterCeremony && (isYinbaojian==true || isYinjian==true || isBaojian==true) && data.documentNo | documentNoTxt : data.datafrom">
+                                    {{data.documentNo | documentNoTxt}}
+                                </div>
+                                <div class="ItemDetailRed-header-title mt25" ng-if="!afterCeremony && isYinbaojian==true && !(data.documentNo | documentNoTxt : data.datafrom)">
+                                    中国银行保险监督管理委员会
+                                </div>
+                                <div class="ItemDetailRed-header-title mt25" ng-if="!afterCeremony && isYinjian==true && !(data.documentNo | documentNoTxt : data.datafrom)">
+                                    中国银行业监督管理委员会
+                                </div>
+                                <div class="ItemDetailRed-header-title mt25" ng-if="!afterCeremony && isBaojian==true && !(data.documentNo | documentNoTxt : data.datafrom)">
+                                    中国保险监督管理委员会
+                                </div>
+                                <div class="ItemDetailRed-header-subtitle" ng-show="data.documentNo!='无[]号'">
+                                    {{data.documentNo | ljkh}}
+                                </div>
+                                <div class="ItemDetailRed-header-line">
+                                </div>
+                            </div>
+                            <div class="lyxd-padding" ng-if="data.generaltype == 10">
+                              <span class="lyxd lyxd-left">问：</span><span class="lyxd" ng-bind-html="data.docTitle|trustHtml"></span>
+                              <span class="lyxd lyxd-left">答：</span><span class="lyxd" ng-bind-html="data.docClob|trustHtml"></span>
+                            </div>
+                            <div ng-if="data.generaltype != 10" class="wenzhang-title" ng-show="showTitle" ng-bind-html="data.docTitle|addBr">
+                            </div>
+                            <!-- 文号显示 -->
+                            <div class="wenzhang-documentNo" ng-show="showDocNo" ng-bind-html="data.documentNo|hexagonSymbol"></div>
+                            <!-- 文号显示 -->
+                            <div ng-if="data.generaltype != 10" class="wenzhang-content" id="wenzhang-content" ng-bind-html="data.docClob|trustHtml" ng-class="isWhite_space? 'iswhite-space': ''">
+                            </div>
+                            <div class="video" ng-show="data.aviCodeUrl && generaltype != 1" id="embed">
+                              <video ng-show="!isIE8" type="video/mp4" src="{{data.aviCodeUrl}}" controls="controls" width="740" height="416"></video>
+                            </div>
+                            <div class="wenzhang-fujian mt25" ng-hide="data.attachmentInfoVOList[0].title==null">
+                                <div>附件信息:</div>
+                                <ul>
+                                    <li ng-repeat="x in data.attachmentInfoVOList">
+                                        <a ng-href="{{x.urlOtherName}}">{{x.title}}</a>
+                                        <!-- <a ng-click="fileDownload(x.urlOtherName)">{{x.title}}</a> -->
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--ng-show="generaltype!=1"判断红头文件不进行显示-->
+                            <!--红头文件进行显示地址-->
+                            <!-- <div class="wenzhang-fulu mt25" ng-bind-html="data.remark2|trustHtml" id="redline" ></div> -->
+                            <!-- 设置跳转链接 -->
+                        
+                            <!-- <a ng-href="{{data.remark2}}">{{data.remark2}}</a> -->
+                            <!-- 更改跳转后的结果 S-->
+                            <!-- <a ng-href="http://www.baidu.com/">http://www.baidu.com/</a> -->
+                        <!-- //////////////////////////////////// -->
+                            <!-- <li  ng-if="data.rules=='1'" ng-repeat='k in data.urlARR'   >
+                                <a   ng-href="{{k}}">{{k}}</a> 
+                            </li>
+
+                            <li ng-if="data.rules=='0'"  ng-repeat='m in data.urlARR'>
+                                <p style="margin: 0px;"> {{m|textFormat}}:</p>
+                                <a  style="color:blue" ng-href="{{m|urlFormat}}">{{m|urlFormat}}</a>
+                            </li> -->
+                              <!-- 更改跳转后的结果 E-->
+                              <!-- ///////////////////////////////////// -->
+                              <!-- <div id="appendix" class="ng-cloak" ng-cloak ng-repeat="item in editSubContent track by $index"
+                              ng-show="editSubContent && ((itemName == '法律行政法规') || (itemName == '政策规章规范性文件' ))"
+                              style="margin:1px 20px"> -->
+                              <li  ng-if="data.rules=='1'"  >
+                                <a ng-href="{{data.remark2}}">{{data.remark2}}</a>
+                            </li>
+                              <div   ng-if="data.rules=='0'" id="appendix" class="ng-cloak" ng-cloak ng-repeat="item in editSubContent track by $index"
+
+                              style="margin:1px 20px">
+                              <div>{{item.title}}</div>
+                              <a style="display:inline-block;width:100%;height:auto;"  class="itemD_jump" ng-href="{{item.href}}">{{item.href}}</a>
+                          </div>
+                              <!-- //////////////////////////////////////////// -->
+                        </div>
+                    </div>
+                    <div id="qrcode" class="mt25">
+                        <div>手机扫一扫打开此页</div>
+                    </div>
+                    <div class="banquanmianze">
+                        <div class="banquanmianze-title">版权与免责声明
+                            <img ng-src="/cn/static/{{image_path}}/common/warn.png" />
+                        </div>
+                        <div>1.凡本站及其子站注明“文章类型：原创”的所有作品，其版权属于国家金融监督管理总局网站及其子站所有。其他媒体、网站或个人转载使用时必须注明：“文章来源：国家金融监督管理总局网站”。</div>
+                        <div>2.凡本站及其子站注明“文章类型：转载”、“文章类型：编译”、“文章类型：摘编”的所有作品，均转载、编译或摘编自其他媒体，转载、编译或摘编的目的在于传递更多信息，并不代表本站及子站赞同其观点和对其真实性负责。其他媒体、网站或个人转载使用时必须注明文章来源，并自负法律责任。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="isGuiZhang == 2">
+            <div  class="content guizhang" >
+            <link href="/cn/css/common/share.css?v=20200108" rel="stylesheet" />
+            
+            <div class="container main-box">
+                <!-- <div class="breadcrumb" style="margin-left: 10px">
+                    <ul>
+                        <li>当前位置：
+                            <a href="/cn/view/pages/index/index.html">首页</a>
+                        </li>
+                        <li ng-repeat="x in breadcrumb_detail">
+                            <a ng-href="{{x|breadcrumbitemUrl}}">{{x.itemName}}&nbsp;</a>
+                        </li>
+                    </ul>
+                </div> -->
+                <div class="rules-header">
+                <a class="gz-wza toolbarSwitch" href="javascript:void(0);">无障碍浏览</a>
+                   <div class="row pages-title">
+                        
+                          <div class="pages-title-red">
+                          <a href="/cn/view/pages/zhengwuxinxi/guizhang.html" style="color: red;"><img class="guohui" src="/cn/static/images/gh.png" /> {{itemTitle}}规章</a></div> 
+                        
+                        <div class="down-xz" ><span ng-click="rulesDocFileDownload(1)">下载文字版</span> <span ng-click="rulesDocFileDownload(2)">下载图片版</span></div>
+                    </div>
+                </div>
+                <div class="main-container">
+
+                    <div class="row pages-dateprint">
+                        <div class="wenzhang-title ng-binding"
+                            ng-bind-html="data.docTitle|trustHtml"></div>
+                        <!--题注-->
+                        <div class="tizhu"><div class="tizhu-title" ng-if="data.caption" >{{data.caption}}</div></div>
+                        <!-- 文章详情内容显示区域 -->
+                        <div id="wenzhang-content" class="iswhite-space" ng-bind-html="data.docClob|trustHtml">
+                        </div>
+                        <div class="fujian" ng-show="data.attachmentInfoVOList[0].title!=null || editSubContent">
+                          <div class="wenzhang-fujian" style="margin-left:0;" ng-hide="data.attachmentInfoVOList[0].title==null">
+                              <div>附件信息:</div>
+                              <ul>
+                                  <li ng-repeat="x in data.attachmentInfoVOList">
+                                      <a ng-href="{{x.urlOtherName}}">{{x.title}}</a>
+                                      <!-- <a ng-click="fileDownload(x.urlOtherName)">{{x.title}}</a> -->
+                                  </li>
+                              </ul>
+                          </div>
+                          <div id="appendix" class="ng-cloak" ng-cloak ng-repeat="item in editSubContent track by $index"
+                                        ng-show="editSubContent"
+                                        style="margin-top:23px;font-size:16px;color:#333">
+                                        <div>{{item.title}}</div>
+                                        <a style="color: blue;font-size:16px;" ng-href="{{item.href}}" target="_blank">{{item.href}}</a>
+                          </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="row">
+                            <div ng-show="generaltype==1" class="mb25">
+                        </div>
+                    </div>
+                </div>
+                
+            
+            
+        </div>
+            <div class="rules-footer">{{itemTitle}}发布</div>
+        </div>
+      </div>
+      </div>
+
+    </div>
+    <tpl src="/cn/view/components/Footer.html"></tpl>
+    <script src="/cn/js/common/jquery/jquery.1.12.4.min.js"></script>
+    <script src="/cn/js/common/angular.1.2.32.min.js"></script>
+    <script src="/cn/js/common/QRCode.js"></script>
+    <script src="/cn/js/common/jquery.share.min.js"></script>
+    <!--common-->
+    <script src="/cn/js/common/Script.js?v=20200108"></script>
+    <script src="/cn/js/common/Nav.js?v=20200108"></script>
+    <script src="/cn/js/common/grayscale.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /*二维码*/
+            var qrcode = new QRCode(document.getElementById("qrcode"), {
+                text: window.location.href,
+                width: 125,
+                height: 125
+            });
+
+            $('#share-more').myHoverTip('share-more-all');
+            $('#share-weixin').share({ sites: ['wechat'] });
+            $('#share-weibo').share({ sites: ['weibo'] });
+            $('#share-qzone').share({ sites: ['qzone'] });
+            $('#share-qq').share({ sites: ['qq'] });
+            $(".toolbarSwitch").click(function () {
+              $("#toolbarSwitch").click();
+            })
+        })      
+    </script>
+    <script src="/cn/js/common/ItemDetail.js?v=20200108"></script>
+    <!--custom-->
+
+</body>
+
+</html>

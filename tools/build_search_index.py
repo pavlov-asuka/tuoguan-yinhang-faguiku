@@ -17,7 +17,7 @@ RULES_INDEX_PATH = META_ROOT / "rules_index.json"
 
 MAX_CHUNK_CHARS = 1400
 CHUNK_OVERLAP_CHARS = 180
-METADATA_ONLY_RECORD_ROLES = {"官方入口", "辅助资料"}
+METADATA_ONLY_RECORD_ROLES = {"官方入口", "重要参考规则", "规则组索引"}
 
 ARTICLE_RE = re.compile(r"第[一二三四五六七八九十百千万零〇两\d]+条")
 SECTION_RE = re.compile(r"第[一二三四五六七八九十百千万零〇两\d]+[章节]")

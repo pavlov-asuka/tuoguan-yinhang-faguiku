@@ -438,5 +438,569 @@
     "notes": [
       "补充证监会公开募集证券投资基金定期报告内容与格式准则PDF。"
     ]
+  },
+  {
+    "id": "TB080",
+    "title": "中国证券登记结算证券账户管理规则",
+    "source_type": "中国结算业务规则",
+    "current_status": "现行有效",
+    "urls": [
+      "http://www.chinaclear.cn/zdjs/editor_file/20141008102818122.pdf"
+    ],
+    "notes": [
+      "中国结算账户管理栏目列示的《证券账户管理规则》PDF正文。"
+    ]
+  },
+  {
+    "id": "TB101",
+    "title": "证券投资基金会计核算操作实务手册",
+    "source_type": "中基协重要规则参考",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.amac.org.cn/hyyj/hjtj/202405/P020240530424712416888.pdf"
+    ],
+    "notes": [
+      "本地已保存中基协PDF；按重要规则参考保留为正式规则口径。"
+    ]
+  },
+  {
+    "id": "TB114",
+    "title": "中国证券登记结算有限责任公司结算规则",
+    "source_type": "中国结算业务规则",
+    "current_status": "现行有效",
+    "urls": [
+      "http://www.chinaclear.cn/zdjs/editor_file/20220620141248275.pdf"
+    ],
+    "notes": [
+      "中国结算清算与交收栏目列示的《结算规则》PDF正文。"
+    ]
+  },
+  {
+    "id": "TB115",
+    "title": "中国证券登记结算有限责任公司证券登记规则",
+    "source_type": "中国结算业务规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.chinaclear.cn/zdjs/dzb/202503/67c62dd0eb8943babfc1ebd6014ecd31/files/1.%E4%B8%AD%E5%9B%BD%E8%AF%81%E5%88%B8%E7%99%BB%E8%AE%B0%E7%BB%93%E7%AE%97%E6%9C%89%E9%99%90%E8%B4%A3%E4%BB%BB%E5%85%AC%E5%8F%B8%E8%AF%81%E5%88%B8%E7%99%BB%E8%AE%B0%E8%A7%84%E5%88%99.pdf"
+    ],
+    "notes": [
+      "中国结算登记与存管栏目列示的2025年PDF正文。"
+    ]
+  },
+  {
+    "id": "TB117",
+    "title": "中国结算关于交易所交易型开放式证券投资基金登记结算业务实施细则",
+    "source_type": "中国结算业务规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.chinaclear.cn/zdjs/zzbdc/202001/d2e5214900424b2e87d470be660c2865.shtml"
+    ],
+    "notes": [
+      "中国结算基金与资产管理业务栏目发布页，含交易所交易型开放式证券投资基金登记结算业务实施细则附件。"
+    ]
+  },
+  {
+    "id": "TB118",
+    "title": "中国结算上市开放式基金登记结算业务指引",
+    "source_type": "中国结算业务规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.chinaclear.cn/zdjs/zzbdc/202411/6e3ec6319a13439db47e5a7f97cdea22/files/%E4%B8%AD%E5%9B%BD%E8%AF%81%E5%88%B8%E7%99%BB%E8%AE%B0%E7%BB%93%E7%AE%97%E6%9C%89%E9%99%90%E8%B4%A3%E4%BB%BB%E5%85%AC%E5%8F%B8%E4%B8%8A%E5%B8%82%E5%BC%80%E6%94%BE%E5%BC%8F%E5%9F%BA%E9%87%91%E7%99%BB%E8%AE%B0%E7%BB%93%E7%AE%97%E4%B8%9A%E5%8A%A1%E6%8C%87%E5%BC%95.pdf"
+    ],
+    "notes": [
+      "中国结算基金与资产管理业务栏目列示的2024年PDF正文。"
+    ]
+  },
+  {
+    "id": "TB184",
+    "title": "公募基金行业合规管理手册",
+    "source_type": "中基协重要规则参考",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.amac.org.cn/hyyj/hjtj/202005/P020250122588393150509.pdf"
+    ],
+    "notes": [
+      "本地已保存中基协PDF；按重要规则参考保留为正式规则口径。"
+    ]
+  },
+  {
+    "id": "TB188",
+    "title": "公开募集基金募集申请注册行政许可事项服务指南",
+    "source_type": "证监会行政许可服务指南",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.csrc.gov.cn/csrc/c101968/c4638336/content.shtml"
+    ],
+    "notes": [
+      "本地已保存证监会服务指南页，补充为现行有效来源。"
+    ]
+  },
+  {
+    "id": "TB119",
+    "title": "上海证券交易所交易规则",
+    "source_type": "上交所交易规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.sse.com.cn/lawandrules/sselawsrules2025/trade/universal/c/c_20250612_10781695.shtml",
+      "https://www.sse.com.cn/lawandrules/sselawsrules2025/trade/universal/c/c_20260424_10816492.shtml"
+    ],
+    "notes": [
+      "2023年修订版截至2026年6月13日现行有效；2026年修订版已发布，将于2026年7月6日施行。"
+    ]
+  },
+  {
+    "id": "TB120",
+    "title": "深圳证券交易所交易规则",
+    "source_type": "深交所交易规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.szse.cn/lawrules/rule/stock/trade/t20230217_598773.html",
+      "https://docs.static.szse.cn/www/lawrules/rule/stock/trade/W020230217564423808793.pdf",
+      "https://www.szse.cn/lawrules/rule/trade/current/t20260424_620190.html",
+      "https://www.szse.cn/lawrules/rule/trade/current/W020260424690713155663.pdf"
+    ],
+    "notes": [
+      "2023年修订版截至2026年6月13日现行有效；深证上〔2026〕551号新版将于2026年7月6日施行。"
+    ]
+  },
+  {
+    "id": "TB121",
+    "title": "北京证券交易所交易规则",
+    "source_type": "北交所交易规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.bse.cn/jygl_list/200010919.html",
+      "https://www.bse.cn/jygl_list/200010920.html",
+      "https://www.bse.cn/jygl_list/200028217.html"
+    ],
+    "notes": [
+      "《北京证券交易所交易规则（试行）》截至2026年6月13日现行有效；北证公告〔2026〕17号新版将于2026年7月6日施行。"
+    ]
+  },
+  {
+    "id": "TB126",
+    "title": "中央国债登记结算有限责任公司债券登记托管结算业务规则",
+    "source_type": "中债业务指引",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.chinabond.com.cn/sczy/sczy_ywzy/ywzy_khzhfw/202307/t20230716_853092698.html"
+    ],
+    "notes": [
+      "官网现行具体题名为《中央国债登记结算有限责任公司债券登记托管结算业务指引》，页面含DOCX正文附件。"
+    ]
+  },
+  {
+    "id": "TB283",
+    "title": "中国证券登记结算有限责任公司证券账户管理规则",
+    "source_type": "中国结算业务规则",
+    "current_status": "现行有效",
+    "urls": [
+      "http://www.chinaclear.cn/zdjs/editor_file/20141008102818122.pdf"
+    ],
+    "notes": [
+      "与TB080同一规则正文，挂接至账户专题目录。"
+    ]
+  },
+  {
+    "id": "TB287",
+    "title": "交易所交易型开放式证券投资基金登记结算业务实施细则",
+    "source_type": "中国结算业务规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.chinaclear.cn/zdjs/zzbdc/202001/d2e5214900424b2e87d470be660c2865.shtml"
+    ],
+    "notes": [
+      "与TB117同一中国结算发布页，挂接至基金登记结算专题目录。"
+    ]
+  },
+  {
+    "id": "TB288",
+    "title": "上市开放式基金登记结算业务指引",
+    "source_type": "中国结算业务规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.chinaclear.cn/zdjs/zzbdc/202411/6e3ec6319a13439db47e5a7f97cdea22/files/%E4%B8%AD%E5%9B%BD%E8%AF%81%E5%88%B8%E7%99%BB%E8%AE%B0%E7%BB%93%E7%AE%97%E6%9C%89%E9%99%90%E8%B4%A3%E4%BB%BB%E5%85%AC%E5%8F%B8%E4%B8%8A%E5%B8%82%E5%BC%80%E6%94%BE%E5%BC%8F%E5%9F%BA%E9%87%91%E7%99%BB%E8%AE%B0%E7%BB%93%E7%AE%97%E4%B8%9A%E5%8A%A1%E6%8C%87%E5%BC%95.pdf"
+    ],
+    "notes": [
+      "与TB118同一规则正文，挂接至基金登记结算专题目录。"
+    ]
+  },
+  {
+    "id": "TB037",
+    "title": "中国银行业协会托管业务专业委员会工作规则",
+    "source_type": "中银协规范性文件",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.china-cba.net/Index/showw/catid/130/id/41103"
+    ],
+    "notes": [
+      "补充中银协托管业务专业委员会工作规则2022年修订版官方正文页。"
+    ]
+  },
+  {
+    "id": "TB165",
+    "title": "商业银行业务连续性监管指引",
+    "source_type": "金监总局继续有效目录",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.nfra.gov.cn/chinese/files/2018/AB54BE9578F54F52872737F60D80CF5B.pdf"
+    ],
+    "notes": [
+      "金监总局规范性文件继续有效目录列示银监发〔2011〕104号；未定位到稳定官方正文页，后续可补正文来源。"
+    ]
+  },
+  {
+    "id": "TB186",
+    "title": "证券投资基金招募说明书内容与格式准则",
+    "source_type": "证监会公告及附件",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.csrc.gov.cn/csrc/c101950/c1047975/content.shtml",
+      "https://www.csrc.gov.cn/csrc/c101950/c1047975/1047975/files/%E9%99%84%E4%BB%B61_%E4%B8%AD%E5%9B%BD%E8%AF%81%E7%9B%91%E4%BC%9A%E5%86%B3%E5%AE%9A%E4%BF%AE%E6%94%B9%E7%9A%84%E8%A7%84%E8%8C%83%E6%80%A7%E6%96%87%E4%BB%B6.pdf"
+    ],
+    "notes": [
+      "证监会公告〔2020〕66号附件修订招募说明书内容与格式准则。"
+    ]
+  },
+  {
+    "id": "TB187",
+    "title": "证券投资基金基金合同内容与格式准则",
+    "source_type": "证监会公告及附件",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.csrc.gov.cn/csrc/c101950/c1047975/content.shtml",
+      "https://www.csrc.gov.cn/csrc/c101950/c1047975/1047975/files/%E9%99%84%E4%BB%B61_%E4%B8%AD%E5%9B%BD%E8%AF%81%E7%9B%91%E4%BC%9A%E5%86%B3%E5%AE%9A%E4%BF%AE%E6%94%B9%E7%9A%84%E8%A7%84%E8%8C%83%E6%80%A7%E6%96%87%E4%BB%B6.pdf"
+    ],
+    "notes": [
+      "证监会公告〔2020〕66号附件修订基金合同内容与格式准则。"
+    ]
+  },
+  {
+    "id": "TB189",
+    "title": "公开募集证券投资基金产品资料概要格式准则",
+    "source_type": "中基协XBRL模板",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.amac.org.cn/xwfb/xhyw/202603/t20260313_27409.html",
+      "https://www.amac.org.cn/xwfb/xhyw/202603/P020260508338767275143.pdf"
+    ],
+    "notes": [
+      "补充中基协公开募集证券投资基金信息披露XBRL模板第5号产品资料概要，2026年5月1日起施行。"
+    ]
+  },
+  {
+    "id": "TB192",
+    "title": "货币市场基金信息披露特别规定",
+    "source_type": "证监会公告及附件",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.csrc.gov.cn/csrc/c101950/c1047975/content.shtml",
+      "https://www.csrc.gov.cn/csrc/c101950/c1047975/1047975/files/%E9%99%84%E4%BB%B61_%E4%B8%AD%E5%9B%BD%E8%AF%81%E7%9B%91%E4%BC%9A%E5%86%B3%E5%AE%9A%E4%BF%AE%E6%94%B9%E7%9A%84%E8%A7%84%E8%8C%83%E6%80%A7%E6%96%87%E4%BB%B6.pdf"
+    ],
+    "notes": [
+      "证监会公告〔2020〕66号附件修订货币市场基金信息披露特别规定。"
+    ]
+  },
+  {
+    "id": "TB205",
+    "title": "深圳证券交易所公开募集基础设施证券投资基金业务办法（试行）",
+    "source_type": "深交所REITs规则",
+    "current_status": "历史失效",
+    "urls": [
+      "https://www.szse.cn/lawrules/rule/reits/t20251231_618229.html",
+      "https://www.szse.cn/lawrules/rule/reits/W020251231638035935242.pdf"
+    ],
+    "notes": [
+      "原基础设施证券投资基金业务办法已于2025年12月31日废止并由公开募集不动产投资信托基金业务办法替代。"
+    ]
+  },
+  {
+    "id": "TB206",
+    "title": "中国结算上海/深圳公开募集基础设施证券投资基金登记结算业务指引",
+    "source_type": "中国结算REITs登记结算规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.chinaclear.cn/zdjs/zzbdc/202512/b4e36d5537794219ac2fa6d0e2001118/files/%E4%B8%AD%E5%9B%BD%E7%BB%93%E7%AE%97%E5%85%AC%E5%BC%80%E5%8B%9F%E9%9B%86%E4%B8%8D%E5%8A%A8%E4%BA%A7%E6%8A%95%E8%B5%84%E4%BF%A1%E6%89%98%E5%9F%BA%E9%87%91%E7%99%BB%E8%AE%B0%E7%BB%93%E7%AE%97%E4%B8%9A%E5%8A%A1%E6%8C%87%E5%BC%95%EF%BC%88%E8%AF%95%E8%A1%8C%EF%BC%89.pdf"
+    ],
+    "notes": [
+      "官网当前题名为公开募集不动产投资信托基金登记结算业务指引（试行），作为原REITs登记结算指引的现行替代口径。"
+    ]
+  },
+  {
+    "id": "TB221",
+    "title": "私募基金合同指引",
+    "source_type": "中基协服务指南及附件",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.amac.org.cn/fwdt/wyb/jgdjhcpbeian/smjjglrdjhcpba/fwzn/202206/t20220624_19657.html",
+      "https://www.amac.org.cn/fwdt/wyb/jgdjhcpbeian/smjjglrdjhcpba/fwzn/202206/P020231129532337600235.docx",
+      "https://www.amac.org.cn/fwdt/wyb/jgdjhcpbeian/smjjglrdjhcpba/fwzn/202206/P020231129532338347129.docx",
+      "https://www.amac.org.cn/fwdt/wyb/jgdjhcpbeian/smjjglrdjhcpba/fwzn/202206/P020231129532339084815.docx"
+    ],
+    "notes": [
+      "中基协服务指南附件8至10分别为私募投资基金合同指引1至3号。"
+    ]
+  },
+  {
+    "id": "TB226",
+    "title": "证券期货经营机构私募资产管理计划备案管理规则",
+    "source_type": "中基协备案规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.amac.org.cn/xwfb/xhyw/202307/P020231126355156253355.pdf"
+    ],
+    "notes": [
+      "现行官方题名为《证券期货经营机构私募资产管理计划备案办法》。"
+    ]
+  },
+  {
+    "id": "TB233",
+    "title": "现金管理类理财产品管理相关通知",
+    "source_type": "金监总局官方正文",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.nfra.gov.cn/cn/view/pages/governmentDetail.html?docId=989851&generaltype=1&itemId=861"
+    ],
+    "notes": [
+      "补充银保监会、人民银行关于规范现金管理类理财产品管理有关事项的通知。"
+    ]
+  },
+  {
+    "id": "TB239",
+    "title": "关于规范信托公司信托业务分类的通知",
+    "source_type": "金监总局官方正文",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.nfra.gov.cn/cn/view/pages/governmentDetail.html?docId=1101453&generaltype=1&itemId=861",
+      "https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=1101455&itemId=915"
+    ],
+    "notes": [
+      "银保监规〔2023〕1号，2023年6月1日起实施。"
+    ]
+  },
+  {
+    "id": "TB265",
+    "title": "银行间市场信用风险缓释工具试点业务规则",
+    "source_type": "交易商协会规则",
+    "current_status": "历史失效",
+    "urls": [
+      "https://www.nafmii.org.cn/zlgl/zlgz/jygfl/yspywl/202402/t20240227_317262.html",
+      "https://www.nafmii.org.cn/ggtz/gg/202104/t20210415_198294.html",
+      "https://www.nafmii.org.cn/cpxl/xyfxhsgjcrm/cpzy/202104/P020220708553837640524.pdf"
+    ],
+    "notes": [
+      "2024版《银行间市场信用风险缓释工具业务规则》替代原试点业务规则。"
+    ]
+  },
+  {
+    "id": "TB266",
+    "title": "信用违约互换业务指引",
+    "source_type": "交易商协会规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.nafmii.org.cn/cpxl/xyfxhsgjcrm/cpzy/202104/P020220708553838002100.pdf"
+    ],
+    "notes": [
+      "补充交易商协会信用违约互换业务指引PDF，需与2024版信用风险缓释工具业务规则联用。"
+    ]
+  },
+  {
+    "id": "TB267",
+    "title": "信用联结票据业务指引",
+    "source_type": "交易商协会规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.nafmii.org.cn/cpxl/xyfxhsgjcrm/cpzy/202104/P020220708553838160456.pdf"
+    ],
+    "notes": [
+      "补充交易商协信用联结票据业务指引PDF，需与2024版信用风险缓释工具业务规则联用。"
+    ]
+  },
+  {
+    "id": "TB269",
+    "title": "转融通业务规则",
+    "source_type": "中证金融规则",
+    "current_status": "现行有效",
+    "urls": [
+      "http://www.csf.com.cn/publish/main/1040/1045/index.html",
+      "http://www.csf.com.cn/publish/main/1040/1045/20230707103811731229229/1688697506450.pdf",
+      "http://www.csf.com.cn/publish/main/1009/1010/20240710172038468505945/index.html"
+    ],
+    "notes": [
+      "采用中证金融转融通业务规则（试行）（2023年6月修订）；转融券业务自2024年7月11日起暂停，适用时需说明限制。"
+    ]
+  },
+  {
+    "id": "TB270",
+    "title": "融资融券交易实施细则",
+    "source_type": "交易所融资融券规则族",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.sse.com.cn/lawandrules/sselawsrules2025/trade/specific/margin/c/c_20250616_10782015.shtml",
+      "https://www.szse.cn/lawrules/rule/stock/trade/t20230217_598777.html",
+      "https://docs.static.szse.cn/www/lawrules/rule/trade/W020230217568325595241.pdf",
+      "https://www.bse.cn/jygl_list/200013679.html"
+    ],
+    "notes": [
+      "融资融券为沪深北交易所规则族；北交所对应题名为融资融券交易细则，保证金比例通知另行优先适用。"
+    ]
+  },
+  {
+    "id": "TB273",
+    "title": "非金融企业资产支持票据指引",
+    "source_type": "交易商协会规则",
+    "current_status": "历史失效",
+    "urls": [
+      "https://www.nafmii.org.cn/ggtz/gg/201710/t20171010_198130.html",
+      "https://www.nafmii.org.cn/ggtz/gg/202303/P020230316624621277408.pdf"
+    ],
+    "notes": [
+      "2023年《银行间债券市场企业资产证券化业务规则》替代，2023年9月1日起施行。"
+    ]
+  },
+  {
+    "id": "TB276",
+    "title": "上海证券交易所沪港通业务实施办法",
+    "source_type": "上交所互联互通规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.sse.com.cn/lawandrules/sselawsrules2025/global/hkexsc/c/c_20251017_10795123.shtml"
+    ],
+    "notes": [
+      "补充上交所沪港通业务实施办法2024年修订版规则页。"
+    ]
+  },
+  {
+    "id": "TB279",
+    "title": "深圳证券交易所深港通业务实施办法",
+    "source_type": "深交所互联互通规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.szse.cn/lawrules/rule/inno/szhk/t20240614_607685.html",
+      "https://docs.static.szse.cn/www/lawrules/rule/inno/W020240614673497419312.pdf"
+    ],
+    "notes": [
+      "补充深交所深港通业务实施办法2024年修订版发布页及附件。"
+    ]
+  },
+  {
+    "id": "TB284",
+    "title": "中国证券登记结算有限责任公司证券质押登记业务规则",
+    "source_type": "中国结算业务规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.chinaclear.cn/zdjs/dzb/202503/d5e3574fd0c8491faeeeece2d48df75d/files/6.%E4%B8%AD%E5%9B%BD%E8%AF%81%E5%88%B8%E7%99%BB%E8%AE%B0%E7%BB%93%E7%AE%97%E6%9C%89%E9%99%90%E8%B4%A3%E4%BB%BB%E5%85%AC%E5%8F%B8%E8%AF%81%E5%88%B8%E8%B4%A8%E6%8A%BC%E7%99%BB%E8%AE%B0%E4%B8%9A%E5%8A%A1%E5%AE%9E%E6%96%BD%E7%BB%86%E5%88%99.pdf"
+    ],
+    "notes": [
+      "官网当前对应题名为证券质押登记业务实施细则。"
+    ]
+  },
+  {
+    "id": "TB310",
+    "title": "QDII外汇管理规定",
+    "source_type": "外汇局官方规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://m.safe.gov.cn/safe/2013/0827/5579.html",
+      "https://www.safe.gov.cn/tianjin/file/file/20250422/3e016a4c36c34ad39f844ec9309bb5ca.pdf"
+    ],
+    "notes": [
+      "外汇局页面标注《合格境内机构投资者境外证券投资外汇管理规定》已修改。"
+    ]
+  },
+  {
+    "id": "TB320",
+    "title": "租入固定资产进项税额抵扣等增值税政策通知",
+    "source_type": "财政部及税务机关政策",
+    "current_status": "现行有效",
+    "urls": [
+      "https://szs.mof.gov.cn/zhengcefabu/201712/t20171225_2788186.htm",
+      "https://shanghai.chinatax.gov.cn/zcfw/zcfgk/zzs/201801/t435818.html"
+    ],
+    "notes": [
+      "财税〔2017〕90号；税务局页面标注全文有效。"
+    ]
+  },
+  {
+    "id": "TB321",
+    "title": "增值税优惠政策衔接公告",
+    "source_type": "税务总局税收政策库",
+    "current_status": "现行有效",
+    "urls": [
+      "https://fgk.chinatax.gov.cn/zcfgk/c102416/c5247434/content.html"
+    ],
+    "notes": [
+      "全称为财政部 税务总局关于增值税法施行后增值税优惠政策衔接事项的公告，财政部税务总局公告2026年第10号。"
+    ]
+  },
+  {
+    "id": "TB323",
+    "title": "起征点标准等增值税征管事项公告",
+    "source_type": "税务总局税收政策库",
+    "current_status": "现行有效",
+    "urls": [
+      "https://fgk.chinatax.gov.cn/zcfgk/c100012/c5247426/content.html"
+    ],
+    "notes": [
+      "国家税务总局公告2026年第4号，成文日期2026年1月30日。"
+    ]
+  },
+  {
+    "id": "TB328",
+    "title": "商业银行合规风险管理指引",
+    "source_type": "金监总局废止依据",
+    "current_status": "历史失效",
+    "urls": [
+      "https://www.nfra.gov.cn/cn/view/pages/rulesDetail.html?docId=1192220",
+      "https://www.nfra.gov.cn/chinese/files/2018/AB54BE9578F54F52872737F60D80CF5B.pdf"
+    ],
+    "notes": [
+      "《金融机构合规管理办法》自2025年3月1日起施行并废止银监发〔2006〕76号。"
+    ]
+  },
+  {
+    "id": "TB329",
+    "title": "银行业金融机构全面风险管理指引",
+    "source_type": "金监总局发布页及继续有效目录",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=120719",
+      "https://www.nfra.gov.cn/chinese/files/2018/AB54BE9578F54F52872737F60D80CF5B.pdf"
+    ],
+    "notes": [
+      "2018年继续有效目录列示银监发〔2016〕44号，未见废止。"
+    ]
+  },
+  {
+    "id": "TB181",
+    "title": "业绩比较基准相关指标解释、基准收益率计算参考及基准示例",
+    "source_type": "中基协业绩比较基准要素库官方页面及附件",
+    "current_status": "现行有效",
+    "reference_urls": [
+      "https://www.amac.org.cn/xwfb/tzgg/202601/t20260127_27297.html",
+      "https://www.amac.org.cn/fwdt/wyc/jgcprycx/cpcx/gmjjyjbjjzyskcx/"
+    ],
+    "urls": [
+      "https://www.amac.org.cn/portal/front/attach/common/downloadAttach?attachId=826",
+      "https://www.amac.org.cn/portal/front/attach/common/downloadAttach?attachId=834",
+      "https://www.amac.org.cn/portal/front/attach/common/downloadAttach?attachId=827"
+    ],
+    "notes": [
+      "中基协发〔2026〕3号公告确认发布公募基金业绩比较基准要素库及运作说明，并指向“服务大厅-我要查-产品查询-公募基金业绩比较基准要素库”页面下载。",
+      "未发现标题精确为《业绩比较基准相关指标解释、基准收益率计算参考及基准示例》的独立官方附件；按官方要素库页面、一类库、二类库及《公募基金业绩比较基准要素库运作说明》作为正文/配套正文落库。",
+      "目标页面动态接口返回附件：attachId=826（一类库.xlsx）、attachId=834（二类库.xlsx）、attachId=827（运作说明.pdf）；数据列表接口显示当前库更新日期为2026-06-10。"
+    ]
+  },
+  {
+    "id": "TB136",
+    "title": "关于证券投资基金投资资产支持证券有关事项的通知",
+    "source_type": "证监会公报PDF",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.csrc.gov.cn/csrc/c100024/c1492317/1492317/files/7a2e3df6cdbc4855aba258d78ecadc1e.pdf"
+    ],
+    "notes": [
+      "证监会公报PDF为正式原文；扫描件正文已补入可检索文本。"
+    ]
   }
 ]

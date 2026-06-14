@@ -187,14 +187,14 @@ def main() -> None:
         "--include-aux",
         dest="include_aux",
         action="store_true",
-        help="Include 历史失效 and 官方入口 results. 辅助资料 is included by default.",
+        help="Include 历史失效 and 官方入口 results.",
     )
     parser.add_argument("--limit", type=int, default=8, help="Maximum number of results.")
     args = parser.parse_args()
 
     rows = search(args)
     if not rows:
-        print("未命中。可以尝试减少关键词，或使用 --include-excluded 查看官方入口/历史规则。辅助资料已默认纳入检索。")
+        print("未命中。可以尝试减少关键词，或使用 --include-excluded 查看官方入口/历史规则。")
         return
 
     for idx, row in enumerate(rows, start=1):

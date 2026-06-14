@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+<title>关于发布《深圳证券交易所深港通业务实施办法（2024年修订）》及有关事项的通知</title>
+<script>
+  if(location.protocol == 'https:'){
+    document.write('<link href="https://res.szse.cn/common/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />');
+  }else{
+    document.write('<link href="http://res.static.szse.cn/common/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />');
+  }
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0" />
+<meta http-equiv="cache-control" content="max-age=0">
+<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="expires" content="Web, 26 Feb 1997 08:21:57 GMT">
+<meta http-equiv="pragma" content="no-cache">
+<meta name="author" content="www.szse.cn">
+<meta name="description" content="深交所官网">
+<meta name="keywords" content="深交所,深交所官网,深圳证券交易所,交易所,交易所官网,深圳证券交易所官网">
+<meta name="renderer" content=webkit>
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google" value="notranslate"> 
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="screen-orientation" content="portrait">
+<meta name="full-screen" content="yes">
+<meta name="browermode" content="application">
+<meta name="x5-orientation" content="portrait">
+<meta name="HandheldFriendly" content="true">
+<script type="text/javascript">
+	var u = navigator.userAgent;
+	var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;//android终端
+
+	function addElementMeta(name,  content) {
+		var head = document.getElementsByTagName('head')[0];
+		var meta = document.createElement('meta');
+
+		meta.setAttribute('name', name);
+		meta.setAttribute('content', content);
+		head.appendChild(meta);
+	}
+	if(isAndroid) {
+		addElementMeta('x5-fullscreen', 'true');
+		addElementMeta('x5-page-mode', 'app');
+	}
+</script> 
+    <script>
+  (function () {
+    var _versionDate = new Date().getTime();
+    if (location.protocol == 'https:') {
+      var _path = 'https://res.szse.cn';
+    } else {
+      var _path = 'http://res.static.szse.cn';
+    }
+    // _path = _path.replace(".static.", ".");
+    //var _path = 'http://res.szse.cn';
+    //document.write( " <script src='" + _path + "/common/js/first.js?random=" + _versionDate + "'> <\/script> ");
+    var _host = 'http://www.szse.cn';
+    if (location.protocol == 'https:') {
+      _host = 'https://www.szse.cn';
+    }
+
+
+    var backDomain = 'http://www.sse.org.cn'
+    var reg = /([a-zA-Z0-9][-a-zA-Z0-9]{0,62})((\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+)\.?(:\d+)?/;
+    if (backDomain && window.location.host.match(reg)[2] === backDomain.match(reg)[2]) {
+      _host = 'http://www.sse.org.cn';
+      _path = 'http://res.static.sse.org.cn';
+      if (location.protocol == 'https:') {
+        _host = 'https://www.sse.org.cn';
+        _path = 'https://res.static.sse.org.cn';
+      }
+
+    }
+
+    _path = _path.replace(".static.", ".");
+
+    document.write(" <script src='" + _host + "/szsePath.js?random=" + _versionDate + "'> <\/script> "
+      + " <script src='" + _path + "/common/js/concatversion.js?random=" + _versionDate + "'> <\/script> ");
+  }());
+</script>
+
+<script>
+
+  function backDomainLinkSwitch(value, type) {
+    var _port = location.port ? (":" + location.port) : "";
+    var reg = /([a-zA-Z0-9][-a-zA-Z0-9]{0,62})((\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+)\.?(:\d+)?/;
+    var urlRegx = /(.*)(http:|https:)(\/\/)(([a-zA-Z0-9][-a-zA-Z0-9]{0,62})((\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+))\.?(:\d+)?(.*)/;
+
+    // html字符串替换
+    if (type == 'str') {
+      var strArr = value.split("=");
+      strArr = strArr.map(function (v) {
+        var host = reg.test(v) ? v.match(reg)[0] : null;
+        if (pathObj.szseHosts.indexOf(host) > -1) {
+          if (window.location.protocol == 'https:' && urlRegx.test(v)) {
+            v = v.replace(urlRegx, '$1https:$3$4' + _port + '$9');
+          };
+          if (pathObj.current_host === pathObj.back_host) {
+            v = v.replace(pathObj.main_host, pathObj.back_host);
+          }
+        }
+        return v
+      });
+      value = strArr.join("=");
+      return value;
+    }
+
+    // a标签地址替换
+    if (type === 'A') {
+      var eleA = document.querySelectorAll(value);
+      for (var i = 0; i < eleA.length; i++) {
+        var href = eleA[i].getAttribute("href");
+        var host = reg.test(href) ? href.match(reg)[0] : null;
+        if (href && pathObj.szseHosts.indexOf(host) > -1) {
+          if (window.location.protocol == 'https:') {
+            href = href.replace(urlRegx, '$1https:$3$4' + _port + '$9');
+          };
+          if (pathObj.current_host === pathObj.back_host) {
+            href = href.replace(pathObj.main_host, pathObj.back_host);
+          }
+          eleA[i].setAttribute('href', href);
+        }
+      }
+    }
+
+    // 单链接替换
+    if (type === "link") {
+      if (window.location.protocol == 'https:' && !!value) {
+        value = value.replace(urlRegx, '$1https:$3$4' + _port + '$9');
+      };
+      if (pathObj.current_host === pathObj.back_host) {
+        var host = reg.test(value) ? value.match(reg)[0] : null;
+        if (value && pathObj.szseHosts.indexOf(host) > -1) {
+          value = value.replace(pathObj.main_host, pathObj.back_host);
+        }
+      }
+      return value;
+    }
+
+    // 背景图地址更换
+    if (type === "background") {
+      var eleBg = document.querySelectorAll(value);
+      for (var i = 0; i < eleBg.length; i++) {
+        var href = eleBg[i].style.backgroundImage;
+        if (window.location.protocol == 'https:' && !!href) {
+          href = href.replace(urlRegx, '$1https:$3$4' + _port + '$9');
+        };
+        var host = reg.test(href) ? href.match(reg)[0] : null;
+        if (href && pathObj.szseHosts.indexOf(host) > -1) {
+          if (pathObj.current_host === pathObj.back_host) {
+            href = href.replace(pathObj.main_host, pathObj.back_host);
+          }
+          eleBg[i].style.backgroundImage = href;
+        }
+      }
+    }
+
+  }
+
+</script>
+
+<script>
+   if(document.cookie.indexOf('ft_language=1')>-1){
+    var style = document.createElement('style');
+    style.textContent='body{visibility:hidden;}';
+    document.head.appendChild(style);
+  }
+</script>
+<script>
+    addComCssFile()
+</script>
+<script>
+        changeVertion('/modules/report/css/report.css', 'css');
+        changeVertion('/modules/aboutus_column/introduction/css/journal.css', 'css');
+    </script>
+    <script>
+  changeVertion('/lib/validator/validator.min.css', 'css');
+  changeVertion('/common/plugins/css/index.min.css', 'css');
+  changeVertion('/common/css/form.css', 'css');
+  changeVertion('/common/css/articleDetailUtil.css','css');
+</script>
+</head>
+  <body class="article-body">
+    <script>
+  navMenuAJAX('/application/publicindex/header/index.html', '/application/publicindex/header/index.html', 'header', 'www');
+</script>
+<div class="g-locationnav">
+    <div class="banner-wrap">
+      <img src="http://res.static.szse.cn/common/images/legalrules-banner.jpg" />
+    </div>
+    <div class="g-container">
+      <div class="g-banner-txt">
+            <h2 class="hidden-xs">深港通</h2>
+            <p>
+              <img src="http://res.static.szse.cn/common/icon/er-banneradr.png" />位置：<a href="../../../" class="CurrChnlCls">法律规则</a>/<a href="../../" class="CurrChnlCls">本所业务规则</a>/<a href="../" class="CurrChnlCls">跨境创新类</a>/<a href="./" class="CurrChnlCls">深港通</a>
+            </p>
+          </div>
+    </div>
+</div>
+  
+      <div class="g-container-wrap">
+            <div class="g-container">
+<!--startprint-->
+                <div class="news-detail-con g-conbox"> 
+                	<div class="des-header">
+                  <h2 class="title">关于发布《深圳证券交易所深港通业务实施办法（2024年修订）》及有关事项的通知</h2>
+                  		<script>
+                  			var curSubTitle ='';
+                  			if(curSubTitle != ''){
+                  				document.write('<h4 style="text-align: center;" class="sub-title"><i class=""></i><span class="">'+curSubTitle+'</span></h4>')
+                  			}                  		
+                  		</script>
+              <div class="time">时间：<span>2024-06-14</span></div>
+              <div class="des-switchsize">
+                字体：
+                <span class="bigger">大</span>
+                <span class="medium">中</span>
+                <span class="smaller">小</span>
+              </div>
+    					
+        	</div>
+    				 <div class="des-content" id="desContent">
+                       <p class="MsoNormal" align="center" style="margin-right: 0pt; line-height: 200%; font-size: 16px; text-align: center;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><span face="宋体" style="font-family: 宋体;">深证上〔</span><span face="宋体" style="font-family: 宋体;">2024〕</span></span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;">462</span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;">号</span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" align="center" style="margin-right: 0.0000pt; mso-para-margin-right: 0.0000gd; text-indent: 23.6000pt; mso-char-indent-count: 2.0000; text-autospace: ideograph-numeric; mso-pagination: none; text-align: center; line-height: 200%;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;">&nbsp; &nbsp;</span></p>
+<p class="MsoNormal" align="center" style="margin-right: 0pt; line-height: 200%; text-align: left; font-size: 16px;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 0.0000pt;">各市场参与人：</span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 0.0000pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-right: 0pt; text-indent: 23.6pt; line-height: 200%; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><span face="宋体" style="font-family: 宋体;">为持续优化互联互通机制，进一步扩大深港通</span><span face="宋体" style="font-family: 宋体;">ETF标的范围，本所对《深圳证券交易所深港通业务实施办法》（以下简称《实施办法》）进行了修订，经中国证监会批准，现予以发布，自发布之日起施行。本所于2023年3月3日发布的《深圳证券交易所深港通业务实施办法（2023年修订）》（深证上〔2023〕153号）同时废止。</span></span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-right: 0pt; text-indent: 23.6pt; line-height: 200%; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;">为确保修订后《实施办法》顺利施行，现将有关事项通知如下：</span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-right: 0pt; text-indent: 23.6pt; line-height: 200%; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; mso-bidi-font-weight: bold; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><span face="宋体" style="font-family: 宋体;">一、《实施办法》修订施行后首次深股通</span><span face="宋体" style="font-family: 宋体;">ETF考察和调整安排</span></span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; mso-bidi-font-weight: bold; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-right: 0pt; text-indent: 23.6pt; line-height: 200%; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;">（一）《实施办法》修订施行后</span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;">，</span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><span face="宋体" style="font-family: 宋体;">深股通</span><span face="宋体" style="font-family: 宋体;">ETF首次调入的考察日为2024年6月17日（深股通ETF定期调整考察日）。在该考察日属于《实施办法》第二十五条规定范围的本所上市股票ETF，将调入深股通ETF，但调入生效日前触及《实施办法》第二十八条调出情形的除外。</span></span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-right: 0pt; text-indent: 23.6pt; line-height: 200%; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;">（二）</span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;">属于</span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;">深股通</span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;">范围</span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><span face="宋体" style="font-family: 宋体;">的本所上市股票</span><span face="宋体" style="font-family: 宋体;">ETF</span></span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;">，</span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><span face="宋体" style="font-family: 宋体;">在</span><span face="宋体" style="font-family: 宋体;">2024年6月17日（深股通ETF定期调整考察日）触及《实施办法》第二十六条规定情形的，将调出深股通。</span></span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-right: 0pt; text-indent: 23.6pt; line-height: 200%; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><span face="宋体" style="font-family: 宋体;">（三）深股通</span><span face="宋体" style="font-family: 宋体;">ETF调整名单将于7月12日由香港联交所证券交易服务公司另行公告，预计自7月22日起生效，请予以关注。</span></span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-right: 0pt; text-indent: 23.6pt; line-height: 200%; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; mso-bidi-font-weight: bold; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><span face="宋体" style="font-family: 宋体;">二、《实施办法》修订施行后首次港股通</span><span face="宋体" style="font-family: 宋体;">ETF考察和调入安排</span></span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; mso-bidi-font-weight: bold; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-right: 0pt; text-indent: 23.6pt; line-height: 200%; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;">（一）《实施办法》修订施行后</span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;">，</span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><span face="宋体" style="font-family: 宋体;">港股通</span><span face="宋体" style="font-family: 宋体;">ETF首次调入的考察日为2024年6月17日。在该考察日属于《实施办法》第七十六条规定范围的香港联交所上市股票ETF，将调入港股通，但调入生效日前触及《实施办法》第七十九条调出情形的除外。</span></span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-right: 0pt; text-indent: 23.6pt; line-height: 200%; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><span face="宋体" style="font-family: 宋体;">（二）已调入港股通的香港联交所上市股票</span><span face="宋体" style="font-family: 宋体;">ETF，在前述考察日不进行调出考察。</span></span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-right: 0pt; text-indent: 23.6pt; line-height: 200%; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><span face="宋体" style="font-family: 宋体;">（三）港股通</span><span face="宋体" style="font-family: 宋体;">ETF调整名单将于7月12日由本所证券交易服务公司另行公告，预计自7月22日起生效，请予以关注。</span></span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-right: 0pt; text-indent: 23.6pt; line-height: 200%; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; mso-bidi-font-weight: bold; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;">三、规则施行衔接安排</span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; mso-bidi-font-weight: bold; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-right: 0pt; text-indent: 23.6pt; line-height: 200%;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 0.0000pt;"><span face="宋体" style="font-family: 宋体;">本次《实施办法》修订施行前深港通部分业务安排继续执行（详见附件</span><span face="宋体" style="font-family: 宋体;">3）。</span></span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 0.0000pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-right: 0pt; text-indent: 23.6pt; line-height: 200%; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 0.0000pt;">&nbsp;</span></p>
+<p class="MsoNormal" style="margin-right: 0pt; text-indent: 23.6pt; line-height: 200%; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 0.0000pt;"><span face="宋体" style="font-family: 宋体;">附件：</span><span face="宋体" style="font-family: 宋体;">1</span></span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 0.0000pt;">．<a href="http://docs.static.szse.cn/www/lawrules/rule/inno/szhk/W020240614673497419312.pdf" target="_blank" rel="noopener" oldsrc="W020240614673497419312.pdf">深圳证券交易所深港通业务实施办法（2024年修订）</a></span></p>
+<p class="MsoNormal" style="margin-right: 0pt; margin-left: 0pt; text-indent: 23.6pt; line-height: 200%; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 0.0000pt;">&nbsp; &nbsp; 2</span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 0.0000pt;">．<a href="http://docs.static.szse.cn/www/lawrules/rule/inno/szhk/W020240614673497607678.pdf" target="_blank" rel="noopener" oldsrc="W020240614673497607678.pdf">《深圳证券交易所深港通业务实施办法》修订说明</a></span></p>
+<p class="MsoNormal" style="margin-right: 0pt; text-indent: 23.6pt; line-height: 200%;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 0.0000pt;">&nbsp; &nbsp; 3</span><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 0.0000pt;">．<a href="http://docs.static.szse.cn/www/lawrules/rule/inno/szhk/W020240614673497698949.pdf" target="_blank" rel="noopener" oldsrc="W020240614673497698949.pdf">《深圳证券交易所深港通业务实施办法（2024年修订）》施行衔接安排</a></span></p>
+<p class="MsoNormal" style="margin-right: 0.0000pt; mso-para-margin-right: 0.0000gd; text-indent: 23.6000pt; mso-char-indent-count: 2.0000; mso-layout-grid-align: none; layout-grid-mode: char; text-autospace: ideograph-numeric; mso-pagination: none; mso-outline-level: 1; line-height: 200%;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;">&nbsp;</span></p>
+<p class="MsoNormal" style="margin-right: 0.0000pt; mso-para-margin-right: 0.0000gd; text-indent: 23.6000pt; mso-char-indent-count: 2.0000; mso-layout-grid-align: none; layout-grid-mode: char; text-autospace: ideograph-numeric; mso-pagination: none; mso-outline-level: 1; line-height: 200%;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;">&nbsp;</span></p>
+<p class="MsoNormal" align="right" style="margin-right: 0.0000pt; mso-para-margin-right: 0.0000gd; text-indent: 23.6000pt; mso-char-indent-count: 2.0000; mso-layout-grid-align: none; layout-grid-mode: char; text-autospace: ideograph-numeric; mso-pagination: none; text-align: right; line-height: 200%;"><span style="font-family: 宋体; line-height: 200%; font-size: 12pt;">深圳证券交易所</span><span style="font-family: 宋体; line-height: 200%; font-size: 12pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" align="right" style="margin-right: 0.0000pt; mso-para-margin-right: 0.0000gd; text-indent: 23.6000pt; mso-char-indent-count: 2.0000; word-break: break-all; text-autospace: ideograph-numeric; mso-pagination: none; text-align: right; line-height: 200%;"><span style="font-family: 宋体; line-height: 200%; font-size: 12pt;">2024年</span><span style="font-family: 宋体; line-height: 200%; font-size: 12pt;">6</span><span style="font-family: 宋体; line-height: 200%; font-size: 12pt;">月</span><span style="font-family: 宋体; line-height: 200%; font-size: 12pt;">14</span><span style="font-family: 宋体; line-height: 200%; font-size: 12pt;">日</span><span style="font-family: 宋体; line-height: 200%; font-size: 12pt;"><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-right: 0.0000pt; mso-para-margin-right: 0.0000gd; text-indent: 23.6000pt; mso-char-indent-count: 2.0000; text-autospace: ideograph-numeric; mso-pagination: none; line-height: 200%;"><span style="mso-spacerun: 'yes'; font-family: 宋体; line-height: 200%; font-size: 12.0000pt; mso-font-kerning: 1.0000pt;">&nbsp;</span></p>
+                    </div>
+                    <script>
+                        var oldCon = document.getElementById("desContent").innerHTML;
+                        oldCon = oldCon.replace(/(o:p)|(u:p)/gi,'span');
+                        oldCon = oldCon.replace(/&lt;!--\[endif\]--&gt;/g,"");
+                        document.getElementById("desContent").innerHTML = oldCon;
+                    </script>
+<!--endprint-->
+    				<div class="des-footer">
+    					<div class="article-page display-none">
+                   
+    						
+    					</div>
+    					<div class="article-btn">
+    						<a href="javascript:void(0);" class="btn btn-gray art-print">打印</a>
+        						<a href="javascript:void(0);" target="_blank" class="btn btn-gray ml10 art-collect">收藏</a>
+        						<a href="javascript:void(0);" class="btn btn-gray ml10 art-close">关闭</a>
+    					</div>
+    				</div>  
+				</div>
+     
+            </div>
+      </div>
+
+    <script>
+  changeVertion('/common/js/toggleBig5.js', 'js');
+  navMenuAJAX('/application/publicindex/footer/index.html','/application/publicindex/footer/index.html', 'footer','www');
+  addComJsFile();
+</script>
+    <script>
+  (function () {
+    var _versionDate = new Date().getTime();
+
+    var _host = 'http://www.szse.cn';
+    if (location.protocol == 'https:') {
+      _host = 'https://www.szse.cn';
+    }
+
+    var backDomain = 'http://www.sse.org.cn'
+    var reg = /([a-zA-Z0-9][-a-zA-Z0-9]{0,62})((\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+)\.?(:\d+)?/;
+    if (backDomain && window.location.host.match(reg)[2] === backDomain.match(reg)[2]) {
+      _host = 'http://www.sse.org.cn';
+      if (location.protocol == 'https:') {
+        _host = 'https://www.sse.org.cn';
+      }
+
+    }
+    document.write(" <script src='" + _host + "/dynamicmodule/index/sysconfig.js?random=" + _versionDate + "'> <\/script> ");
+
+  }());
+</script>
+    <script>
+    	var articleDetail = {
+    		docTitle:'关于发布《深圳证券交易所深港通业务实施办法（2024年修订）》及有关事项的通知',
+    		subDocTitle:'',
+    		docAbstract:'',
+                articleId:'607685',
+		channelCode:'szserulesinnoSzhk_news',
+    channelId : '12824'
+    	}
+    </script>
+    <script>
+    	changeVertion('/common/js/articleDetail.js','js');
+    </script>
+    <script>
+  changeVertion('/lib/validator/jquery.validate.js', 'js');
+  changeVertion('/common/js/jquery.validate_extend.js', 'js');
+  changeVertion('/lib/webuploader-0.1.5/webuploader.js', 'js');
+  changeVertion('/common/plugins/index.min.js', 'js');
+  changeVertion('/common/js/articleDetailUtil.js','js');
+</script>
+  </body>
+</html>
+
+
+

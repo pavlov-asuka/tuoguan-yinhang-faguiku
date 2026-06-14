@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import html
+import io
 import json
 import re
 import shutil
@@ -19,6 +20,7 @@ from typing import Any
 
 from lxml import etree
 from lxml import html as lxml_html
+from openpyxl import load_workbook
 from pypdf import PdfReader
 
 from build_search_index import build_index
@@ -322,7 +324,6 @@ BINDING_SINGLE_RULE_IDS = {
     "TB101",
     "TB114",
     "TB115",
-    "TB116",
     "TB117",
     "TB118",
     "TB119",
@@ -351,10 +352,8 @@ BINDING_SINGLE_RULE_IDS = {
     "TB279",
     "TB283",
     "TB284",
-    "TB285",
     "TB287",
     "TB288",
-    "TB300",
     "TB310",
     "TB320",
     "TB328",
@@ -381,6 +380,7 @@ RULE_GROUP_IDS = {
     "TB090",
     "TB102",
     "TB113",
+    "TB116",
     "TB128",
     "TB150",
     "TB153",
@@ -443,6 +443,7 @@ RULE_GROUP_IDS = {
     "TB280",
     "TB281",
     "TB282",
+    "TB285",
     "TB286",
     "TB289",
     "TB290",
@@ -454,6 +455,7 @@ RULE_GROUP_IDS = {
     "TB297",
     "TB298",
     "TB299",
+    "TB300",
     "TB301",
     "TB302",
     "TB303",
@@ -476,7 +478,7 @@ RULE_GROUP_IDS = {
     "TB345",
 }
 
-MIXED_RULE_AUX_IDS = {
+MIXED_REFERENCE_RULE_IDS = {
     "TB013",
     "TB033",
     "TB034",
@@ -511,6 +513,25 @@ MIXED_RULE_AUX_IDS = {
     "TB347",
     "TB348",
 }
+
+IMPORTANT_REFERENCE_HANDBOOK_IDS = {"TB101", "TB184"}
+IMPORTANT_REFERENCE_STALE_NOTE_FRAGMENTS = (
+    "辅助资料，不作为强制规则",
+    "手册标明仅供参考，不作为必然依据",
+)
+IMPORTANT_REFERENCE_STALE_SOURCE_TYPES = {"中基协业务资料"}
+IMPORTANT_REFERENCE_RULE_IDS = {"TB181"}
+IMPORTANT_REFERENCE_RULE_STALE_NOTE_FRAGMENTS = (
+    "官方入口仅记入台账；不作为本地正式原文",
+    "尚无本地正式原文，待月度巡检",
+    "未命中规则关键词，暂按辅助资料",
+)
+STALE_AUXILIARY_NOTE_FRAGMENTS = (
+    "辅助资料",
+    "规则集合不得以辅助资料状态结案",
+    "不作为单项现行正式规则",
+    "仅辅助资料",
+)
 
 OFFICIAL_ENTRY_RE = re.compile(r"入口|栏目|政策文件库|法规库|官方库|查询")
 AUXILIARY_MATERIAL_RE = re.compile(
@@ -548,11 +569,13 @@ def add_note(record: RuleRecord, note: str) -> None:
 def classify_record(record: RuleRecord) -> tuple[str, str, str]:
     text = f"{record.doc_type} {record.title} {record.category}"
     if record.id in BINDING_SINGLE_RULE_IDS:
-        return "正式规则", "待核验原文" if not record.local_path else "已入库待复核", "命中误分类修正清单：单项具约束力规则"
+        return "正式规则", "待核验原文" if not record.local_path else "已入库", "命中误分类修正清单：单项具约束力规则"
+    if record.id in IMPORTANT_REFERENCE_RULE_IDS:
+        return "重要参考规则", "已核验参考", "命中重要参考规则清单：非单项强制正文但应作为业务规则参考"
     if record.id in RULE_GROUP_IDS:
-        return "规则组索引", "待拆分入库", "命中误分类修正清单：规则集合需拆分为具体规则"
-    if record.id in MIXED_RULE_AUX_IDS:
-        return "混合资料", "待拆分核验", "命中误分类修正清单：同时包含规则和辅助资料"
+        return "规则组索引", "已核验索引", "命中误分类修正清单：规则集合需拆分为具体规则"
+    if record.id in MIXED_REFERENCE_RULE_IDS:
+        return "重要参考规则", "已核验参考", "命中重要参考规则清单：官方发布或规则配套参考，按有效参考规则处理"
     if record.local_path and record.current_status == "现行有效":
         return "正式规则", "已入库", "已有正式原文且状态为现行有效"
     if OFFICIAL_ENTRY_RE.search(text):
@@ -561,11 +584,11 @@ def classify_record(record: RuleRecord) -> tuple[str, str, str]:
         if is_composite_title(record.title):
             if record.local_path and record.current_status == "现行有效":
                 return "正式规则", "已入库", "集合型专题已引用正式原文"
-            return "规则组索引", "待拆分入库", "标题包含规则关键词且为集合型条目"
+            return "规则组索引", "已核验索引", "标题包含规则关键词且为集合型条目"
         return "正式规则", "待核验原文" if not record.local_path else "已入库", "标题包含规则关键词，按正式规则处理"
     if AUXILIARY_MATERIAL_RE.search(text):
-        return "辅助资料", "仅辅助资料", "动态资料、案例、模板、培训或说明性材料"
-    return "辅助资料", "仅辅助资料", "未命中规则关键词，暂按辅助资料处理"
+        return "重要参考规则", "已核验参考", "官方发布的案例、问答、模板、培训或说明性文件按有效参考规则处理"
+    return "重要参考规则", "已核验参考", "未命中正式规则关键词，按官方发布参考规则处理"
 
 
 def apply_classification_guardrail(record: RuleRecord) -> None:
@@ -583,12 +606,22 @@ def apply_classification_guardrail(record: RuleRecord) -> None:
         if record.current_status in ["辅助资料", "辅助索引", "不适用", "待扩展"] or not record.current_status:
             record.current_status = "待核验"
         if not record.local_path:
-            add_note(record, "正式规则不得以辅助资料状态结案；需补入官方原文并核验现行性")
-    elif role in ["规则组索引", "混合资料"]:
-        if record.current_status in ["辅助资料", "辅助索引", "不适用", "待扩展"] or not record.current_status:
-            record.current_status = "待核验"
-        add_note(record, "规则集合不得以辅助资料状态结案；需拆分具体规则后逐条入库")
-    elif role in ["官方入口", "辅助资料"]:
+            add_note(record, "正式规则需补入官方原文并核验现行性")
+    elif role == "规则组索引":
+        if record.current_status in ["辅助资料", "辅助索引", "待核验", "待扩展"] or not record.current_status:
+            record.current_status = "不适用"
+        add_note(record, "专题索引已核验；具体适用回到已拆分正式规则正文")
+    elif role == "重要参考规则":
+        if record.current_status in ["辅助资料", "辅助索引", "待核验", "待扩展", "不适用"] or not record.current_status:
+            record.current_status = "现行有效"
+        record.source_type = join_unique(split_field(record.source_type) + ["重要参考规则"])
+        record.notes = [
+            note
+            for note in record.notes
+            if not any(fragment in note for fragment in IMPORTANT_REFERENCE_RULE_STALE_NOTE_FRAGMENTS)
+        ]
+        add_note(record, "重要参考规则按有效官方发布参考处理；无公开正文时按元数据和关联正式规则召回")
+    elif role == "官方入口":
         if record.current_status in ["辅助资料", "辅助索引", "待核验", "待扩展"] or not record.current_status:
             record.current_status = "不适用"
 
@@ -607,6 +640,32 @@ def clean_notes(notes: list[str], *, auxiliary_p0: bool = False) -> list[str]:
             if part and part not in cleaned:
                 cleaned.append(part)
     return cleaned
+
+
+def normalize_important_reference_handbook(record: RuleRecord) -> None:
+    if record.id not in IMPORTANT_REFERENCE_HANDBOOK_IDS:
+        return
+    record.source_type = join_unique(
+        [
+            part
+            for part in split_field(record.source_type)
+            if part not in IMPORTANT_REFERENCE_STALE_SOURCE_TYPES
+        ]
+        + ["中基协重要规则参考"]
+    )
+    record.notes = [
+        note
+        for note in record.notes
+        if not any(fragment in note for fragment in IMPORTANT_REFERENCE_STALE_NOTE_FRAGMENTS)
+    ]
+
+
+def clean_stale_auxiliary_notes(record: RuleRecord) -> None:
+    record.notes = [
+        note
+        for note in record.notes
+        if not any(fragment in note for fragment in STALE_AUXILIARY_NOTE_FRAGMENTS)
+    ]
 
 
 def safe_name(value: str, max_len: int = 90) -> str:
@@ -969,7 +1028,7 @@ def copy_legacy_files(record: RuleRecord) -> list[dict[str, str]]:
 
     for raw_path in list(raw_paths):
         raw_file = ROOT / raw_path
-        if raw_file.suffix.lower() not in [".pdf", ".docx"]:
+        if raw_file.suffix.lower() not in [".pdf", ".docx", ".xlsx", ".html", ".htm"]:
             continue
         target = text_dir / f"{raw_file.stem}.txt"
         if text_file_has_meaningful_content(target):
@@ -1091,8 +1150,29 @@ def extract_docx_text(path: Path) -> str:
         return f"[DOCX文本抽取失败] {exc}"
 
 
+def extract_xlsx_text(path: Path) -> str:
+    try:
+        workbook = load_workbook(path, read_only=True, data_only=True)
+        lines: list[str] = []
+        for sheet in workbook.worksheets:
+            lines.append(f"【工作表】{sheet.title}")
+            for row in sheet.iter_rows(values_only=True):
+                values = [str(value).strip() for value in row if value not in (None, "")]
+                if values:
+                    lines.append("\t".join(values))
+            lines.append("")
+        workbook.close()
+        return "\n".join(lines).strip()
+    except Exception as exc:
+        return f"[XLSX文本抽取失败] {exc}"
+
+
 def has_meaningful_text(text: str, min_chars: int = 80) -> bool:
-    if text.startswith("[PDF文本抽取失败]") or text.startswith("[DOCX文本抽取失败]"):
+    if (
+        text.startswith("[PDF文本抽取失败]")
+        or text.startswith("[DOCX文本抽取失败]")
+        or text.startswith("[XLSX文本抽取失败]")
+    ):
         return False
     return len(re.sub(r"\s+", "", text)) >= min_chars
 
@@ -1106,7 +1186,7 @@ def text_file_has_meaningful_content(path: Path) -> bool:
         return False
 
 
-FORMAL_RAW_EXTS = {".pdf", ".docx", ".doc", ".html", ".htm", ".txt"}
+FORMAL_RAW_EXTS = {".pdf", ".docx", ".doc", ".xlsx", ".html", ".htm", ".txt"}
 
 
 def has_formal_raw_path(path_value: str) -> bool:
@@ -1128,6 +1208,10 @@ def write_text_for_raw(raw_file: Path, text_dir: Path) -> Path | None:
         text = extract_pdf_text(raw_file)
     elif raw_file.suffix.lower() == ".docx":
         text = extract_docx_text(raw_file)
+    elif raw_file.suffix.lower() == ".xlsx":
+        text = extract_xlsx_text(raw_file)
+    elif raw_file.suffix.lower() in [".html", ".htm"]:
+        text = html_text_from_bytes(raw_file.read_bytes())
     else:
         return None
     if not has_meaningful_text(text):
@@ -1219,12 +1303,52 @@ def source_override_for_record(record: RuleRecord, overrides: list[dict[str, Any
     return None
 
 
+def header_value(headers: dict[str, str], name: str) -> str:
+    name = name.lower()
+    for key, value in headers.items():
+        if key.lower() == name:
+            return value
+    return ""
+
+
+def extension_from_content_disposition(headers: dict[str, str]) -> str:
+    disposition = header_value(headers, "Content-Disposition")
+    if not disposition:
+        return ""
+    match = re.search(r"filename\*?=(?:UTF-8''|\"?)([^\";]+)", disposition, re.I)
+    if not match:
+        return ""
+    filename = urllib.parse.unquote(match.group(1).strip().strip('"'))
+    suffix = Path(filename).suffix.lower()
+    return suffix if suffix in [".pdf", ".docx", ".doc", ".xlsx", ".html", ".htm", ".json", ".txt"] else ""
+
+
+def office_zip_extension(data: bytes) -> str:
+    try:
+        with zipfile.ZipFile(io.BytesIO(data)) as zf:
+            names = set(zf.namelist())
+        if any(name.startswith("xl/") for name in names):
+            return ".xlsx"
+        if "word/document.xml" in names:
+            return ".docx"
+    except Exception:
+        return ""
+    return ""
+
+
 def extension_from_payload(data: bytes, headers: dict[str, str], url: str) -> str:
-    content_type = headers.get("Content-Type", "").lower()
+    content_type = header_value(headers, "Content-Type").lower()
     suffix = Path(urllib.parse.unquote(urllib.parse.urlparse(url).path)).suffix.lower()
+    disposition_suffix = extension_from_content_disposition(headers)
     if data.startswith(b"%PDF") or "application/pdf" in content_type:
         return ".pdf"
-    if data.startswith(b"PK") or "wordprocessingml.document" in content_type:
+    if disposition_suffix:
+        return ".html" if disposition_suffix == ".htm" else disposition_suffix
+    if data.startswith(b"PK"):
+        return office_zip_extension(data) or ".docx"
+    if "spreadsheetml.sheet" in content_type:
+        return ".xlsx"
+    if "wordprocessingml.document" in content_type:
         return ".docx"
     if data.startswith(b"\xd0\xcf\x11\xe0") or "msword" in content_type:
         return ".doc"
@@ -1232,13 +1356,32 @@ def extension_from_payload(data: bytes, headers: dict[str, str], url: str) -> st
         return ".json"
     if "html" in content_type or suffix in [".html", ".htm"] or re.search(br"<html|<!doctype html", data[:500], re.I):
         return ".html"
-    if suffix in [".pdf", ".docx", ".doc", ".html", ".htm", ".json", ".txt"]:
+    if suffix in [".pdf", ".docx", ".doc", ".xlsx", ".html", ".htm", ".json", ".txt"]:
         return ".html" if suffix == ".htm" else suffix
     return ".html"
 
 
+def decode_html_bytes(data: bytes) -> str:
+    charset_match = re.search(br"charset=([A-Za-z0-9_\-]+)", data[:1000], re.I)
+    candidates: list[str] = []
+    if charset_match:
+        declared = charset_match.group(1).decode("ascii", errors="ignore").lower()
+        candidates.append({"gb_2312-80": "gb2312"}.get(declared, declared))
+    candidates.extend(["utf-8", "gb18030", "gbk", "gb2312"])
+    seen: set[str] = set()
+    for encoding in candidates:
+        if not encoding or encoding in seen:
+            continue
+        seen.add(encoding)
+        try:
+            return data.decode(encoding)
+        except UnicodeDecodeError:
+            continue
+    return data.decode("utf-8", errors="replace")
+
+
 def html_text_from_bytes(data: bytes) -> str:
-    doc = lxml_html.fromstring(data)
+    doc = lxml_html.fromstring(decode_html_bytes(data))
     for node in doc.xpath("//script|//style|//noscript"):
         node.drop_tree()
     lines = [html.unescape(line.strip()) for line in doc.text_content().splitlines()]
@@ -1270,7 +1413,7 @@ def attachment_links_from_html(data: bytes, base_url: str, limit: int = 6) -> li
         full = urllib.parse.urljoin(base_url, href)
         marker = f"{full} {label}".lower()
         looks_like_attachment = (
-            re.search(r"\.(pdf|docx?|wps)(\?|#|$)", marker)
+            re.search(r"\.(pdf|docx?|xlsx?|wps)(\?|#|$)", marker)
             or "附件" in label
             or "下载" in label
             or "download" in marker
@@ -1293,7 +1436,7 @@ def write_source_payload(data: bytes, headers: dict[str, str], url: str, raw_fil
 
     notes: list[str] = []
     text_path: Path | None = None
-    if ext in [".pdf", ".docx"]:
+    if ext in [".pdf", ".docx", ".xlsx"]:
         text_path = write_text_for_raw(raw_file, text_dir)
         if not text_path:
             notes.append(f"{raw_file.name} 未抽取到有效文本")
@@ -1321,7 +1464,7 @@ def download_source_url(record: RuleRecord, url: str, raw_dir: Path, text_dir: P
     data, headers = request_bytes(
         url,
         headers={
-            "Accept": "text/html,application/xhtml+xml,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,*/*",
+            "Accept": "text/html,application/xhtml+xml,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,*/*",
         },
     )
     raw_file = raw_dir / f"{record.id}_{safe_name(record.title)}_source{index:02d}"
@@ -1335,7 +1478,7 @@ def download_source_url(record: RuleRecord, url: str, raw_dir: Path, text_dir: P
     if extension_from_payload(data, headers, url) == ".html":
         for attachment_index, attachment_url in enumerate(attachment_links_from_html(data, url), start=1):
             try:
-                att_data, att_headers = request_bytes(attachment_url, headers={"Accept": "application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,*/*"})
+                att_data, att_headers = request_bytes(attachment_url, headers={"Accept": "application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,*/*"})
                 att_file = raw_dir / f"{record.id}_{safe_name(record.title)}_source{index:02d}_attachment{attachment_index:02d}"
                 att_raw, att_text, att_notes = write_source_payload(att_data, att_headers, attachment_url, att_file, text_dir)
                 raw_paths.append(att_raw)
@@ -1354,13 +1497,14 @@ def apply_source_override(record: RuleRecord, overrides: list[dict[str, Any]]) -
     if not item:
         return False
     urls = [url for url in item.get("urls", []) if url]
+    reference_urls = [url for url in item.get("reference_urls", []) if url]
     if not urls:
         record.errors.append("source_overrides 未配置 urls")
         return False
     had_formal_raw = record_has_formal_raw(record)
 
     def refresh_override_metadata(success_urls: list[str]) -> None:
-        record.source_url = join_unique(split_field(record.source_url) + success_urls)
+        record.source_url = join_unique(split_field(record.source_url) + reference_urls + success_urls)
         record.source_type = join_unique([record.source_type, item.get("source_type", "官方来源")])
         record.current_status = item.get("current_status") or "现行有效"
         if record.current_status not in ["待核验", "待扩展"]:
@@ -1552,12 +1696,13 @@ def download_npc(record: RuleRecord) -> None:
 
 def record_to_row(record: RuleRecord) -> dict[str, Any]:
     apply_classification_guardrail(record)
-    if record.record_role != "辅助资料":
-        record.business_tags = [tag for tag in record.business_tags if tag != "辅助资料"]
+    normalize_important_reference_handbook(record)
+    clean_stale_auxiliary_notes(record)
+    record.business_tags = [tag for tag in record.business_tags if tag != "辅助资料"]
     if (
         not record.local_path
         and record.current_status != "历史失效"
-        and record.record_role not in ["官方入口", "辅助资料"]
+        and record.record_role not in ["官方入口", "重要参考规则", "规则组索引"]
     ):
         record.notes = [note for note in record.notes if note != "复用旧公募基金托管库原文/文本"]
         note = "尚无本地正式原文，待月度巡检"
@@ -1567,7 +1712,7 @@ def record_to_row(record: RuleRecord) -> dict[str, Any]:
         record.priority == "P0"
         and not record.source_url
         and record.current_status not in ["历史失效", "不适用"]
-        and record.record_role not in ["官方入口", "辅助资料"]
+        and record.record_role not in ["官方入口", "重要参考规则", "规则组索引"]
     ):
         record.current_status = "待核验"
     if "flk.npc.gov.cn" in record.source_url and not record.source_type:
@@ -1757,7 +1902,7 @@ def write_unresolved(rows: list[dict[str, Any]]) -> None:
     lines = [
         "# 待核验与未完成项目",
         "",
-        "以下项目均标注“待月度巡检”。正式规则、规则组索引和混合资料不得以“辅助资料”状态结案。",
+        "以下项目均标注“待月度巡检”。官方发布项目应按正式规则、重要参考规则、规则组索引或官方入口处理。",
         "",
     ]
     if not selected:
@@ -1769,8 +1914,8 @@ def write_unresolved(rows: list[dict[str, Any]]) -> None:
             source_state = "具约束力规则，需补入官方原文并核验现行性" if not row.get("local_path") else "已入库但需复核效力状态和版本"
         elif role == "规则组索引":
             source_state = "规则集合或规则库索引，需拆分为具体规则后逐条入库"
-        elif role == "混合资料":
-            source_state = "同时包含规则和辅助资料，需拆分规则正文、模板、问答或案例"
+        elif role == "重要参考规则":
+            source_state = "官方发布参考项目，需按元数据或正文保持可检索"
         else:
             source_state = "已联网或本地定位到官方来源但尚未完整入库" if row.get("source_url") else "仅有目录线索，尚待核验"
         lines.append(f"## {row['id']} {row['title']}")
