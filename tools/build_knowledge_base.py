@@ -520,11 +520,14 @@ IMPORTANT_REFERENCE_STALE_NOTE_FRAGMENTS = (
     "手册标明仅供参考，不作为必然依据",
 )
 IMPORTANT_REFERENCE_STALE_SOURCE_TYPES = {"中基协业务资料"}
-IMPORTANT_REFERENCE_RULE_IDS = {"TB181"}
+FORMAL_REFERENCE_RULE_IDS = {"TB181"}
+IMPORTANT_REFERENCE_RULE_IDS: set[str] = set()
 IMPORTANT_REFERENCE_RULE_STALE_NOTE_FRAGMENTS = (
     "官方入口仅记入台账；不作为本地正式原文",
     "尚无本地正式原文，待月度巡检",
     "未命中规则关键词，暂按辅助资料",
+    "命中重要参考规则清单",
+    "重要参考规则按有效官方发布参考处理",
 )
 STALE_AUXILIARY_NOTE_FRAGMENTS = (
     "辅助资料",
@@ -570,6 +573,8 @@ def classify_record(record: RuleRecord) -> tuple[str, str, str]:
     text = f"{record.doc_type} {record.title} {record.category}"
     if record.id in BINDING_SINGLE_RULE_IDS:
         return "正式规则", "待核验原文" if not record.local_path else "已入库", "命中误分类修正清单：单项具约束力规则"
+    if record.id in FORMAL_REFERENCE_RULE_IDS:
+        return "正式规则", "待核验原文" if not record.local_path else "已入库", "命中正式规则白名单：官方发布正文/附件已入库"
     if record.id in IMPORTANT_REFERENCE_RULE_IDS:
         return "重要参考规则", "已核验参考", "命中重要参考规则清单：非单项强制正文但应作为业务规则参考"
     if record.id in RULE_GROUP_IDS:
@@ -603,6 +608,14 @@ def apply_classification_guardrail(record: RuleRecord) -> None:
     add_note(record, f"分类口径：{reason}")
 
     if role == "正式规则":
+        record.source_type = join_unique(
+            [part for part in split_field(record.source_type) if part != "重要参考规则"]
+        )
+        record.notes = [
+            note
+            for note in record.notes
+            if not any(fragment in note for fragment in IMPORTANT_REFERENCE_RULE_STALE_NOTE_FRAGMENTS)
+        ]
         if record.current_status in ["辅助资料", "辅助索引", "不适用", "待扩展"] or not record.current_status:
             record.current_status = "待核验"
         if not record.local_path:
@@ -898,7 +911,7 @@ def merge_catalog_items(items: list[CatalogItem], legacy_by_key: dict[str, dict[
             record.publish_date = legacy_row.get("publish_date", "")
             record.effective_date = legacy_row.get("effective_date", "")
             record.current_status = legacy_row.get("current_status") or record.current_status
-            record.source_type = legacy_row.get("source_type", "")
+            record.source_type = join_unique(split_field(legacy_row.get("source_type", "")))
             record.source_url = legacy_row.get("source_url", "")
             record.business_tags.extend(split_field(legacy_row.get("business_tags", "")))
             if legacy_row.get("notes"):
@@ -1505,7 +1518,7 @@ def apply_source_override(record: RuleRecord, overrides: list[dict[str, Any]]) -
 
     def refresh_override_metadata(success_urls: list[str]) -> None:
         record.source_url = join_unique(split_field(record.source_url) + reference_urls + success_urls)
-        record.source_type = join_unique([record.source_type, item.get("source_type", "官方来源")])
+        record.source_type = join_unique(split_field(record.source_type) + [item.get("source_type", "官方来源")])
         record.current_status = item.get("current_status") or "现行有效"
         if record.current_status not in ["待核验", "待扩展"]:
             stale_fragments = [
@@ -1562,7 +1575,7 @@ def apply_source_override(record: RuleRecord, overrides: list[dict[str, Any]]) -
         record.notes.extend(failures)
 
     record.source_url = join_unique(split_field(record.source_url) + success_urls)
-    record.source_type = join_unique([record.source_type, item.get("source_type", "官方来源")])
+    record.source_type = join_unique(split_field(record.source_type) + [item.get("source_type", "官方来源")])
     record.local_path = join_unique(split_field(record.local_path) + raw_paths)
     record.text_path = join_unique(split_field(record.text_path) + text_paths)
     record.file_type = join_unique(sorted({Path(path).suffix.lower().lstrip(".") for path in split_field(record.local_path)}))
@@ -1683,7 +1696,7 @@ def download_npc(record: RuleRecord) -> None:
             record.errors.append(f"国家法律法规数据库未取得可用正文文件：{title}")
             return
         record.source_url = join_unique([record.source_url, "https://flk.npc.gov.cn/"])
-        record.source_type = join_unique([record.source_type, "国家法律法规数据库"])
+        record.source_type = join_unique(split_field(record.source_type) + ["国家法律法规数据库"])
         record.local_path = join_unique(split_field(record.local_path) + raw_paths)
         record.text_path = join_unique(split_field(record.text_path) + text_paths)
         record.file_type = join_unique(sorted({Path(path).suffix.lower().lstrip(".") for path in split_field(record.local_path)}))
@@ -1769,100 +1782,661 @@ def local_file_href(path: str) -> str:
 
 
 def write_html_index(rows: list[dict[str, Any]], now: str) -> None:
-    by_category: dict[str, list[dict[str, Any]]] = {}
+    def unique(values: list[str]) -> list[str]:
+        seen: set[str] = set()
+        result: list[str] = []
+        for value in values:
+            if value and value not in seen:
+                seen.add(value)
+                result.append(value)
+        return result
+
+    def file_payload(path: str) -> dict[str, str]:
+        suffix = Path(path).suffix.lower().lstrip(".") or "file"
+        return {
+            "name": Path(path).name,
+            "path": path,
+            "href": local_file_href(path),
+            "type": suffix.upper(),
+        }
+
+    browser_rows: list[dict[str, Any]] = []
     for row in rows:
-        by_category.setdefault(row["category"], []).append(row)
+        source_urls = [url for url in unique(split_field(row.get("source_url", ""))) if url.startswith("http")]
+        browser_rows.append(
+            {
+                "id": row.get("id", ""),
+                "title": row.get("title", ""),
+                "priority": row.get("priority", ""),
+                "status": row.get("current_status", ""),
+                "role": row.get("record_role", "") or "未分类",
+                "ingest": row.get("ingest_status", "") or "未标注",
+                "category": row.get("category", ""),
+                "catalogs": row.get("catalog_paths", ""),
+                "docType": row.get("doc_type", ""),
+                "issuer": row.get("issuer", ""),
+                "ruleNo": row.get("rule_no", ""),
+                "publishDate": row.get("publish_date", ""),
+                "effectiveDate": row.get("effective_date", ""),
+                "productTags": row.get("product_tags", ""),
+                "lineTags": row.get("business_line_tags", ""),
+                "marketTags": row.get("market_tags", ""),
+                "businessTags": row.get("business_tags", ""),
+                "notes": row.get("notes", ""),
+                "errors": row.get("errors", ""),
+                "sources": source_urls,
+                "rawFiles": [file_payload(path) for path in split_field(row.get("local_path", ""))],
+                "textFiles": [file_payload(path) for path in split_field(row.get("text_path", ""))],
+            }
+        )
 
-    sections = []
-    nav = []
-    for idx, (category, items) in enumerate(by_category.items(), start=1):
-        cat_id = f"cat-{idx:02d}-{html_anchor(category)}"
-        nav.append(f'<a href="#{cat_id}"><span>{html.escape(category)}</span><strong>{len(items)}</strong></a>')
-        cards = []
-        for item in items:
-            rule_id = f"rule-{html_anchor(item['id'])}"
-            files = split_field(item.get("local_path", ""))
-            file_links = "".join(
-                f'<a href="{local_file_href(path)}" target="_blank" rel="noopener">{html.escape(Path(path).name)}</a>'
-                for path in files
-            ) or '<span class="empty">暂无本地正式原文</span>'
-            source_links = "".join(
-                f'<a href="{html.escape(url, quote=True)}" target="_blank" rel="noopener">{html.escape(url)}</a>'
-                for url in split_field(item.get("source_url", ""))
-                if url.startswith("http")
-            ) or '<span class="empty">暂无官方来源链接</span>'
-            cards.append(
-                f"""
-                <article id="{rule_id}" class="card">
-                  <h3><span>{html.escape(item['id'])}</span>{html.escape(item['title'])}</h3>
-                  <p class="badges">{html.escape(item['priority'])}｜{html.escape(item['current_status'])}｜{html.escape(item.get('record_role', '未分类'))}｜{html.escape(item.get('ingest_status', '未标注'))}</p>
-                  <dl>
-                    <div><dt>目录挂接</dt><dd>{html.escape(item['catalog_paths'])}</dd></div>
-                    <div><dt>文档类型</dt><dd>{html.escape(item['doc_type'])}</dd></div>
-                    <div><dt>产品标签</dt><dd>{html.escape(item['product_tags'] or '未标注')}</dd></div>
-                    <div><dt>条线标签</dt><dd>{html.escape(item['business_line_tags'] or '未标注')}</dd></div>
-                    <div><dt>市场标签</dt><dd>{html.escape(item['market_tags'] or '未标注')}</dd></div>
-                    <div><dt>发布机构</dt><dd>{html.escape(item['issuer'] or '待核验')}</dd></div>
-                    <div><dt>文号</dt><dd>{html.escape(item['rule_no'] or '待核验')}</dd></div>
-                  </dl>
-                  <h4>本地原文</h4><div class="links">{file_links}</div>
-                  <h4>官方来源</h4><div class="links">{source_links}</div>
-                </article>
-                """
-            )
-        sections.append(f'<section id="{cat_id}"><h2>{html.escape(category)} <span>{len(items)}条</span></h2>{"".join(cards)}</section>')
+    data_json = json.dumps(browser_rows, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    metrics = [
+        ("总收录记录", len(rows)),
+        ("正式规则", sum(1 for row in rows if row.get("record_role") == "正式规则")),
+        ("重要参考", sum(1 for row in rows if row.get("record_role") == "重要参考规则")),
+        ("规则组索引", sum(1 for row in rows if row.get("record_role") == "规则组索引")),
+        ("有本地原文文件", sum(1 for row in rows if row.get("local_path"))),
+        ("官方来源覆盖", sum(1 for row in rows if row.get("source_url"))),
+        (
+            "待处理",
+            sum(
+                1
+                for row in rows
+                if row["current_status"] in ["待核验", "待扩展"]
+                or str(row.get("ingest_status", "")).startswith("待")
+            ),
+        ),
+    ]
+    metrics_html = "".join(
+        f'<div class="metric"><strong>{count}</strong><span>{html.escape(label)}</span></div>'
+        for label, count in metrics
+    )
 
-    html_doc = f"""<!doctype html>
+    html_doc = """<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>商业银行托管业务法规库总目录</title>
   <style>
-    body {{ margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif; background:#f5f7f8; color:#20242a; }}
-    .layout {{ display:grid; grid-template-columns:320px 1fr; min-height:100vh; }}
-    aside {{ position:sticky; top:0; height:100vh; overflow:auto; padding:20px; background:#eef3f4; border-right:1px solid #d8dde5; }}
-    main {{ padding:28px min(5vw,56px) 64px; }}
-    a {{ color:#145a63; text-decoration:none; }}
-    nav a {{ display:flex; justify-content:space-between; gap:12px; padding:8px 10px; border-radius:6px; }}
-    nav a:hover, .links a:hover {{ background:#e2f1f1; }}
-    .hero {{ border-bottom:1px solid #d8dde5; margin-bottom:24px; padding-bottom:18px; }}
-    .stats {{ display:flex; flex-wrap:wrap; gap:10px; }}
-    .stats span, .badges {{ border:1px solid #d8dde5; border-radius:6px; background:white; padding:6px 10px; color:#59636f; }}
-    section {{ margin-top:32px; }}
-    h2 span {{ color:#687481; font-size:15px; }}
-    .card {{ background:white; border:1px solid #d8dde5; border-radius:8px; padding:16px; margin:12px 0; }}
-    .card h3 {{ margin:0; font-size:18px; }}
-    .card h3 span {{ display:inline-block; min-width:62px; margin-right:10px; color:#fff; background:#1f6f78; border-radius:6px; padding:2px 8px; text-align:center; }}
-    dl {{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 18px; }}
-    dt {{ color:#687481; font-size:12px; }}
-    dd {{ margin:0; overflow-wrap:anywhere; }}
-    .links {{ display:grid; gap:7px; }}
-    .links a {{ display:block; border:1px solid #d8dde5; border-radius:6px; padding:8px 10px; overflow-wrap:anywhere; }}
-    .empty {{ color:#8a5b16; }}
-    @media (max-width:860px) {{ .layout {{ display:block; }} aside {{ position:relative; height:auto; max-height:50vh; }} dl {{ grid-template-columns:1fr; }} main {{ padding:20px 16px 48px; }} }}
+    :root {
+      --paper:#f7f3ea;
+      --panel:#fffdf8;
+      --ink:#24221e;
+      --muted:#746f66;
+      --line:#d8d0c1;
+      --line-strong:#b9ac96;
+      --teal:#155f67;
+      --red:#9f3d32;
+      --gold:#b17a25;
+      --green:#35745d;
+      --shadow:0 16px 36px rgba(64,50,31,.10);
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      color:var(--ink);
+      background:
+        linear-gradient(90deg, rgba(36,34,30,.045) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(36,34,30,.035) 1px, transparent 1px),
+        var(--paper);
+      background-size:28px 28px;
+      font-family:"Microsoft YaHei UI","Microsoft YaHei","PingFang SC",sans-serif;
+      font-size:14px;
+    }
+    a { color:var(--teal); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    button, input, select { font:inherit; }
+    .shell {
+      display:grid;
+      grid-template-columns:312px minmax(0,1fr);
+      min-height:100vh;
+    }
+    .rail {
+      position:sticky;
+      top:0;
+      height:100vh;
+      overflow:auto;
+      border-right:1px solid var(--line);
+      background:rgba(255,253,248,.86);
+      backdrop-filter:blur(12px);
+      padding:18px;
+    }
+    .brand {
+      border-bottom:2px solid var(--ink);
+      padding-bottom:14px;
+      margin-bottom:14px;
+    }
+    .brand h1 {
+      margin:0;
+      font-family:"Source Han Serif SC","Noto Serif CJK SC","SimSun",serif;
+      font-size:25px;
+      line-height:1.15;
+      font-weight:700;
+    }
+    .brand p { margin:8px 0 0; color:var(--muted); font-size:12px; }
+    .metrics {
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:8px;
+      margin-bottom:18px;
+    }
+    .metric {
+      min-height:58px;
+      border:1px solid var(--line);
+      background:var(--panel);
+      padding:10px;
+      box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+    }
+    .metric strong { display:block; font-size:22px; line-height:1; color:var(--teal); }
+    .metric span { display:block; margin-top:6px; font-size:12px; color:var(--muted); }
+    .tree-title {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin:14px 0 8px;
+      color:var(--muted);
+      font-size:12px;
+    }
+    .tree-all,
+    .tree button,
+    .tree summary {
+      width:100%;
+      min-height:32px;
+      border:0;
+      border-left:3px solid transparent;
+      background:transparent;
+      color:var(--ink);
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:6px 8px;
+      text-align:left;
+      list-style:none;
+    }
+    .tree summary::-webkit-details-marker { display:none; }
+    .tree button { padding-left:calc(10px + var(--depth,0) * 12px); }
+    .tree summary { padding-left:calc(8px + var(--depth,0) * 12px); }
+    .tree span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .tree b {
+      flex:0 0 auto;
+      min-width:28px;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:600;
+      text-align:right;
+    }
+    .tree [data-category].is-active {
+      border-left-color:var(--red);
+      background:#f2e6d2;
+      color:#111;
+    }
+    .tree details { margin:1px 0; }
+    .tree details > div { margin-left:4px; }
+    .main {
+      min-width:0;
+      padding:22px min(3vw,34px) 34px;
+    }
+    .mast {
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:24px;
+      padding-bottom:16px;
+      border-bottom:2px solid var(--ink);
+    }
+    .mast h2 {
+      margin:0;
+      font-family:"Source Han Serif SC","Noto Serif CJK SC","SimSun",serif;
+      font-size:31px;
+      line-height:1.12;
+      font-weight:700;
+    }
+    .mast p { margin:7px 0 0; color:var(--muted); }
+    .stamp {
+      flex:0 0 auto;
+      border:1px solid var(--line-strong);
+      color:var(--red);
+      padding:8px 10px;
+      font-size:12px;
+      background:rgba(255,253,248,.72);
+    }
+    .toolbar {
+      display:grid;
+      grid-template-columns:minmax(220px,1fr) repeat(4,minmax(112px,148px)) auto;
+      gap:10px;
+      align-items:center;
+      margin:16px 0;
+    }
+    .toolbar input,
+    .toolbar select,
+    .toolbar button {
+      height:38px;
+      border:1px solid var(--line-strong);
+      background:var(--panel);
+      color:var(--ink);
+      border-radius:0;
+      padding:0 10px;
+    }
+    .toolbar button {
+      cursor:pointer;
+      background:#efe4d0;
+      color:#2d2416;
+    }
+    .workspace {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 360px;
+      gap:14px;
+      align-items:start;
+    }
+    .list-panel,
+    .detail {
+      border:1px solid var(--line);
+      background:rgba(255,253,248,.94);
+      box-shadow:var(--shadow);
+    }
+    .list-head {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      min-height:48px;
+      border-bottom:1px solid var(--line);
+      padding:10px 12px;
+    }
+    .list-head strong { color:var(--teal); }
+    .list-head span { color:var(--muted); font-size:12px; }
+    .table-wrap { overflow:auto; max-height:calc(100vh - 190px); }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th {
+      position:sticky;
+      top:0;
+      z-index:1;
+      background:#ede3d1;
+      color:#4f4638;
+      border-bottom:1px solid var(--line-strong);
+      font-size:12px;
+      font-weight:700;
+      text-align:left;
+      padding:9px 8px;
+    }
+    td {
+      border-bottom:1px solid #e6dece;
+      padding:9px 8px;
+      vertical-align:top;
+      line-height:1.35;
+    }
+    tbody tr { cursor:pointer; }
+    tbody tr:hover,
+    tbody tr.is-selected { background:#f4ead8; }
+    .col-id { width:76px; }
+    .col-priority { width:70px; }
+    .col-role { width:104px; }
+    .col-status { width:92px; }
+    .col-files { width:76px; text-align:right; }
+    .rule-title { font-weight:700; color:#1f211d; }
+    .subline { display:block; margin-top:3px; color:var(--muted); font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .chip {
+      display:inline-flex;
+      align-items:center;
+      min-height:22px;
+      border:1px solid var(--line-strong);
+      padding:2px 7px;
+      font-size:12px;
+      color:#463d30;
+      background:#fffaf0;
+      white-space:nowrap;
+    }
+    .chip.formal { border-color:#87a897; color:var(--green); }
+    .chip.reference { border-color:#b79655; color:var(--gold); }
+    .chip.index { border-color:#8fb0bd; color:var(--teal); }
+    .chip.entry { border-color:#c99892; color:var(--red); }
+    .detail {
+      position:sticky;
+      top:18px;
+      max-height:calc(100vh - 36px);
+      overflow:auto;
+    }
+    .detail-head {
+      padding:15px;
+      border-bottom:1px solid var(--line);
+      background:#f1e7d4;
+    }
+    .detail-head h3 { margin:8px 0 0; font-size:20px; line-height:1.35; }
+    .detail-id { font-weight:800; color:var(--red); }
+    .detail-body { padding:14px 15px 18px; }
+    .kv {
+      display:grid;
+      grid-template-columns:74px minmax(0,1fr);
+      gap:7px 12px;
+      margin:0 0 14px;
+    }
+    .kv dt { color:var(--muted); font-size:12px; }
+    .kv dd { margin:0; overflow-wrap:anywhere; }
+    .detail h4 {
+      margin:18px 0 8px;
+      font-size:13px;
+      color:#40382c;
+      border-bottom:1px solid var(--line);
+      padding-bottom:6px;
+    }
+    .file-list { display:grid; gap:7px; }
+    .file-list a {
+      display:grid;
+      grid-template-columns:44px minmax(0,1fr);
+      gap:8px;
+      align-items:center;
+      border:1px solid var(--line);
+      background:#fffaf0;
+      padding:7px 8px;
+      min-height:38px;
+    }
+    .file-list b {
+      color:#fff;
+      background:var(--teal);
+      padding:3px 4px;
+      text-align:center;
+      font-size:11px;
+    }
+    .file-list span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .empty { color:#8b6b32; font-size:13px; }
+    .note {
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+      color:#4b463e;
+      line-height:1.55;
+    }
+    @media (max-width:1180px) {
+      .shell { grid-template-columns:260px minmax(0,1fr); }
+      .workspace { grid-template-columns:1fr; }
+      .detail { position:relative; top:auto; max-height:none; }
+    }
+    @media (max-width:820px) {
+      .shell { display:block; }
+      .rail { position:relative; height:auto; max-height:48vh; }
+      .main { padding:16px; }
+      .mast { display:block; }
+      .stamp { display:inline-block; margin-top:12px; }
+      .toolbar { grid-template-columns:1fr 1fr; }
+      .toolbar input { grid-column:1 / -1; }
+      .toolbar button { grid-column:1 / -1; }
+      .table-wrap { max-height:none; }
+      .col-status, .col-role { width:86px; }
+    }
   </style>
 </head>
 <body>
-  <div class="layout">
-    <aside><h1>总目录</h1><p>生成时间：{html.escape(now)}</p><nav>{"".join(nav)}</nav></aside>
-    <main>
-      <header class="hero">
-        <h1>商业银行托管业务法规库总目录</h1>
-        <p>同一法规原文只保存一份，通过产品、条线、市场和目录挂接复用。</p>
-        <div class="stats">
-          <span>{len(rows)} 条台账记录</span>
-          <span>{sum(1 for r in rows if r['priority'] == 'P0')} 条 P0</span>
-          <span>{sum(1 for r in rows if r.get('local_path'))} 条已有本地原文</span>
-          <span>{sum(1 for r in rows if r['current_status'] in ['待核验','待扩展'] or str(r.get('ingest_status', '')).startswith('待'))} 条待核验/待处理</span>
+  <div class="shell">
+    <aside class="rail">
+      <div class="brand">
+        <h1>托管法规库</h1>
+        <p>生成时间：__NOW__</p>
+      </div>
+      <div class="metrics">__METRICS__</div>
+      <div class="tree-title"><span>原文库目录</span><span id="activePath">全部</span></div>
+      <nav class="tree" id="tree"></nav>
+    </aside>
+    <main class="main">
+      <header class="mast">
+        <div>
+          <h2>商业银行托管业务法规库总目录</h2>
+          <p>按原文库路径浏览，按台账字段筛选，逐条查看原文、文本和官方来源。</p>
         </div>
+        <div class="stamp">01 原文库 / 02 文本库 / 03 台账</div>
       </header>
-      {"".join(sections)}
+      <section class="toolbar">
+        <input id="query" type="search" placeholder="搜索 TB编号、标题、机构、标签、路径或来源">
+        <select id="roleFilter"><option value="">全部角色</option></select>
+        <select id="statusFilter"><option value="">全部状态</option></select>
+        <select id="priorityFilter"><option value="">全部优先级</option></select>
+        <select id="fileFilter">
+          <option value="">全部原文状态</option>
+          <option value="with">有本地原文文件</option>
+          <option value="without">无本地原文文件</option>
+        </select>
+        <button id="reset" type="button">重置</button>
+      </section>
+      <section class="workspace">
+        <div class="list-panel">
+          <div class="list-head">
+            <div><strong id="resultCount">0</strong> <span>条记录</span></div>
+            <span id="resultHint">全部目录</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th class="col-id">ID</th>
+                  <th>规则名称</th>
+                  <th class="col-priority">优先级</th>
+                  <th class="col-role">角色</th>
+                  <th class="col-status">状态</th>
+                  <th class="col-files">文件</th>
+                </tr>
+              </thead>
+              <tbody id="ruleRows"></tbody>
+            </table>
+          </div>
+        </div>
+        <aside class="detail" id="detail"></aside>
+      </section>
     </main>
   </div>
+  <script id="ruleData" type="application/json">__DATA__</script>
+  <script>
+    const rules = JSON.parse(document.getElementById('ruleData').textContent);
+    const state = { query:'', role:'', status:'', priority:'', file:'', category:'', selectedId:'' };
+    const els = {
+      tree: document.getElementById('tree'),
+      activePath: document.getElementById('activePath'),
+      query: document.getElementById('query'),
+      role: document.getElementById('roleFilter'),
+      status: document.getElementById('statusFilter'),
+      priority: document.getElementById('priorityFilter'),
+      file: document.getElementById('fileFilter'),
+      reset: document.getElementById('reset'),
+      rows: document.getElementById('ruleRows'),
+      count: document.getElementById('resultCount'),
+      hint: document.getElementById('resultHint'),
+      detail: document.getElementById('detail')
+    };
+
+    function esc(value) {
+      return String(value ?? '').replace(/[&<>"']/g, char => ({
+        '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+      }[char]));
+    }
+
+    function domain(url) {
+      try { return new URL(url).hostname || url; } catch { return url; }
+    }
+
+    function roleClass(role) {
+      if (role === '正式规则') return 'formal';
+      if (role === '重要参考规则') return 'reference';
+      if (role === '规则组索引') return 'index';
+      if (role === '官方入口') return 'entry';
+      return '';
+    }
+
+    function fillSelect(select, values) {
+      values.filter(Boolean).sort((a, b) => a.localeCompare(b, 'zh-Hans-CN')).forEach(value => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = value;
+        select.appendChild(option);
+      });
+    }
+
+    function buildTree() {
+      const root = { count: rules.length, children: new Map() };
+      for (const rule of rules) {
+        const parts = rule.category.split('/').filter(Boolean);
+        let node = root;
+        for (const part of parts) {
+          if (!node.children.has(part)) node.children.set(part, { count:0, children:new Map() });
+          node = node.children.get(part);
+          node.count += 1;
+        }
+      }
+      function renderNode(node, prefix, depth) {
+        return [...node.children.entries()]
+          .sort((a, b) => a[0].localeCompare(b[0], 'zh-Hans-CN'))
+          .map(([name, child]) => {
+            const path = [...prefix, name].join('/');
+            const label = `<span>${esc(name)}</span><b>${child.count}</b>`;
+            if (child.children.size) {
+              return `<details ${depth < 1 ? 'open' : ''}><summary data-category="${esc(path)}" style="--depth:${depth}">${label}</summary><div>${renderNode(child, [...prefix, name], depth + 1)}</div></details>`;
+            }
+            return `<button type="button" data-category="${esc(path)}" style="--depth:${depth}">${label}</button>`;
+          }).join('');
+      }
+      els.tree.innerHTML = `<button type="button" class="tree-all" data-category=""><span>全部目录</span><b>${rules.length}</b></button>${renderNode(root, [], 0)}`;
+    }
+
+    function searchable(rule) {
+      return [
+        rule.id, rule.title, rule.priority, rule.status, rule.role, rule.ingest,
+        rule.category, rule.catalogs, rule.docType, rule.issuer, rule.ruleNo,
+        rule.productTags, rule.lineTags, rule.marketTags, rule.businessTags,
+        rule.notes, rule.sources.join(' '), rule.rawFiles.map(file => file.name).join(' ')
+      ].join(' ').toLowerCase();
+    }
+
+    for (const rule of rules) rule._search = searchable(rule);
+
+    function filteredRules() {
+      const terms = state.query.trim().toLowerCase().split(/\\s+/).filter(Boolean);
+      return rules.filter(rule => {
+        if (state.category && !rule.category.startsWith(state.category)) return false;
+        if (state.role && rule.role !== state.role) return false;
+        if (state.status && rule.status !== state.status) return false;
+        if (state.priority && rule.priority !== state.priority) return false;
+        if (state.file === 'with' && rule.rawFiles.length === 0) return false;
+        if (state.file === 'without' && rule.rawFiles.length > 0) return false;
+        return terms.every(term => rule._search.includes(term));
+      });
+    }
+
+    function tagText(rule) {
+      return [rule.issuer, rule.ruleNo, rule.docType].filter(Boolean).join(' / ') || rule.category;
+    }
+
+    function renderRows(list) {
+      els.rows.innerHTML = list.map(rule => {
+        const fileCount = rule.rawFiles.length ? `${rule.rawFiles.length} 原文 / ${rule.textFiles.length} 文本` : '无';
+        return `<tr data-id="${esc(rule.id)}" class="${rule.id === state.selectedId ? 'is-selected' : ''}">
+          <td class="col-id"><strong>${esc(rule.id)}</strong></td>
+          <td><span class="rule-title">${esc(rule.title)}</span><span class="subline">${esc(tagText(rule))}</span></td>
+          <td class="col-priority">${esc(rule.priority)}</td>
+          <td class="col-role"><span class="chip ${roleClass(rule.role)}">${esc(rule.role)}</span></td>
+          <td class="col-status">${esc(rule.ingest)}</td>
+          <td class="col-files">${esc(fileCount)}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    function fileLinks(files, emptyText) {
+      if (!files.length) return `<div class="empty">${esc(emptyText)}</div>`;
+      return `<div class="file-list">${files.map(file => `<a href="${esc(file.href)}" target="_blank" rel="noopener" title="${esc(file.path)}"><b>${esc(file.type)}</b><span>${esc(file.name)}</span></a>`).join('')}</div>`;
+    }
+
+    function sourceLinks(urls) {
+      if (!urls.length) return '<div class="empty">暂无官方来源链接</div>';
+      return `<div class="file-list">${urls.map(url => `<a href="${esc(url)}" target="_blank" rel="noopener" title="${esc(url)}"><b>URL</b><span>${esc(domain(url))}</span></a>`).join('')}</div>`;
+    }
+
+    function renderDetail(rule) {
+      if (!rule) {
+        els.detail.innerHTML = '<div class="detail-body empty">当前筛选条件下没有记录</div>';
+        return;
+      }
+      state.selectedId = rule.id;
+      els.detail.innerHTML = `<div class="detail-head">
+          <div class="detail-id">${esc(rule.id)} · ${esc(rule.priority)}</div>
+          <h3>${esc(rule.title)}</h3>
+        </div>
+        <div class="detail-body">
+          <dl class="kv">
+            <dt>角色</dt><dd><span class="chip ${roleClass(rule.role)}">${esc(rule.role)}</span></dd>
+            <dt>入库</dt><dd>${esc(rule.ingest)}</dd>
+            <dt>效力</dt><dd>${esc(rule.status)}</dd>
+            <dt>机构</dt><dd>${esc(rule.issuer || '待核验')}</dd>
+            <dt>文号</dt><dd>${esc(rule.ruleNo || '待核验')}</dd>
+            <dt>类型</dt><dd>${esc(rule.docType || '未标注')}</dd>
+            <dt>路径</dt><dd>${esc(rule.category)}</dd>
+            <dt>标签</dt><dd>${esc([rule.productTags, rule.lineTags, rule.marketTags, rule.businessTags].filter(Boolean).join(' / ') || '未标注')}</dd>
+          </dl>
+          <h4>本地原文</h4>${fileLinks(rule.rawFiles, '暂无本地原文')}
+          <h4>文本抽取</h4>${fileLinks(rule.textFiles, '暂无文本抽取')}
+          <h4>官方来源</h4>${sourceLinks(rule.sources)}
+          <h4>目录挂接</h4><div class="note">${esc(rule.catalogs || rule.category)}</div>
+          ${rule.notes ? `<h4>备注</h4><div class="note">${esc(rule.notes)}</div>` : ''}
+          ${rule.errors ? `<h4>提示</h4><div class="note">${esc(rule.errors)}</div>` : ''}
+        </div>`;
+      renderRows(filteredRules());
+    }
+
+    function updateActiveTree() {
+      document.querySelectorAll('[data-category]').forEach(node => {
+        node.classList.toggle('is-active', node.dataset.category === state.category);
+      });
+      els.activePath.textContent = state.category || '全部';
+    }
+
+    function render() {
+      const list = filteredRules();
+      if (!list.some(rule => rule.id === state.selectedId)) {
+        state.selectedId = list[0]?.id || '';
+      }
+      els.count.textContent = list.length;
+      els.hint.textContent = state.category || '全部目录';
+      renderRows(list);
+      renderDetail(list.find(rule => rule.id === state.selectedId));
+      updateActiveTree();
+    }
+
+    fillSelect(els.role, [...new Set(rules.map(rule => rule.role))]);
+    fillSelect(els.status, [...new Set(rules.map(rule => rule.status))]);
+    fillSelect(els.priority, [...new Set(rules.map(rule => rule.priority))]);
+    buildTree();
+    render();
+
+    els.query.addEventListener('input', event => { state.query = event.target.value; render(); });
+    els.role.addEventListener('change', event => { state.role = event.target.value; render(); });
+    els.status.addEventListener('change', event => { state.status = event.target.value; render(); });
+    els.priority.addEventListener('change', event => { state.priority = event.target.value; render(); });
+    els.file.addEventListener('change', event => { state.file = event.target.value; render(); });
+    els.reset.addEventListener('click', () => {
+      state.query = state.role = state.status = state.priority = state.file = state.category = '';
+      els.query.value = els.role.value = els.status.value = els.priority.value = els.file.value = '';
+      render();
+    });
+    els.tree.addEventListener('click', event => {
+      const node = event.target.closest('[data-category]');
+      if (!node) return;
+      state.category = node.dataset.category;
+      render();
+    });
+    els.rows.addEventListener('click', event => {
+      const row = event.target.closest('tr[data-id]');
+      if (!row) return;
+      const rule = rules.find(item => item.id === row.dataset.id);
+      renderDetail(rule);
+    });
+  </script>
 </body>
 </html>
 """
+    html_doc = (
+        html_doc.replace("__NOW__", html.escape(now))
+        .replace("__METRICS__", metrics_html)
+        .replace("__DATA__", data_json)
+    )
     (ENTRY_ROOT / "总目录.html").write_text(html_doc, encoding="utf-8", newline="\n")
 
 
