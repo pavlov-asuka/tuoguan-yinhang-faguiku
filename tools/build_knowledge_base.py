@@ -35,6 +35,16 @@ SOURCE_OVERRIDES_PATH = META_ROOT / "source_overrides.json"
 ENTRY_ROOT = ROOT / "00_入口与索引"
 UNRESOLVED_PATH = ENTRY_ROOT / "unresolved.md"
 BUILD_CACHE_ROOT: Path | None = None
+UPDATE_LOG_PATH = ENTRY_ROOT / "更新记录.md"
+MANUAL_UPDATE_HEADING = "## 人工维护记录"
+AUTO_UPDATE_HEADING = "## 自动重建记录"
+
+DEFAULT_MANUAL_UPDATE_LOG = """- 2026-06-14：重做 `00_入口与索引/总目录.html` 为法规库工作台，提供目录树、筛选表格、详情面板和相对路径原文链接；同步明确“总收录记录”“有本地原文文件”“官方来源覆盖”等指标口径。
+- 2026-06-14：将 TB181“业绩比较基准相关指标解释、基准收益率计算参考及基准示例”纳入正式规则，保留一类库、二类库和《公募基金业绩比较基准要素库运作说明》本地原文与文本。
+- 2026-06-14：完成 unresolved 清理和大目录完整性复核；官方发布资料不再使用“辅助资料”低效力分类，按正式规则、重要参考规则、规则组索引或官方入口处理。
+- 2026-06-14：确认 TB101/TB184 等手册类资料作为重要参考规则保留，不降级为资料入口。
+- 2026-06-13：补强本地检索索引，重要参考规则、规则组索引和官方入口等无正文记录可通过元数据块召回；同步修复 Windows 控制台输出兼容问题。
+- 2026-06-12：按“中国商业银行托管业务条线大法规库”口径重构法规库，归档旧公募基金托管库并复用已核验原文和文本。"""
 
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -2440,6 +2450,56 @@ def write_html_index(rows: list[dict[str, Any]], now: str) -> None:
     (ENTRY_ROOT / "总目录.html").write_text(html_doc, encoding="utf-8", newline="\n")
 
 
+def read_manual_update_log() -> str:
+    if not UPDATE_LOG_PATH.exists():
+        return DEFAULT_MANUAL_UPDATE_LOG
+    text = UPDATE_LOG_PATH.read_text(encoding="utf-8")
+    if MANUAL_UPDATE_HEADING not in text:
+        return DEFAULT_MANUAL_UPDATE_LOG
+    manual = text.split(MANUAL_UPDATE_HEADING, 1)[1]
+    if AUTO_UPDATE_HEADING in manual:
+        manual = manual.split(AUTO_UPDATE_HEADING, 1)[0]
+    manual = manual.strip()
+    return manual or DEFAULT_MANUAL_UPDATE_LOG
+
+
+def write_update_log(rows: list[dict[str, Any]], now: str) -> None:
+    manual_log = read_manual_update_log()
+    role_counts = {
+        role: sum(1 for row in rows if row.get("record_role") == role)
+        for role in ["正式规则", "重要参考规则", "规则组索引", "官方入口"]
+    }
+    waiting_count = sum(
+        1
+        for row in rows
+        if row["current_status"] in ["待核验", "待扩展"]
+        or str(row.get("ingest_status", "")).startswith("待")
+        or str(row.get("ingest_status", "")).endswith("待复核")
+    )
+    auto_log = [
+        f"- {now}：自动重建商业银行托管业务法规库派生文件，刷新元数据台账、入口索引、待核验清单和搜索索引。",
+        (
+            f"  - 记录概况：总收录 {len(rows)}；正式规则 {role_counts['正式规则']}；"
+            f"重要参考规则 {role_counts['重要参考规则']}；规则组索引 {role_counts['规则组索引']}；"
+            f"官方入口 {role_counts['官方入口']}。"
+        ),
+        (
+            f"  - 覆盖情况：有本地原文文件 {sum(1 for row in rows if row.get('local_path'))}；"
+            f"官方来源覆盖 {sum(1 for row in rows if row.get('source_url'))}；待处理 {waiting_count}。"
+        ),
+    ]
+    auto_log_text = "\n".join(auto_log)
+    UPDATE_LOG_PATH.write_text(
+        "# 更新记录\n\n"
+        f"{MANUAL_UPDATE_HEADING}\n\n"
+        f"{manual_log}\n\n"
+        f"{AUTO_UPDATE_HEADING}\n\n"
+        f"{auto_log_text}\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+
 def write_markdown_indexes(rows: list[dict[str, Any]]) -> None:
     now = time.strftime("%Y-%m-%d %H:%M:%S")
     table = "\n".join(
@@ -2456,12 +2516,7 @@ def write_markdown_indexes(rows: list[dict[str, Any]]) -> None:
         newline="\n",
     )
     write_html_index(rows, now)
-    (ENTRY_ROOT / "更新记录.md").write_text(
-        "# 更新记录\n\n"
-        f"- {now}：重建商业银行托管业务法规库，刷新元数据台账、入口索引、待核验清单和搜索索引。\n",
-        encoding="utf-8",
-        newline="\n",
-    )
+    write_update_log(rows, now)
 
 
 def write_unresolved(rows: list[dict[str, Any]]) -> None:
