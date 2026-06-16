@@ -27,7 +27,6 @@ from build_search_index import build_index
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CATALOG_PATH = ROOT / "中国商业银行托管业务条线大法规库总目录.md"
 RAW_ROOT = ROOT / "01_法规原文库"
 TEXT_ROOT = ROOT / "02_文本抽取库"
 META_ROOT = ROOT / "03_元数据台账"
@@ -39,7 +38,8 @@ UPDATE_LOG_PATH = ENTRY_ROOT / "更新记录.md"
 MANUAL_UPDATE_HEADING = "## 人工维护记录"
 AUTO_UPDATE_HEADING = "## 自动重建记录"
 
-DEFAULT_MANUAL_UPDATE_LOG = """- 2026-06-14：重做 `00_入口与索引/总目录.html` 为法规库工作台，提供目录树、筛选表格、详情面板和相对路径原文链接；同步明确“总收录记录”“有本地原文文件”“官方来源覆盖”等指标口径。
+DEFAULT_MANUAL_UPDATE_LOG = """- 2026-06-16：移除根目录 `中国商业银行托管业务条线大法规库总目录.md` 作为构建入口，后续以 `03_元数据台账/rules_index.json` 驱动重建；保留 `00_入口与索引/总目录.html` 作为总目录入口。
+- 2026-06-14：重做 `00_入口与索引/总目录.html` 为法规库工作台，提供目录树、筛选表格、详情面板和相对路径原文链接；同步明确“总收录记录”“有本地原文文件”“官方来源覆盖”等指标口径。
 - 2026-06-14：将 TB181“业绩比较基准相关指标解释、基准收益率计算参考及基准示例”纳入正式规则，保留一类库、二类库和《公募基金业绩比较基准要素库运作说明》本地原文与文本。
 - 2026-06-14：完成 unresolved 清理和大目录完整性复核；官方发布资料不再使用“辅助资料”低效力分类，按正式规则、重要参考规则、规则组索引或官方入口处理。
 - 2026-06-14：确认 TB101/TB184 等手册类资料作为重要参考规则保留，不降级为资料入口。
@@ -757,64 +757,68 @@ def category_from_stack(stack: dict[int, str]) -> str:
     return "/".join(parts)
 
 
-def parse_catalog() -> tuple[list[CatalogItem], dict[str, Any]]:
-    lines = CATALOG_PATH.read_text(encoding="utf-8").splitlines()
-    stack: dict[int, str] = {}
-    top_code = ""
+def catalog_path_from_category(category: str) -> str:
+    return " > ".join(part.strip() for part in category.split("/") if part.strip())
+
+
+def category_from_catalog_path(catalog_path: str) -> str:
+    return "/".join(safe_name(part.strip(), max_len=60) for part in catalog_path.split(">") if part.strip())
+
+
+def top_code_from_row(category: str, catalog_path: str, business_tags: str) -> str:
+    for value in [category, catalog_path, business_tags]:
+        match = re.search(r"(^|[; >])([A-G])[_;-]?", value)
+        if match:
+            return match.group(2)
+    return ""
+
+
+def legacy_row_sort_key(row: dict[str, Any]) -> tuple[int, str]:
+    match = re.search(r"\d+", str(row.get("id", "")))
+    return (int(match.group(0)) if match else 999999, str(row.get("title", "")))
+
+
+def catalog_items_from_rows(rows: list[dict[str, Any]]) -> tuple[list[CatalogItem], dict[str, Any]]:
+    if not rows:
+        raise RuntimeError("缺少 03_元数据台账/rules_index.json，无法重建法规库")
+
     items: list[CatalogItem] = []
-    skipped_internal = 0
-
-    for line_no, line in enumerate(lines, start=1):
-        top = re.match(r"^# ([A-G])\. (.+)$", line)
-        if top:
-            top_code = top.group(1)
-            stack = {1: f"{top.group(1)}_{top.group(2).strip()}"}
-            continue
-
-        heading = re.match(r"^(#{2,4})\s+(.+)$", line)
-        if heading and top_code:
-            level = len(heading.group(1))
-            stack[level] = heading.group(2).strip()
-            for stale in [k for k in stack if k > level]:
-                stack.pop(stale, None)
-            continue
-
-        bullet = re.match(r"^- 【(?P<priority>P[012])｜(?P<doc_type>[^】]+)】(?P<body>.+)$", line)
-        if not bullet or not top_code:
-            continue
-
-        raw = line.strip()
-        second_level = stack.get(2, "")
-        if second_level.startswith("G-02") or second_level.startswith("G-03"):
-            skipped_internal += 1
-            continue
-        if any(keyword in raw for keyword in INTERNAL_KEYWORDS):
-            skipped_internal += 1
-            continue
-
-        body = bullet.group("body").strip()
-        title = extract_title(body)
+    for row_index, row in enumerate(sorted(rows, key=legacy_row_sort_key), start=1):
+        title = canonical_title(str(row.get("title", "")).strip())
         if not title:
             continue
 
-        path = " > ".join(stack[level] for level in sorted(stack))
-        items.append(
-            CatalogItem(
-                title=title,
-                priority=bullet.group("priority"),
-                doc_type=bullet.group("doc_type").strip(),
-                body=body,
-                category=category_from_stack(stack),
-                catalog_path=path,
-                top_code=top_code,
-                line_no=line_no,
+        priority = str(row.get("priority", "") or "P2").strip()
+        if priority not in {"P0", "P1", "P2", "P3"}:
+            priority = "P2"
+        doc_type = str(row.get("doc_type", "") or row.get("layer", "") or row.get("record_role", "") or "未标注").strip()
+        category = str(row.get("category", "")).strip()
+        catalog_paths = split_field(str(row.get("catalog_paths", "")))
+        if not catalog_paths and category:
+            catalog_paths = [catalog_path_from_category(category)]
+        if not catalog_paths:
+            catalog_paths = [title]
+
+        for path_index, catalog_path in enumerate(catalog_paths):
+            item_category = category or category_from_catalog_path(catalog_path)
+            top_code = top_code_from_row(item_category, catalog_path, str(row.get("business_tags", "")))
+            items.append(
+                CatalogItem(
+                    title=title,
+                    priority=priority,
+                    doc_type=doc_type,
+                    body=str(row.get("key_obligations", "") or f"《{title}》").strip(),
+                    category=item_category,
+                    catalog_path=catalog_path,
+                    top_code=top_code,
+                    line_no=(row_index * 100) + path_index,
+                )
             )
-        )
 
     summary = {
         "catalog_items": len(items),
-        "skipped_internal_items": skipped_internal,
-        "source": CATALOG_PATH.name,
+        "skipped_internal_items": 0,
+        "source": "03_元数据台账/rules_index.json",
     }
     return items, summary
 
@@ -2569,7 +2573,7 @@ def main() -> None:
     legacy_rows = load_legacy_rows()
     legacy_by_key = legacy_maps(legacy_rows)
     source_overrides = load_source_overrides()
-    catalog_items, catalog_summary = parse_catalog()
+    catalog_items, catalog_summary = catalog_items_from_rows(legacy_rows)
     records = merge_catalog_items(catalog_items, legacy_by_key)
 
     BUILD_CACHE_ROOT = snapshot_generated_dirs()
