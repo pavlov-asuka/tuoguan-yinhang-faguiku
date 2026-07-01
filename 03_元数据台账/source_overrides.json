@@ -1002,5 +1002,198 @@
     "notes": [
       "证监会公报PDF为正式原文；扫描件正文已补入可检索文本。"
     ]
+  },
+  {
+    "title": "财政部 税务总局关于国债等债券利息收入增值税政策的公告",
+    "source_type": "税务总局税收政策库",
+    "current_status": "现行有效",
+    "urls": [
+      "https://fgk.chinatax.gov.cn/zcfgk/c102416/c5242161/content.html"
+    ],
+    "notes": [
+      "财政部 税务总局公告2025年第4号，2025-08-08起按公告恢复新发国债、地方政府债券、金融债券利息收入增值税。"
+    ]
+  },
+  {
+    "title": "财政部 国家税务总局关于企业所得税若干优惠政策的通知",
+    "source_type": "税务总局税收政策库",
+    "current_status": "现行有效",
+    "urls": [
+      "https://fgk.chinatax.gov.cn/zcfgk/c102416/c5203352/content.html"
+    ]
+  },
+  {
+    "title": "上海证券交易所主动管理交易型开放式证券投资基金业务指引",
+    "source_type": "上交所业务规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.sse.com.cn/lawandrules/sselawsrules2025/fund/trading/c/c_20260617_10822565.shtml"
+    ]
+  },
+  {
+    "title": "深圳证券交易所证券投资基金业务指引第5号——主动管理交易型开放式基金",
+    "source_type": "深交所业务规则",
+    "current_status": "现行有效",
+    "urls": [
+      "http://www.szse.cn/lawrules/rule/allrules/bussiness/t20260617_621085.html"
+    ]
+  },
+  {
+    "title": "关于推出外币回购优化服务的通知",
+    "source_type": "上海清算所通知",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.shclearing.com.cn/xwgg/tzgg/202606/t20260618_1809510.html"
+    ]
+  },
+  {
+    "title": "银行间市场清算所股份有限公司外币回购清算业务指南（2026年修订版）",
+    "source_type": "上海清算所业务指南",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.shclearing.cn/xwgg/tzgg/202606/t20260618_1809507.html"
+    ]
+  },
+  {
+    "title": "上海国际金融中心发展离岸金融行动方案",
+    "source_type": "人民银行政策文件",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026061616092398246/index.html"
+    ]
+  },
+  {
+    "title": "中国人民银行公开市场业务公告〔2026〕第3号",
+    "source_type": "人民银行公告",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026061619332271304/index.html"
+    ]
+  },
+  {
+    "title": "中国人民银行公开市场业务公告〔2026〕第2号",
+    "source_type": "人民银行公告",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026061619361288362/index.html"
+    ]
+  },
+  {
+    "title": "中国证券登记结算有限责任公司深圳分公司约定购回式证券交易登记结算业务指南",
+    "source_type": "中国结算业务规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://m.chinaclear.cn/zdjs/szfgsgg/202606/7d8d2c25ae1840ca9fd3888125176ffb.shtml"
+    ],
+    "notes": [
+      "修订后指南于2026-07-10日日终发布，自2026-07-13起实施。"
+    ]
+  },
+  {
+    "title": "上海证券交易所科创板企业发行上市申报及推荐暂行规定（征求意见稿）",
+    "source_type": "上交所公开征求意见",
+    "current_status": "未发布正式稿",
+    "urls": [
+      "https://www.sse.com.cn/lawandrules/publicadvice/c/c_20260617_10822573.shtml"
+    ],
+    "notes": [
+      "征求意见稿，意见反馈截止日2026-07-02；不作为现行正式依据。"
+    ]
+  },
+  {
+    "title": "上海证券交易所发行上市审核规则适用指引第10号——人工智能大模型企业适用科创板第五套上市标准",
+    "source_type": "上交所业务规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.sse.com.cn/lawandrules/sselawsrules2025/stocks/review/firstepisode/c/c_20260617_10822578.shtml"
+    ],
+    "notes": [
+      "与托管职责低相关，作为权益投资标的供给参考规则保留。"
+    ]
+  },
+  {
+    "title": "国家金融监督管理总局关于银行业保险业人工智能安全开发应用的指导意见",
+    "source_type": "金监总局政策法规",
+    "current_status": "现行有效",
+    "reference_urls": [
+      "https://www.nfra.gov.cn/cn/view/pages/governmentDetail.html?docId=1261784&generaltype=1&itemId=",
+      "https://www.nfra.gov.cn/cbircweb/DocInfo/SelectByDocId?docId=1261784"
+    ],
+    "urls": [
+      "https://www.nfra.gov.cn/cbircweb/download/downloadPdf?docId=1261784&generaltype=1&itemId=861"
+    ]
+  },
+  {
+    "title": "基金经理兼任私募资产管理计划投资经理工作指引",
+    "source_type": "中基协自律规则",
+    "current_status": "现行有效",
+    "reference_urls": [
+      "https://www.amac.org.cn/xwfb/xhyw/202606/t20260612_27828.html"
+    ],
+    "urls": [
+      "https://www.amac.org.cn/xwfb/xhyw/202606/P020260612635543995545.pdf",
+      "https://www.amac.org.cn/xwfb/xhyw/202606/P020260612635544126416.pdf"
+    ]
+  },
+  {
+    "title": "公开募集证券投资基金主题投资风格管理指引",
+    "source_type": "中基协自律规则",
+    "current_status": "已发布未施行",
+    "reference_urls": [
+      "https://www.amac.org.cn/xwfb/xhyw/202606/t20260612_27827.html"
+    ],
+    "urls": [
+      "https://www.amac.org.cn/xwfb/xhyw/202606/P020260612619968467938.pdf",
+      "https://www.amac.org.cn/xwfb/xhyw/202606/P020260612619968493302.pdf"
+    ],
+    "notes": [
+      "自2026-12-01起施行。"
+    ]
+  },
+  {
+    "title": "公开募集证券投资基金投资者适当性管理细则",
+    "source_type": "中基协自律规则",
+    "current_status": "现行有效",
+    "reference_urls": [
+      "https://www.amac.org.cn/xwfb/xhyw/202606/t20260612_27826.html"
+    ],
+    "urls": [
+      "https://www.amac.org.cn/xwfb/xhyw/202606/P020260612617672605532.pdf"
+    ],
+    "notes": [
+      "基金管理人、基金销售机构应在发布之日起六个月内完善风险等级划分体系并完成系统改造。"
+    ]
+  },
+  {
+    "title": "公开募集证券投资基金可持续投资策略应用指引（试行）",
+    "source_type": "中基协自律规则",
+    "current_status": "现行有效",
+    "reference_urls": [
+      "https://www.amac.org.cn/xwfb/xhyw/202606/t20260612_27825.html"
+    ],
+    "urls": [
+      "https://www.amac.org.cn/xwfb/xhyw/202606/P020260612616040029432.pdf"
+    ]
+  },
+  {
+    "title": "私募投资基金信息披露实施细则",
+    "source_type": "中基协自律规则",
+    "current_status": "已发布未施行",
+    "reference_urls": [
+      "https://www.amac.org.cn/xwfb/tzgg/202606/t20260605_27780.html"
+    ],
+    "urls": [
+      "https://www.amac.org.cn/xwfb/tzgg/202606/P020260605683618804893.pdf",
+      "https://www.amac.org.cn/xwfb/tzgg/202606/P020260605683618896590.pdf",
+      "https://www.amac.org.cn/xwfb/tzgg/202606/P020260605683618942041.pdf",
+      "https://www.amac.org.cn/xwfb/tzgg/202606/P020260605683619002146.pdf",
+      "https://www.amac.org.cn/xwfb/tzgg/202606/P020260605683619062920.pdf",
+      "https://www.amac.org.cn/xwfb/tzgg/202606/P020260605683619109688.pdf",
+      "https://www.amac.org.cn/xwfb/tzgg/202606/P020260605683619150594.pdf",
+      "https://www.amac.org.cn/xwfb/tzgg/202606/P020260605683619194878.pdf"
+    ],
+    "notes": [
+      "自2026-09-01起施行；需与证监会《私募投资基金信息披露监督管理办法》衔接使用。"
+    ]
   }
 ]
