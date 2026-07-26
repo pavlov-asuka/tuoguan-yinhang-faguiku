@@ -545,7 +545,7 @@
       "https://www.sse.com.cn/lawandrules/sselawsrules2025/trade/universal/c/c_20260424_10816492.shtml"
     ],
     "notes": [
-      "2023年修订版截至2026年6月13日现行有效；2026年修订版已发布，将于2026年7月6日施行。"
+      "2026年修订版自2026年7月6日起施行，2023年修订版同时废止；附件3列示条文继续暂缓实施，具体时间由上交所另行通知。"
     ]
   },
   {
@@ -560,7 +560,7 @@
       "https://www.szse.cn/lawrules/rule/trade/current/W020260424690713155663.pdf"
     ],
     "notes": [
-      "2023年修订版截至2026年6月13日现行有效；深证上〔2026〕551号新版将于2026年7月6日施行。"
+      "深证上〔2026〕551号修订版自2026年7月6日起施行，2023年修订版同时废止。"
     ]
   },
   {
@@ -1034,8 +1034,16 @@
     "title": "深圳证券交易所证券投资基金业务指引第5号——主动管理交易型开放式基金",
     "source_type": "深交所业务规则",
     "current_status": "现行有效",
-    "urls": [
+    "reference_urls": [
       "http://www.szse.cn/lawrules/rule/allrules/bussiness/t20260617_621085.html"
+    ],
+    "urls": [
+      "https://www.szse.cn/lawrules/rule/allrules/bussiness/t20260617_621085.html",
+      "https://docs.static.szse.cn/www/lawrules/rule/allrules/bussiness/W020260617519656420997.pdf",
+      "https://docs.static.szse.cn/www/lawrules/rule/allrules/bussiness/W020260617519656577932.pdf"
+    ],
+    "notes": [
+      "正式指引及起草说明附件已一并入库。"
     ]
   },
   {
@@ -1194,6 +1202,171 @@
     ],
     "notes": [
       "自2026-09-01起施行；需与证监会《私募投资基金信息披露监督管理办法》衔接使用。"
+    ]
+  },
+  {
+    "id": "TB086",
+    "title": "银行间债券市场债券登记托管结算管理办法",
+    "source_type": "人民银行部门规章",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.pbc.gov.cn/jinrongshichangsi/147160/147358/147400/2888296/index.html",
+      "https://jrj.sh.gov.cn/ZXYW178/20260526/4839131f4d5142978f0712db05f0fb2e.html"
+    ],
+    "notes": [
+      "2026年7月1日起按《中国人民银行关于修改部分规章的决定》（中国人民银行令〔2026〕第4号）修订后的条文执行；修订决定另见 TB369。"
+    ]
+  },
+  {
+    "id": "TB369",
+    "title": "中国人民银行关于修改部分规章的决定",
+    "source_type": "人民银行部门规章",
+    "current_status": "现行有效",
+    "urls": [
+      "https://jrj.sh.gov.cn/ZXYW178/20260526/4839131f4d5142978f0712db05f0fb2e.html"
+    ],
+    "notes": [
+      "上海市金融主管部门页面转载中国人民银行完整正式文本，并明确标注信息来源为中国人民银行。"
+    ]
+  },
+  {
+    "id": "TB370",
+    "title": "关于场外衍生品交易报告有关事项的通知",
+    "source_type": "交易商协会自律规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.nafmii.org.cn/ggtz/tz/202607/t20260715_326062.html"
+    ],
+    "notes": [
+      "首次月度报告应于2026年8月7日前完成。"
+    ]
+  },
+  {
+    "id": "TB371",
+    "title": "银行间债券市场跨托管机构债券借贷业务细则",
+    "source_type": "银行间市场业务细则",
+    "current_status": "现行有效",
+    "reference_urls": [
+      "https://www.chinamoney.com.cn/chinese/bbzqsczqjd/20260717/2779469.html"
+    ],
+    "urls": [
+      "https://www.chinamoney.com.cn/dqs/cm-s-notice-query/fileDownLoad.do?mode=save&contentId=2779469&priority=0"
+    ]
+  },
+  {
+    "id": "TB372",
+    "title": "上海证券交易所资产支持证券挂牌条件确认规则适用指引第2号——大类基础资产（2026年修订）",
+    "source_type": "上交所业务规则",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.sse.com.cn/lawandrules/sselawsrules2025/bond/listing/assets/c/c_20260724_10826663.shtml"
+    ]
+  },
+  {
+    "id": "TB373",
+    "title": "深圳证券交易所资产支持证券挂牌条件审核业务指引第2号——审核重点关注事项（2026年修订）",
+    "source_type": "深交所业务规则",
+    "current_status": "现行有效",
+    "reference_urls": [
+      "https://www.szse.cn/lawrules/rule/allrules/bussiness/t20260724_621835.html"
+    ],
+    "urls": [
+      "https://docs.static.szse.cn/www/lawrules/rule/allrules/bussiness/W020260724557240683184.pdf",
+      "https://docs.static.szse.cn/www/lawrules/rule/allrules/bussiness/W020260724557240941692.pdf"
+    ]
+  },
+  {
+    "id": "TB374",
+    "title": "企业年金个人账户转移接续规程（暂行）",
+    "source_type": "人社部门政策发布",
+    "current_status": "已发布未施行",
+    "urls": [
+      "https://rensheju.nanyang.gov.cn/2026/07-24/1422353.html"
+    ],
+    "notes": [
+      "当前官方公开来源为人社部门发布摘要，尚未检索到人社部完整正文附件；不得据摘要替代完整条文适用。"
+    ]
+  },
+  {
+    "id": "TB375",
+    "title": "北京证券交易所债券交易业务指南第1号——交易业务",
+    "source_type": "北交所业务指南",
+    "current_status": "现行有效",
+    "reference_urls": [
+      "https://www.bse.cn/jyglzq_list/200028647.html"
+    ],
+    "urls": [
+      "https://www.bse.cn/uploads/6/file/public/202606/20260626180040_hhs624t6yl.pdf"
+    ]
+  },
+  {
+    "id": "TB376",
+    "title": "国家金融监督管理总局办公厅关于商业银行开展浦东新区自贸离岸债业务有关事项的通知",
+    "source_type": "金监总局政策法规",
+    "current_status": "现行有效",
+    "reference_urls": [
+      "https://www.nfra.gov.cn/cn/view/pages/governmentDetail.html?docId=1261546&generaltype=1&itemId=4167",
+      "https://www.nfra.gov.cn/cbircweb/DocInfo/SelectByDocId?docId=1261546"
+    ],
+    "urls": [
+      "https://www.nfra.gov.cn/cbircweb/download/downloadPdf?docId=1261546&generaltype=1&itemId=861"
+    ]
+  },
+  {
+    "id": "TB377",
+    "title": "深圳证券交易所证券交易业务指南第6号——约定购回式证券交易（2026年修订）",
+    "source_type": "深交所业务指南",
+    "current_status": "现行有效",
+    "reference_urls": [
+      "https://www.szse.cn/lawrules/service/member/t20260618_621161.html"
+    ],
+    "urls": [
+      "https://docs.static.szse.cn/www/lawrules/service/member/W020260618562992988044.pdf"
+    ]
+  },
+  {
+    "id": "TB378",
+    "title": "公开募集证券投资基金销售费用管理规定",
+    "source_type": "证监会规范性文件",
+    "current_status": "现行有效",
+    "reference_urls": [
+      "https://www.csrc.gov.cn/csrc/c101954/c7606091/content.shtml"
+    ],
+    "urls": [
+      "https://www.csrc.gov.cn/csrc/c101954/c7606091/7606091/files/%E9%99%84%E4%BB%B61%EF%BC%9A%E5%85%AC%E5%BC%80%E5%8B%9F%E9%9B%86%E8%AF%81%E5%88%B8%E6%8A%95%E8%B5%84%E5%9F%BA%E9%87%91%E9%94%80%E5%94%AE%E8%B4%B9%E7%94%A8%E7%AE%A1%E7%90%86%E8%A7%84%E5%AE%9A.pdf"
+    ]
+  },
+  {
+    "id": "TB379",
+    "title": "上海证券交易所证券交易业务指南第4号——证券代码段分配指南（2026年第2次修订）",
+    "source_type": "上交所业务指南",
+    "current_status": "现行有效",
+    "urls": [
+      "https://www.sse.com.cn/lawandrules/guide/stock/jyglywznylc/zn/c/c_20260713_10825354.shtml"
+    ]
+  },
+  {
+    "id": "TB380",
+    "title": "上海证券交易所上市公司证券发行上市审核规则（征求意见稿）",
+    "source_type": "上交所公开征求意见",
+    "current_status": "未发布正式稿",
+    "urls": [
+      "https://www.sse.com.cn/lawandrules/publicadvice/c/c_20260703_10824337.shtml"
+    ],
+    "notes": [
+      "意见反馈截止日为2026年7月17日；未发布正式稿，不作为现行正式依据。"
+    ]
+  },
+  {
+    "id": "TB381",
+    "title": "上海证券交易所上市公司证券发行与承销业务实施细则（征求意见稿）",
+    "source_type": "上交所公开征求意见",
+    "current_status": "未发布正式稿",
+    "urls": [
+      "https://www.sse.com.cn/lawandrules/publicadvice/c/c_20260703_10824340.shtml"
+    ],
+    "notes": [
+      "意见反馈截止日为2026年7月17日；未发布正式稿，不作为现行正式依据。"
     ]
   }
 ]
