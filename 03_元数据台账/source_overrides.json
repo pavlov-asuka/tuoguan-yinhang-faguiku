@@ -1281,10 +1281,17 @@
     "source_type": "人社部门政策发布",
     "current_status": "已发布未施行",
     "urls": [
-      "https://rensheju.nanyang.gov.cn/2026/07-24/1422353.html"
+      "https://www.mohrss.gov.cn/yanglaobxs/YLBXSzhengcewenjian/202607/t20260724_580865.html",
+      "https://www.mohrss.gov.cn/yanglaobxs/YLBXSzhengcewenjian/202607/W020260724577701764971.doc",
+      "https://www.mohrss.gov.cn/yanglaobxs/YLBXSzhengcewenjian/202607/W020260724577701769990.doc"
+    ],
+    "reference_urls": [
+      "https://rensheju.nanyang.gov.cn/2026/07-24/1422353.html",
+      "https://www.mohrss.gov.cn/yanglaobxs/YLBXSzhengcewenjian/index.html"
     ],
     "notes": [
-      "当前官方公开来源为人社部门发布摘要，尚未检索到人社部完整正文附件；不得据摘要替代完整条文适用。"
+      "人社部正式正文页显示文号人社厅函〔2026〕89号；签发日期为2026-07-13，网页发布日期为2026-07-24；自2027-01-01起施行。",
+      "已补充人社部正式正文及两个表格附件；南阳市人社局页面保留为辅助来源。"
     ]
   },
   {
